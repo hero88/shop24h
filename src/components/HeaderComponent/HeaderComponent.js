@@ -5,7 +5,7 @@ import IconNavBar from "./IconNavBar";
 
 function HeaderComponent(){
     return(
-        <Navbar color='light' expand='md' light>
+        <Navbar className='fixed-top' color='light' expand='md' light>
             <Logo/>
             <IconNavBar/>
         </Navbar>
