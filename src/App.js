@@ -1,6 +1,7 @@
 import DATA from './data.json';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeaderComponent from './components/HeaderComponent/HeaderComponent';
+import FooterComponent from './components/FooterComponent/FooterComponent';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <li key={index}>{element.Name}</li>)
         }
       </ul>
+      <FooterComponent/>
     </div>
   );
 }
