@@ -6,16 +6,24 @@ import ProductList from './ProductList';
 
 import ProductItems from './../../data.json';
 
+import {useState, useEffect} from 'react';
+
 function HomepageContent(){
+    const [products, setProducts] = useState(ProductItems);
+
+    useEffect(() => {
+        console.log(products);
+    }, [products]);
+
     return(
         <Container>                        
             <Row>
                 <Col sm='4'>
-                    <FilterComponent/>
+                    <FilterComponent sendFilteredProduct={setProducts}/>
                 </Col>
                 <Col sm='8'>
-                    <ProductList data={ProductItems}/>
-                    <Navigation data={ProductItems}/>
+                    <ProductList data={products}/>
+                    <Navigation data={products}/>
                 </Col>
             </Row>            
         </Container>
