@@ -1,15 +1,23 @@
-import {Container} from 'reactstrap'
-import CarouselSlide from './CarouselSlide';
-import LatestProducts from './LatestProducts';
-import ViewAllProduct from './ViewAllProduct';
+import {Container, Row, Col} from 'reactstrap';
 
+import FilterComponent from './FilterComponent';
+import Navigation from './Navigation';
+import ProductList from './ProductList';
+
+import ProductItems from './../../data.json';
 
 function HomepageContent(){
     return(
-        <Container>
-            <CarouselSlide/>
-            <LatestProducts/>
-            <ViewAllProduct/>
+        <Container>                        
+            <Row>
+                <Col sm='4'>
+                    <FilterComponent/>
+                </Col>
+                <Col sm='8'>
+                    <ProductList data={ProductItems}/>
+                    <Navigation data={ProductItems}/>
+                </Col>
+            </Row>            
         </Container>
     )
 }

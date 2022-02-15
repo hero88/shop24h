@@ -2,7 +2,7 @@
     {
         "Id": 1,
         "Name": "Cáp sạc iPhone USB-C to lightning",
-        "Type": "Phụ kiện iPhone, iPad",
+        "Type": "Accessories",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2020/10/cap-sac-iphone-usb-c-to-lightning-1-met.jpg",
         "Price": 350000,
         "PromotionPrice": 280000,
@@ -12,7 +12,7 @@
     {
         "Id": 2,
         "Name": "Balo Tomtoc Fashion Premium Waterproof Black",
-        "Type": "Túi chống sốc",
+        "Type": "Balo",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2020/09/balo-tomtoc-a61-e01d-black-2020.jpg",
         "Price": 1450000,
         "PromotionPrice": 1232500,
@@ -22,7 +22,7 @@
     {
         "Id": 3,
         "Name": "Bàn phím Magic Keyboard Apple-US English",
-        "Type": "Bàn phím không dây",
+        "Type": "Keyboard",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2020/12/magic-keyboard-2-us.jpg",
         "Price": 2700000,
         "PromotionPrice": 2430000,
@@ -32,7 +32,7 @@
     {
         "Id": 4,
         "Name": "Dụng cụ mở macbook, laptop đa năng",
-        "Type": "Tua vít",
+        "Type": "Accesories",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2021/11/bo-tua-vit-mo-macbook-m1-2021.jpg",
         "Price": 250000,
         "PromotionPrice": 200000,
@@ -42,7 +42,7 @@
     {
         "Id": 5,
         "Name": "Miếng lót chuột 2 mặt bằng da PU",
-        "Type": "Lót chuột",
+        "Type": "Mouse",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2020/07/mieng-lot-chuot-da-pu-2-mat.jpg",
         "Price": 60000,
         "PromotionPrice": 54000,
@@ -52,7 +52,7 @@
     {
         "Id": 6,
         "Name": "Dây cáp sạc Apple Watch Magnetic Charger 1m",
-        "Type": "Phụ kiện Apple Watch",
+        "Type": "Accessories",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2020/12/cap-sac-apple-watch-magnetic-charger-1m.jpg",
         "Price": 550000,
         "PromotionPrice": 440000,
@@ -62,7 +62,7 @@
     {
         "Id": 7,
         "Name": "Cáp màn hình Macbook Air",
-        "Type": "Cáp màn hình",
+        "Type": "Display",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2017/11/cap-man-hinh-macbook-air.jpg",
         "Price": 380000,
         "PromotionPrice": 304000,
@@ -72,7 +72,7 @@
     {
         "Id": 8,
         "Name": "Bộ chân đế cao su Macbook Pro kèm nút nhựa",
-        "Type": "Chân đế macbook",
+        "Type": "Accesories",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2017/07/bo-chan-de-macbook-pro-day-du.jpg",
         "Price": 200000,
         "PromotionPrice": 180000,
@@ -82,7 +82,7 @@
     {
         "Id": 9,
         "Name": "Phủ phím macbook màu cam san hô kèm phím tắt MacOS",
-        "Type": "Phủ phím macbook",
+        "Type": "Keyboard",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2021/02/phu-phim-macbook-2021-mau-cam-san-ho.jpg",
         "Price": 230000,
         "PromotionPrice": 200000,
@@ -92,7 +92,7 @@
     {
         "Id": 10,
         "Name": "Bộ vệ sinh JCPAL MiX Screen Cleaner Set",
-        "Type": "Vệ sinh macbook, iMac",
+        "Type": "Display",
         "ImageUrl": "https://maccare.vn/wp-content/uploads/2020/11/bo-ve-sinh-jcpal-mix-screen-cleaner-maccare.jpg",
         "Price": 120000,
         "PromotionPrice": 100000,

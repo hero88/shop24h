@@ -1,18 +1,16 @@
-import DATA from './../../data.json';
 
 import {Container, Row, Col, Card, CardBody, CardFooter} from 'reactstrap';
 
-function LatestProducts() {
-    const lastestItems = DATA.filter(data => data.LatestProduct===true );
+function ProductList({data}) {
     return(
         <Container className='p-4'>
             <Col sm='12' className='text-center fw-bold'>
-                <h2>LATEST PRODUCTS</h2>
+                <h2>PRODUCTS</h2>
             </Col>
             <Col sm='12'>
                 <Row>
                 {
-                    lastestItems.map((element, index) => 
+                    data.map((element, index) => 
                     <Col sm='4' key={index}>
                         <Card className='mb-2'>
                             <img src={element.ImageUrl} className='card-img-top' alt=''/>
@@ -29,11 +27,10 @@ function LatestProducts() {
                     </Col>
                     )
                 }
-                </Row>
-                
+                </Row>                
             </Col>
         </Container>
     )
 }
 
-export default LatestProducts;
+export default ProductList;
