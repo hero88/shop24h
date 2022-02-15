@@ -19,6 +19,7 @@ function Navigation({data}) {
     return(
         <>        
         <Grid item xs={12} md={12} sm={12} lg={12} marginTop={5} marginBottom={5}>
+            <p>Page: {page}</p>
             <Pagination onChange={changeHandler} count={noPage} defaultPage={page}></Pagination>
         </Grid>
         </>

@@ -11,7 +11,10 @@ function ProductList({data}) {
                 <Row>
                 {
                     data.map((element, index) => 
-                    <Col sm='4' key={index}>
+                    <Col 
+                        sm={ 12/data.length > 4 ? 12/data.length : 4 } 
+                        key={index}
+                    >
                         <Card className='mb-2'>
                             <img src={element.ImageUrl} className='card-img-top' alt=''/>
                             <CardBody>
