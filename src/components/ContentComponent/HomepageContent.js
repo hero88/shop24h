@@ -1,7 +1,7 @@
 import {Container, Row, Col} from 'reactstrap';
 
 import FilterComponent from './FilterComponent';
-import Navigation from './Navigation';
+
 import ProductList from './ProductList';
 
 import ProductItems from './../../data.json';
@@ -23,7 +23,7 @@ function HomepageContent(){
                 </Col>
                 <Col sm='8'>
                     <ProductList data={products}/>
-                    <Navigation data={products}/>
+                    
                 </Col>
             </Row>            
         </Container>
