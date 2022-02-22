@@ -13,6 +13,7 @@ import Login from './components/ContentComponent/Login';
 
 import {useState, useEffect} from 'react';
 import {auth} from './firebase'
+import ProductDetail from './components/ContentComponent/ProductDetail';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -31,12 +32,16 @@ function App() {
           <Breadcrumb tag="nav">
             <BreadcrumbItem tag="a" href="/">Home</BreadcrumbItem>            
           </Breadcrumb>
+          <Breadcrumb tag="nav">
+            <BreadcrumbItem tag="a" href="/product">Products</BreadcrumbItem>            
+          </Breadcrumb>
       </Row>     
       <br/>
       <Routes>
         <Route path='/login' element={<Login sendUser={setUser}/>}/>
         <Route path='/' element={<HomepageContent/>}/>
         <Route path='product' element={<ProductList data={ProductItems}/>}/>
+        <Route path='product/:id' element={<ProductDetail/>}/>
       </Routes> 
       
       <FooterComponent/>

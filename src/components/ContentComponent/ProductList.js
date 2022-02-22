@@ -38,7 +38,9 @@ function ProductList({data}) {
                         key={index}
                     >
                         <Card className='mb-2'>
-                            <img src={element.ImageUrl} className='card-img-top' alt=''/>
+                            <a href={"/product/" + element.Id} data-toggle='tooltip' title='Click for details'>
+                                <img src={element.ImageUrl} className='card-img-top' alt='' />
+                            </a>                            
                             <CardBody>
                                 <h4>{element.Name}</h4>
                                 <p>{element.Description}</p>
@@ -54,8 +56,7 @@ function ProductList({data}) {
                 }
                 </Row>                
             </Col>
-            <Grid item xs={12} md={12} sm={12} lg={12} marginTop={5} marginBottom={5}>
-                <p>Page: {page}</p>
+            <Grid item xs={12} md={12} sm={12} lg={12} marginTop={5} marginBottom={5}>                
                 <Pagination onChange={changeHandler} count={noPage} defaultPage={1}></Pagination>
             </Grid>         
         </Container>

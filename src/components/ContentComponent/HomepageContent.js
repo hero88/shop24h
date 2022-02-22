@@ -7,7 +7,6 @@ import ProductList from './ProductList';
 import ProductItems from './../../data.json';
 
 import {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
 
 function HomepageContent(){
     const [products, setProducts] = useState(ProductItems);
@@ -17,17 +16,13 @@ function HomepageContent(){
     }, [products]);
 
     return(
-        <Container>   
-            <Row className='mb-3'>
-                <Link to='/product'>Products</Link>
-            </Row>                     
+        <Container>                                    
             <Row>
                 <Col sm='4'>
                     <FilterComponent sendFilteredProduct={setProducts}/>
                 </Col>
                 <Col sm='8'>
-                    <ProductList data={products}/>
-                    
+                    <ProductList data={products}/>                    
                 </Col>
             </Row>            
         </Container>
