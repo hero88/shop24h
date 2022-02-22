@@ -73,6 +73,7 @@ function FilterComponent({sendFilteredProduct}) {
                 <Select 
                     labelId="demo-simple-select-helper-label"                    
                     defaultValue="None" 
+                    label='Type'
                     onChange={onChangeSelect}
                 >
                     <MenuItem value="None">Chọn</MenuItem>
