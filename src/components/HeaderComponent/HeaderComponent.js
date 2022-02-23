@@ -4,6 +4,8 @@ import {auth} from './../../firebase';
 
 import Logo from "./Logo";
 import IconNavBar from "./IconNavBar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import {useState} from 'react';
 
@@ -22,7 +24,7 @@ function HeaderComponent({currentUser}){
         auth.signOut()
         .then(() => {
             setUser(null);
-            alert("Logout successful!");  
+            toast.success("Đăng xuất thành công!");  
             console.log(user);          
             handleClose();
         })
@@ -62,10 +64,10 @@ function HeaderComponent({currentUser}){
                         <MenuItem onClick={handleClose}>My account</MenuItem>
                         <MenuItem onClick={onBtnLogoutClick}>Logout</MenuItem>
                     </Menu>
+                    <ToastContainer autoClose={2000}/>   
                 </div> 
                 :   <IconNavBar/>        
-            }
-            
+            }        
         </Navbar>
     )
 }
