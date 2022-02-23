@@ -98,6 +98,36 @@
         "PromotionPrice": 100000,
         "LatestProduct": false,
         "Description": "Bộ vệ sinh JCPAL MiX Screen Cleaner giúp làm sạch màn hình an toàn, hiệu quả sử dụng cho tất cả các loại màn hình máy tính, điện thoại bởi dung dịch không chứa cồn."
+    },
+    {
+        "Id": 11,
+        "Name": "Bàn phím không dây Logitech MX Keys Mini",
+        "Type": "Keyboard",
+        "ImageUrl": "https://lh3.googleusercontent.com/FVCoNk2zAigYnIyKzb2H1o-R3GydhIGBOgOCmy_S3ZhpRtGIBwUqplkfkSMbeyBh3H6yuWZwVxEdqEiDIiEHtYNQuAIApyIn=w1000-rw",
+        "Price": 2700000,
+        "PromotionPrice": 2500000,
+        "LatestProduct": false,
+        "Description": "Bàn phím không dây Logitech MX Keys Mini (Hồng) sở hữu thiết kế hiện đại gọn gàng, với các phím bấm thông minh hơn, hỗ trợ người dùng thao tác chuẩn xác, nhanh nhẹn. Đây sẽ là người bạn tuyệt vời mang đến trải nghiệm gõ phím tuyệt vời cho những ai yêu thích sáng tạo. Kích thước mini nhỏ gọn, các phím chức năng tiện ích. MX Keys Mini (Hồng) tối giản với kích thước mini, đặt mọi phím và lệnh trong tầm tay người dùng. Bạn sẽ có tư thế ngồi tốt hơn, cải thiện công thái học với vai được căn chỉnh và cho phép đặt chuột gần bàn phím hơn để bạn không cần phải chạm tay nhiều."
+    },
+    {
+        "Id": 12,
+        "Name": "Màn hình LCD SAMSUNG LS27R350FHEXXV (1920 x 1080/IPS/75Hz/5 ms/FreeSync)",
+        "Type": "Display",
+        "ImageUrl": "https://lh3.googleusercontent.com/dNnpUSJm-depK-2KYGWJKquHMXtLzgcYERiHpebVMjljt3jvkigS8vNc60R6Khs6oX-ONWGDIEWGnUybaA=w1000-rw",
+        "Price": 5339000,
+        "PromotionPrice": 5239000,
+        "LatestProduct": false,
+        "Description": "Màn hình LCD Samsung 27 inches được thiết kế cạnh viền siêu mỏng và sang trọng, kèm theo đó là đế chắc chắn giúp bạn có thể lắp đặt trong bàn làm việc một cách dễ dàng. Với màn hình IPS LED, bạn sẽ được tận hưởng một trải nghiệm tuyệt đẹp, cùng những chi tiết sắc nét trên màn hình gần như không có viền."
+    },
+    {
+        "Id": 13,
+        "Name": "Màn hình LCD ASUS VY249HE (1920 x 1080/IPS/75Hz/1 ms/FreeSync)",
+        "Type": "Display",
+        "ImageUrl": "https://lh3.googleusercontent.com/9XVDSArZemhDHJdTjB_ZtCOdfJiHjX8454Ajjp0KkIVXc7etr1C09dYQ6McusO3XhTh0ccqdLhURPlQyNexPM5hqWqcNZORl=w1000-rw",
+        "Price": 4590000,
+        "PromotionPrice": 4190000,
+        "LatestProduct": false,
+        "Description": "LCD ASUS VY249HE là màn hình phẳng có kích thước 23.8 inch có độ phân giải Full HD 1920 x 1080 pixels, góc nhìn mở rộng 178 (H) / 178 (V) mang đến chất lượng hình ảnh sắc nét, chân thật cùng với độ sáng 250 cd/m2 cho phép hình ảnh hiển thị rõ ở những nơi có điều kiện ánh sáng bình thường. Có khả năng hiển thị màu sắc lên đến 16.7 triệu màu, tấm nền IPS LED cùng độ tương phản tĩnh 1,000:1 cho khả năng tái tạo màu sắc tốt, chi tiết cao giúp người dùng tận hưởng hình ảnh với màu sắc rực rỡ, chân thật."
     }
 ]
     
