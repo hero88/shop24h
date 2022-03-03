@@ -4,24 +4,31 @@ import FilterComponent from './FilterComponent';
 
 import ProductList from './ProductList';
 
-import ProductItems from './../../data.json';
-
 import {useState, useEffect} from 'react';
 
 function HomepageContent(){
-    const [products, setProducts] = useState(ProductItems);
+    const fetchApi = async (paramUrl, paramOptions = {}) => {
+        const response = await fetch(paramUrl, paramOptions);
+        const responseData = await response.json();
+        return responseData;
+    }
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        console.log(products);
-    }, [products]);
+        fetchApi("http://localhost:8000/products/")
+            .then(response => {                
+                setProducts(response.products);
+            })
+            .catch(error => console.log(error))        
+    }, []);
 
     return(
         <Container>                                    
             <Row>
-                <Col sm='4'>
+                <Col sm='3'>
                     <FilterComponent sendFilteredProduct={setProducts}/>
                 </Col>
-                <Col sm='8'>
+                <Col sm='9'>
                     <ProductList data={products}/>                    
                 </Col>
             </Row>            

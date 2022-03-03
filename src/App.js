@@ -8,7 +8,6 @@ import {Row, BreadcrumbItem, Breadcrumb } from 'reactstrap';
 import { Route, Routes } from 'react-router-dom';
 import ProductList from './components/ContentComponent/ProductList';
 
-import ProductItems from './data.json';
 import Login from './components/ContentComponent/Login';
 
 import {useState, useEffect} from 'react';
@@ -16,13 +15,25 @@ import {auth} from './firebase'
 import ProductDetail from './components/ContentComponent/ProductDetail';
 
 function App() {
+  const fetchApi = async (paramUrl, paramOptions = {}) => {
+    const response = await fetch(paramUrl, paramOptions);
+    const responseData = await response.json();
+    return responseData;
+  }
+  const [productItems, setProductItems] = useState([]);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     console.log("App user: ", user);
     auth.onAuthStateChanged((result) => {
       setUser(result);
-    })
+    });
+    fetchApi("http://localhost:8000/products/")
+      .then(response => {
+        console.log(response);
+        setProductItems(response.products);
+      })
+      .catch(error => console.log(error))
   },[user]);  
 
   return (
@@ -31,15 +42,15 @@ function App() {
       <Row className='mt-5 p-4'>
           <Breadcrumb tag="nav">
             <BreadcrumbItem tag="a" href="/">Home</BreadcrumbItem>    
-            <BreadcrumbItem tag="a" href="/product">Products</BreadcrumbItem>        
+            <BreadcrumbItem tag="a" href="/products">Products</BreadcrumbItem>        
           </Breadcrumb>
       </Row>     
       <br/>
       <Routes>
         <Route path='/login' element={<Login sendUser={setUser}/>}/>
         <Route path='/' element={<HomepageContent/>}/>
-        <Route path='product' element={<ProductList data={ProductItems}/>}/>
-        <Route path='product/:id' element={<ProductDetail/>}/>
+        <Route path='products' element={<ProductList data={productItems}/>}/>
+        <Route path='products/:id' element={<ProductDetail/>}/>
       </Routes> 
       
       <FooterComponent/>

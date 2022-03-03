@@ -2,13 +2,18 @@ import {Select, MenuItem, InputLabel, Button} from '@mui/material';
 import {Row, Col, Input, Container} from 'reactstrap';
 
 import {useState, useEffect} from 'react';
-import AllProducts from './../../data.json';
 
 function FilterComponent({sendFilteredProduct}) {
+    const fetchApi = async (paramUrl, paramOptions = {}) => {
+        const response = await fetch(paramUrl, paramOptions);
+        const responseData = await response.json();
+        return responseData;
+    }
     const [type, setType] = useState("None");
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
     const [name, setName] = useState("");
+    const [allProducts, setAllProducts] = useState([]);
 
     const onChangeSelect = (e) => setType(e.target.value);          
     const onMaxPriceChange = (e) => setMaxPrice(e.target.value.trim());
@@ -22,12 +27,12 @@ function FilterComponent({sendFilteredProduct}) {
             && (maxPrice === 0)
             && (!name)
             )
-            sendFilteredProduct(AllProducts);
+            sendFilteredProduct(allProducts);
         else {
-            let filteredProduct = AllProducts;
+            let filteredProduct = allProducts;
             if (type !== "None") { // filter by product type
-                filteredProduct = AllProducts.filter(function (el){
-                    return el.Type === type;
+                filteredProduct = allProducts.filter(function (el){
+                    return el.type === type;
                 })
             }
             if (minPrice || maxPrice) { // filter by min,max price
@@ -38,15 +43,15 @@ function FilterComponent({sendFilteredProduct}) {
                 else {
                     filteredProduct = filteredProduct.filter(function(el){
                         if (minPrice && maxPrice)
-                            return (el.Price >= minPrice) && (el.Price <= maxPrice);
+                            return (el.buyPrice >= minPrice) && (el.buyPrice <= maxPrice);
                         else
-                            return (el.Price >= minPrice) || (el.Price <= maxPrice); 
+                            return (el.buyPrice >= minPrice) || (el.buyPrice <= maxPrice); 
                     })
                 }
             }
             if (name) { // filter by name
                 filteredProduct = filteredProduct.filter(function(el){
-                    return el.Name.toLowerCase().indexOf(name.toLowerCase()) !== -1;
+                    return el.name.toLowerCase().indexOf(name.toLowerCase()) !== -1;
                 })
             }
             console.log(filteredProduct);
@@ -56,10 +61,11 @@ function FilterComponent({sendFilteredProduct}) {
     
 
     useEffect(()=>{
-        console.log("Type = " + type);
-        console.log("Max price = " + maxPrice);     
-        console.log("Min price = " + minPrice);
-        console.log("Product name = " + name);
+        fetchApi("http://localhost:8000/products/")
+            .then(response => {
+                setAllProducts(response.products);
+            })
+            .catch(error => console.log(error))
     }, [type, minPrice, maxPrice, name]);
 
     return(
@@ -100,10 +106,10 @@ function FilterComponent({sendFilteredProduct}) {
         </Row>
         {/* Filter by name */}
         <Row className='mt-5'>
-             <Col>
+             <Col sm='12'>
                 <InputLabel>Nhập tên sản phẩm</InputLabel>
              </Col>
-             <Col>
+             <Col sm='12'>
                 <Input placeholder='product name...' onChange={onProductNameChange}/> 
             </Col>
         </Row>
