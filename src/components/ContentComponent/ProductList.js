@@ -7,7 +7,7 @@ function ProductList({data}) {
     const [productList, setProductList] = useState(data);
     const [page, setPage] = useState(1);
     const [noPage, setNoPage] = useState(0)
-    const limit = 2;
+    const limit = 3;
 
     const changeHandler = (event, value) => {
         setPage(value);        
@@ -38,17 +38,17 @@ function ProductList({data}) {
                         key={index}
                     >
                         <Card className='mb-2'>
-                            <a href={"/product/" + element.Id} data-toggle='tooltip' title='Click for details'>
-                                <img src={element.ImageUrl} className='card-img-top' alt='' />
+                            <a href={"/products/" + element._id} data-toggle='tooltip' title='Click for details'>
+                                <img src={element.imageUrl} className='card-img-top' alt='photo_something' />
                             </a>                            
                             <CardBody>
-                                <h4>{element.Name}</h4>
-                                <p>{element.Description}</p>
+                                <h4>{element.name}</h4>
+                                <p>{element.description}</p>
                             </CardBody>
                             <CardFooter>
                                 <h4>Price:</h4>
-                                <p className='text-decoration-line-through'>{element.Price.toLocaleString()} VND</p>
-                                <p className='text-danger'>{element.PromotionPrice.toLocaleString()} VND</p>
+                                <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
+                                <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND</p>
                             </CardFooter>
                         </Card>
                     </Col>
