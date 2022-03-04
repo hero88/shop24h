@@ -6,12 +6,14 @@ import {Container, Row, Col, Card, CardBody, CardFooter} from 'reactstrap';
 function ProductList({data}) {    
     const [productList, setProductList] = useState(data);
     const [page, setPage] = useState(1);
-    const [noPage, setNoPage] = useState(0)
-    const limit = 3;
+    const [noPage, setNoPage] = useState(0);
+    const [limit, setLimit] = useState(3);
 
     const changeHandler = (event, value) => {
         setPage(value);        
     }
+
+    const changeSelectHandler = e => setLimit(e.target.value);
 
     useEffect(() => {
         if (data.length>0) {
@@ -28,6 +30,15 @@ function ProductList({data}) {
         <Container className='p-4'>
             <Col sm='12' className='text-center fw-bold'>
                 <h2>PRODUCTS</h2>
+            </Col>
+            <Col sm='12' className='mb-3'>
+                    <label>Chọn số lượng sản phẩm hiển thị &nbsp;</label>
+                    <select onChange={changeSelectHandler} defaultValue={3}>
+                        <option value={3}>3</option>
+                        <option value={4}>4</option>
+                        <option value={5}>5</option>
+                        <option value={8}>8</option>
+                    </select>
             </Col>
             <Col sm='12'>
                 <Row>
