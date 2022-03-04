@@ -22,7 +22,7 @@ function FilterComponent({sendFilteredProduct}) {
     
     const onBtnFilterClick = () => {
         console.log("---Click nút filter---");
-        if (type === "None" 
+        if (type === "None" // no filter choice selected
             && (minPrice === 0) 
             && (maxPrice === 0)
             && (!name)
