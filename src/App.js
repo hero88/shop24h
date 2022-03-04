@@ -15,13 +15,25 @@ import {auth} from './firebase'
 import ProductDetail from './components/ContentComponent/ProductDetail';
 
 function App() {
+  const fetchApi = async (paramUrl, paramOptions = {}) => {
+    const response = await fetch(paramUrl, paramOptions);
+    const responseData = await response.json();
+    return responseData;
+  }
+
   const [user, setUser] = useState(null);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     console.log("App user: ", user);
     auth.onAuthStateChanged((result) => {
       setUser(result);
     });    
+    fetchApi("http://localhost:8000/products/")
+            .then(response => {                
+                setProducts(response.products);
+            })
+            .catch(error => console.log(error));    
   },[user]);  
 
   return (
@@ -37,7 +49,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login sendUser={setUser}/>}/>
         <Route path='/' element={<HomepageContent/>}/>
-        <Route path='products' element={<ProductList />}/>
+        <Route path='products' element={<ProductList data={products}/>}/>
         <Route path='products/:id' element={<ProductDetail/>}/>
       </Routes> 
       
