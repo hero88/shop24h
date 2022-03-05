@@ -7,13 +7,12 @@ function IconNavBar() {
     return(        
             <Nav className='ml-auto' navbar>
                 <NavItem className='m-2'>
-                    <a href='/login'>Login</a>
-                </NavItem>
-                <NavItem className='m-2'>
                     <FontAwesomeIcon icon={faBell}/>
                 </NavItem>
                 <NavItem className='m-2'>
-                    <FontAwesomeIcon icon={faUserCircle}/>
+                    <a href='/login'>
+                        <FontAwesomeIcon icon={faUserCircle}/>
+                    </a>
                 </NavItem>
                 <NavItem className='m-2'>
                     <FontAwesomeIcon icon={faShoppingBasket}/>
