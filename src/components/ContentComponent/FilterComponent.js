@@ -72,10 +72,10 @@ function FilterComponent({sendFilteredProduct}) {
         <Container className='mt-5'>
         {/* Filter by type */}
         <Row>
-            <Col sm='4'>
-                <InputLabel id="demo-simple-select-helper-label">Chọn Type</InputLabel>
+            <Col sm='12'>
+                <InputLabel id="demo-simple-select-helper-label">Chọn loại sản phẩm</InputLabel>
             </Col>
-            <Col sm='7'>
+            <Col sm='12'>
                 <Select 
                     labelId="demo-simple-select-helper-label"                    
                     defaultValue="None" 
@@ -113,7 +113,7 @@ function FilterComponent({sendFilteredProduct}) {
                 <Input placeholder='product name...' onChange={onProductNameChange}/> 
             </Col>
         </Row>
-        <Button className='mt-5' variant='contained' onClick={onBtnFilterClick}>Lọc</Button>
+        <Button className='mt-5' variant='contained' onClick={onBtnFilterClick}>Tìm kiếm</Button>
         </Container>
     )
 }

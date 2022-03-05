@@ -4,6 +4,12 @@ import {Container, Row, Col, Card, CardBody, CardFooter} from 'reactstrap';
 
 
 function ProductList({data}) {    
+    const fetchApi = async (paramUrl, paramOptions = {}) => {
+        const response = await fetch(paramUrl, paramOptions);
+        const responseData = await response.json();
+        return responseData;
+    }
+
     const [productList, setProductList] = useState(data);
     const [page, setPage] = useState(1);
     const [noPage, setNoPage] = useState(0);
@@ -16,15 +22,14 @@ function ProductList({data}) {
     const changeSelectHandler = e => setLimit(e.target.value);
 
     useEffect(() => {
-        if (data.length>0) {
-            setProductList(data.slice((page - 1) * limit, page * limit));
-            setNoPage(Math.ceil(data.length / limit));  
-        } 
-        else {
-            setNoPage(1);
-            setProductList([]);
-        }             
-    }, [data, page, limit]);
+        setNoPage(Math.ceil(data.length/limit));
+        fetchApi("http://localhost:8000/products/?limit=" + limit + "&page=" + page)
+            .then(response => {                
+                setProductList(response.products);                
+            })
+            .catch(error => console.log(error));
+                
+    }, [page, limit,data]);
 
     return(
         <Container className='p-4'>
