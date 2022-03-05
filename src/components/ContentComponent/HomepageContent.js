@@ -13,6 +13,7 @@ function HomepageContent(){
         return responseData;
     }
     const [products, setProducts] = useState([]);
+    const [searchObj, setSearchObj] = useState({});
 
     useEffect(() => {
         fetchApi("http://localhost:8000/products/")
@@ -26,10 +27,10 @@ function HomepageContent(){
         <Container>                                    
             <Row>
                 <Col sm='3'>
-                    <FilterComponent sendFilteredProduct={setProducts}/>
+                    <FilterComponent sendFilterObj={setSearchObj}/>
                 </Col>
                 <Col sm='9'>
-                    <ProductList data={products}/>                    
+                    <ProductList data={products} searchData={searchObj}/>                    
                 </Col>
             </Row>            
         </Container>

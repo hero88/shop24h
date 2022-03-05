@@ -49,7 +49,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<Login sendUser={setUser}/>}/>
         <Route path='/' element={<HomepageContent/>}/>
-        <Route path='products' element={<ProductList data={products}/>}/>
+        <Route path='products' element={<ProductList data={products} searchData={{}}/>}/>
         <Route path='products/:id' element={<ProductDetail/>}/>
       </Routes> 
       

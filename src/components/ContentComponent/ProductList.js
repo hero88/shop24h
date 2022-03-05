@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import {Container, Row, Col, Card, CardBody, CardFooter} from 'reactstrap';
 
 
-function ProductList({data}) {    
+function ProductList({data, searchData}) {    
     const fetchApi = async (paramUrl, paramOptions = {}) => {
         const response = await fetch(paramUrl, paramOptions);
         const responseData = await response.json();
@@ -20,16 +20,31 @@ function ProductList({data}) {
     }
 
     const changeSelectHandler = e => setLimit(e.target.value);
+    const baseURL = "http://localhost:8000/products/?";
 
     useEffect(() => {
-        setNoPage(Math.ceil(data.length/limit));
-        fetchApi("http://localhost:8000/products/?limit=" + limit + "&page=" + page)
-            .then(response => {                
-                setProductList(response.products);                
-            })
+        let targetURL = "";
+        if ((Object.keys(searchData).length===0)
+            || (!searchData.name && searchData.minPrice === 0 && searchData.maxPrice === 0 && searchData.type==="None")
+        )
+            targetURL = baseURL;
+        else{
+            targetURL = baseURL;
+            if (searchData.name) targetURL +=  "&name=" + searchData.name;
+            if (searchData.minPrice) targetURL += "&minPrice=" + searchData.minPrice;
+            if (searchData.maxPrice) targetURL += "&maxPrice=" + searchData.maxPrice;
+            if (searchData.type) targetURL += "&type=" + searchData.type;            
+        }
+        fetchApi(targetURL)
+            .then(response => setNoPage(Math.ceil(response.count/limit)))
+            .catch(err => console.log(err));
+
+        targetURL += "&limit=" + limit + "&page=" + page; // do pagination
+
+        fetchApi(targetURL)
+            .then(response => setProductList(response.products))
             .catch(error => console.log(error));
-                
-    }, [page, limit,data]);
+    }, [page, limit, searchData]);
 
     return(
         <Container className='p-4'>
