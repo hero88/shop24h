@@ -40,7 +40,7 @@ function App() {
     <div >
       <HeaderComponent currentUser={user}/>      
       <Row className='mt-5 p-4'>
-          <Breadcrumb tag="nav">
+          <Breadcrumb tag="nav" className="mt-5">
             <BreadcrumbItem tag="a" href="/">Home</BreadcrumbItem>    
             <BreadcrumbItem tag="a" href="/products">Products</BreadcrumbItem>        
           </Breadcrumb>
