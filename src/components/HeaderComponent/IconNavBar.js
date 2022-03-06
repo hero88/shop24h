@@ -10,7 +10,7 @@ function IconNavBar() {
                     <FontAwesomeIcon icon={faBell}/>
                 </NavItem>
                 <NavItem className='m-2'>
-                    <a href='/login'>
+                    <a href='/login' data-toggle='tooltip' title='Signin here'>
                         <FontAwesomeIcon icon={faUserCircle}/>
                     </a>
                 </NavItem>
