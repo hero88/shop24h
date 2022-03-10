@@ -24,7 +24,7 @@ function ProductDetail({currentUser, sendProduct}) {
 
     const onBtnAddToCartClick = () => {
         if (!currentUser) {
-            alert("You need to login to continue!");
+            alert("Bạn cần phải đăng nhập!");
             return false;
         }
         else {
@@ -36,7 +36,6 @@ function ProductDetail({currentUser, sendProduct}) {
                 image: currentProduct.imageUrl
             };
             sendProduct(selectedProduct);
-            AddCart(selectedProduct);
         }
     }
     

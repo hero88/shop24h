@@ -29,8 +29,9 @@ function HeaderComponent({currentUser}){
         auth.signOut()
         .then(() => {
             setUser(null);
-            toast.success("Đăng xuất thành công!");  
-            console.log(user);          
+            localStorage.setItem('cart', []);
+            toast.success("Đăng xuất thành công!"); 
+            console.log(user);        
             handleClose();
         })
         .catch((error) => {

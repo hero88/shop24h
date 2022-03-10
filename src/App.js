@@ -28,39 +28,37 @@ function App() {
 
   const cartHandle = (data) => {
     let selectedProduct = data;
-    if (cart.length === 0) { // cart empty 
-      setCart(cart=>[...cart,selectedProduct]);
-      localStorage.setItem('cart', JSON.stringify(cart));
+    let copy = [...cart];
+    if (copy.length === 0) { // cart empty 
+      copy.push(selectedProduct);
+      //localStorage.setItem('cart', JSON.stringify(cart));
     }
     else {
-      let check = false; // new item to cart
-      let newArr = [...cart];      
-      newArr.map((item, index) => {
+      let check = false; // new item to cart    
+      copy.map((item, index) => {
           if (item.productId === selectedProduct.productId) {
             check = true;
-            newArr[index].quantity++;
+            copy[index].quantity = copy[index].quantity + 1;
           }
-          return newArr;
+          return copy;
       })
       if (!check) {
-        setCart(cart=>[...cart, selectedProduct]);
-        localStorage.setItem('cart', JSON.stringify(cart));
+        copy.push(selectedProduct);
+        //localStorage.setItem('cart', JSON.stringify(cart));
       }
-      else {
-        setCart(newArr);
-        localStorage.setItem('cart', JSON.stringify(cart));
-      }
-    }        
+    }  
+    localStorage.setItem('cart', JSON.stringify(copy));  
+    setCart(copy);    
   }
 
   useEffect(() => {
     console.log("App user: ", user);     
     console.log(cart);    
-    if(cart.length===0) {
+    
+    if(cart.length===0 && user) {
       let temp = localStorage.getItem('cart');
-      setCart(JSON.parse(temp));
+      if (temp.length>0) setCart(JSON.parse(temp));
     }
-
     auth.onAuthStateChanged((result) => {
       setUser(result);
     });    
@@ -69,7 +67,7 @@ function App() {
             .then(response => {                
                 setProducts(response.products);
             })
-            .catch(error => console.log(error));   
+            .catch(error => console.log(error)); 
   },[user, cart]);  
 
   return (
@@ -87,7 +85,7 @@ function App() {
         <Route path='/' element={<HomepageContent/>}/>
         <Route path='products' element={<ProductList data={products} searchData={{}}/>}/>
         <Route path='products/:id' element={<ProductDetail currentUser={user} sendProduct={cartHandle}/>}/>
-        <Route path='shoppingcart' element={<ShoppingCart currentCart={cart}/>}/>
+        <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
       </Routes> 
       
       <FooterComponent/>
