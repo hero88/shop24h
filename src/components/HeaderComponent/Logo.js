@@ -2,7 +2,7 @@ import { NavbarBrand } from 'reactstrap';
 
 function Logo() {
     return(
-        <NavbarBrand href='/'>DevCamp</NavbarBrand>
+        <NavbarBrand href='/'>Shop24h</NavbarBrand>
     )
 }
 

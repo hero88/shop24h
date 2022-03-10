@@ -1,11 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
 
-import {Container, Grid, IconButton} from '@mui/material';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBasket  } from '@fortawesome/free-solid-svg-icons';
+import {Container, Grid, Button} from '@mui/material';
 import {useState, useEffect} from 'react';
 
-function ProductDetail() {
+import {AddCart} from '../actions'
+import {connect} from 'react-redux';
+
+function ProductDetail({currentUser, sendProduct}) {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
         const response = await fetch(paramUrl, paramOptions);
         const responseData = await response.json();
@@ -19,6 +20,23 @@ function ProductDetail() {
 
     const substractItem = () => {
         if (NoItem > 0 ) setNoItem(NoItem-1); /*số lượng item min=0*/
+    }
+
+    const onBtnAddToCartClick = () => {
+        if (!currentUser) {
+            alert("Bạn cần phải đăng nhập!");
+            return false;
+        }
+        else {
+            let selectedProduct = {
+                name: currentProduct.name,
+                quantity: NoItem,
+                productId: id,
+                price: currentProduct.promotionPrice,
+                image: currentProduct.imageUrl
+            };
+            sendProduct(selectedProduct);
+        }
     }
     
     useEffect(()=>{
@@ -45,11 +63,10 @@ function ProductDetail() {
                     <button onClick={substractItem}>-</button>
                     &nbsp;{NoItem >= 0 ? NoItem : 0 /*số lượng item min=0*/ }&nbsp; 
                     <button onClick={()=> setNoItem(NoItem + 1 )}>+</button>
-                    <br/>
-                    <IconButton color='primary'>
-                        <FontAwesomeIcon icon={faShoppingBasket}/>&nbsp;                     
+                    <br/><br/>
+                    <Button color='primary' variant='contained' onClick={onBtnAddToCartClick}>                   
                         Thêm vào giỏ hàng
-                    </IconButton>
+                    </Button>
                 </Grid>
                 <Grid item xs={12} md={12} lg={12}>
                     <h3>MÔ TẢ</h3>
@@ -83,4 +100,17 @@ function ProductDetail() {
     )
 }
 
-export default ProductDetail;
+
+const mapStateToProps = state =>{
+    return {
+         _products: state._todoProduct,
+    };
+}
+function mapDispatchToProps(dispatch){
+    return{
+        AddCart:item=>dispatch(AddCart(item))
+      
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);

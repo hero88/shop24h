@@ -2,8 +2,13 @@ import { Navbar } from "reactstrap";
 import { Button, MenuItem, Menu } from '@mui/material';
 import {auth} from './../../firebase';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingBasket  } from '@fortawesome/free-solid-svg-icons';
+
 import Logo from "./Logo";
 import IconNavBar from "./IconNavBar";
+import  {connect} from  'react-redux';
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,14 +29,15 @@ function HeaderComponent({currentUser}){
         auth.signOut()
         .then(() => {
             setUser(null);
-            toast.success("Đăng xuất thành công!");  
-            console.log(user);          
+            localStorage.setItem('cart', []);
+            toast.success("Đăng xuất thành công!"); 
+            console.log(user);        
             handleClose();
         })
         .catch((error) => {
             console.log(error)
         })
-    }    
+    }        
 
     return(
         <Navbar className='fixed-top' color='light' expand='md' light>
@@ -41,7 +47,7 @@ function HeaderComponent({currentUser}){
                 ? 
                 <div>
                     <p>Hello {currentUser.displayName}</p>&nbsp;
-                    <img src={currentUser.photoURL} alt='avatar'/>&nbsp;
+                    <img src={currentUser.photoURL} alt='avatar' width='30%'/>&nbsp;
                     <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
@@ -64,6 +70,9 @@ function HeaderComponent({currentUser}){
                         <MenuItem onClick={handleClose}>My account</MenuItem>
                         <MenuItem onClick={onBtnLogoutClick}>Logout</MenuItem>
                     </Menu>
+                    <a href='/shoppingcart'>
+                        <FontAwesomeIcon icon={faShoppingBasket}/>                       
+                    </a>
                     <ToastContainer autoClose={2000}/>   
                 </div> 
                 :   <IconNavBar/>        
@@ -72,4 +81,10 @@ function HeaderComponent({currentUser}){
     )
 }
 
-export default HeaderComponent;
+const mapStateToProps = state =>{
+    return{
+        numberCart: state._todoProduct.numberCart
+    }
+}
+
+export default connect(mapStateToProps,null)(HeaderComponent);
