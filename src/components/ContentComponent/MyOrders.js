@@ -16,7 +16,6 @@ function MyOrders() {
     const FireBaseUser = auth.currentUser;
     const customerURL = "http://localhost:8000/customers/";
     const orderURL = "http://localhost:8000/orders/";
-    const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
     const [orderList, setOrderList] = useState([]);
