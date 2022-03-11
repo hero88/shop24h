@@ -15,6 +15,12 @@ import {auth} from './firebase'
 import ProductDetail from './components/ContentComponent/ProductDetail';
 import ShoppingCart from './components/ContentComponent/ShoppingCart';
 
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Profile from './components/ContentComponent/Profile';
+import MyOrders from './components/ContentComponent/MyOrders';
+
 function App() {
   const fetchApi = async (paramUrl, paramOptions = {}) => {
     const response = await fetch(paramUrl, paramOptions);
@@ -86,9 +92,12 @@ function App() {
         <Route path='products' element={<ProductList data={products} searchData={{}}/>}/>
         <Route path='products/:id' element={<ProductDetail currentUser={user} sendProduct={cartHandle}/>}/>
         <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
+        <Route path='profile' element={<Profile/>}/>
+        <Route path='orders' element={<MyOrders/>}/>
       </Routes> 
       
       <FooterComponent/>
+      <ToastContainer autoClose={2000}/>
     </div>
   );
 }

@@ -40,12 +40,13 @@ function Login({sendUser}) {
         auth.signInWithPopup(googleProvider)
         .then((result) => {
             toast.success("Đăng nhập thành công! Trở lại trang chủ ...");
-            setUser(result.user);     
+            let temp = result.user;
+            setUser(temp);     
             let newUser = {
-                uid: user.providerData[0].uid,
-                fullName: user.providerData[0].displayName,
-                email: user.providerData[0].email,
-                phoneNumber: user.providerData[0].phoneNumber,                
+                uid: temp.providerData[0].uid,
+                fullName: temp.providerData[0].displayName,
+                email: temp.providerData[0].email,
+                phoneNumber: temp.providerData[0].phoneNumber,                
             }     
             
             if (!userExist) createNewuser(newUser);

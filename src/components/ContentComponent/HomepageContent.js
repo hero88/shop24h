@@ -26,10 +26,10 @@ function HomepageContent(){
     return(
         <Container>                                    
             <Row>
-                <Col sm='3'>
+                <Col sm='3' xs='5'>
                     <FilterComponent sendFilterObj={setSearchObj}/>
                 </Col>
-                <Col sm='9'>
+                <Col sm='9' xs='7'>
                     <ProductList data={products} searchData={searchObj}/>                    
                 </Col>
             </Row>            
