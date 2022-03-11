@@ -20,7 +20,7 @@ function ShoppingCart({currentCart, currentUser}) {
     const customerURL = "http://localhost:8000/customers/";
     const orderURL = "http://localhost:8000/orders/";
 
-    let TotalCart = 0;
+    let TotalCart = 0; // total VND amount of the cart
     const TotalPrice = (price,tonggia) =>{
         return Number(price * tonggia).toLocaleString('en-US');
     }
@@ -76,7 +76,7 @@ function ShoppingCart({currentCart, currentUser}) {
             let reqOptions = {
                 method: 'POST',
                 body: JSON.stringify({
-                    note: "Thành tiền: " + TotalCart + " VND"
+                    totalAmount: TotalCart
                 }),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
@@ -85,7 +85,6 @@ function ShoppingCart({currentCart, currentUser}) {
             fetchApi(targetURL, reqOptions)
             .then(result =>{
                 let order = result.order;
-                console.log(order);
                 toast.success("Tạo đơn hàng thành công với id: " + order._id);
                 createOrderDetail(order._id);
                 localStorage.setItem('cart',[]);
@@ -159,7 +158,10 @@ function ShoppingCart({currentCart, currentUser}) {
                                     </TableCell>
                                     <TableCell>
                                         <Button variant='contained' color='success' 
-                                                onClick={()=>localStorage.setItem('cart', JSON.stringify(cart))}
+                                                onClick={()=>{
+                                                    localStorage.setItem('cart', JSON.stringify(cart));
+                                                    toast.success("Cập nhật giỏ hàng thành công !");
+                                                }}
                                         >
                                             Cập nhật giỏ hàng
                                         </Button>
@@ -173,7 +175,7 @@ function ShoppingCart({currentCart, currentUser}) {
                         </TableContainer>
                     </Grid>                   
                 </Grid> 
-                : <p>Bạn chưa có sản phẩm nào !</p>
+                : <p>Giỏ hàng trống, bạn chưa có sản phẩm nào !</p>
             }
             <ToastContainer autoClose={2000}/>
         </Container>

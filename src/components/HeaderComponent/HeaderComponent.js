@@ -8,6 +8,7 @@ import { faShoppingBasket  } from '@fortawesome/free-solid-svg-icons';
 import Logo from "./Logo";
 import IconNavBar from "./IconNavBar";
 import  {connect} from  'react-redux';
+import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,6 +17,7 @@ import {useState} from 'react';
 
 function HeaderComponent({currentUser}){
     const [user, setUser] = useState(currentUser);
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -66,8 +68,9 @@ function HeaderComponent({currentUser}){
                         'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                        <MenuItem onClick={()=>navigate('/profile')}>Profile</MenuItem>
+                        <MenuItem onClick={()=>navigate('/orders')}>My orders</MenuItem>
+                        <MenuItem style={{display: auth.currentUser.providerData ? 'none' : 'block'}}>Change Password</MenuItem>
                         <MenuItem onClick={onBtnLogoutClick}>Logout</MenuItem>
                     </Menu>
                     <a href='/shoppingcart'>

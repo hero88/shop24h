@@ -65,7 +65,7 @@ function ProductList({data, searchData}) {
                 {
                     productList.map((element, index) => 
                     <Col 
-                        sm={ 12/productList.length > 4 ? 12/productList.length : 4 } 
+                        sm={ 12/productList.length > 4 ? 12/productList.length : 4 }                         
                         key={index}
                     >
                         <Card className='mb-2'>
