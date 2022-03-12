@@ -80,7 +80,7 @@ function Profile() {
             .then(result =>{
                 let customerList = result.customers;
                 let tempUserProvider = customerList.find(el=>FireBaseUser.providerData[0].uid === el.uid);
-                let tempUser = customerList.find(el=> el._id === FireBaseUser._id);
+                let tempUser = customerList.find(el=> el.uid === FireBaseUser.uid);
                 if (tempUserProvider) setUser(tempUserProvider);
                 if (tempUser) setUser(tempUser);
             })
