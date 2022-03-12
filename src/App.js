@@ -21,6 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Profile from './components/ContentComponent/Profile';
 import MyOrders from './components/ContentComponent/MyOrders';
 import SignUp from './components/ContentComponent/SignUp';
+import ProductTable from './components/ContentComponent/ProductTable';
 
 function App() {
   const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -96,6 +97,7 @@ function App() {
         <Route path='profile' element={<Profile/>}/>
         <Route path='orders' element={<MyOrders/>}/>
         <Route path='signup' element={<SignUp/>}/>
+        <Route path='producttable' element={<ProductTable/>}/>
       </Routes> 
       
       <FooterComponent/>

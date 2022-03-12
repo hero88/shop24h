@@ -41,7 +41,7 @@ function Login({sendUser}) {
     const loginGoogle = () => {
         auth.signInWithPopup(googleProvider)
         .then((result) => {
-            toast.success("Đăng nhập thành công! Trở lại trang chủ ...");
+            toast.success("Đăng nhập thành công!");
             let temp = result.user;
             setUser(temp);     
             let newUser = {
@@ -79,7 +79,7 @@ function Login({sendUser}) {
         .then((result)=> {
             toast.success("Đăng nhập thành công!");
             setUser(result.user);
-            navigate('/');
+            setTimeout(() => navigate('/'), 5000);
             sendUser(user);
         })
         .catch(() => toast.error("Email/Password sai rồi!"))
