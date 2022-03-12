@@ -10,12 +10,17 @@ import IconNavBar from "./IconNavBar";
 import  {connect} from  'react-redux';
 import { useNavigate } from "react-router-dom";
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 function HeaderComponent({currentUser}){
+    const fetchApi = async (paramUrl, paramOptions = {}) => {
+        const response = await fetch(paramUrl, paramOptions);
+        const responseData = await response.json();
+        return responseData;
+    }
+
     const [user, setUser] = useState(currentUser);
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -26,6 +31,8 @@ function HeaderComponent({currentUser}){
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const customerURL = "http://localhost:8000/customers/";
 
     const onBtnLogoutClick = () => {
         auth.signOut()
@@ -40,6 +47,20 @@ function HeaderComponent({currentUser}){
             console.log(error)
         })
     }        
+
+    useEffect(() => {
+        if (currentUser) {
+            fetchApi(customerURL)
+            .then(result =>{
+                let customerList = result.customers;
+                let tempUserProvider = customerList.find(el=>currentUser.providerData[0].uid === el.uid);
+                let tempUser = customerList.find(el=> el.uid === currentUser.uid);
+                if (tempUserProvider) setUser(tempUserProvider);
+                if (tempUser) setUser(tempUser);
+            })
+            .catch(err=> console.log(err))
+        }
+    },[currentUser])
 
     return(
         <Navbar className='fixed-top' color='light' expand='md' light>
@@ -70,13 +91,34 @@ function HeaderComponent({currentUser}){
                     >
                         <MenuItem onClick={()=>navigate('/profile')}>Profile</MenuItem>
                         <MenuItem onClick={()=>navigate('/orders')}>My orders</MenuItem>
-                        <MenuItem style={{display: auth.currentUser.providerData ? 'none' : 'block'}}>Change Password</MenuItem>
+                        {
+                            auth.currentUser 
+                            ? <MenuItem style={{display: auth.currentUser.providerData ? 'none' : 'block'}}>Change Password</MenuItem>
+                            : <></>
+                        }
+                        {
+                            user
+                            ?
+                            <MenuItem style={{display: user.role === "Admin" ? 'block' : 'none'}}>Danh sách khách hàng</MenuItem>
+                            : <></>
+                        }
+                        {
+                            user
+                            ?
+                            <MenuItem style={{display: user.role === "Admin" ? 'block' : 'none'}}>Danh sách tất cả đơn hàng</MenuItem>
+                            : <></>
+                        }
+                        {
+                            user
+                            ?
+                            <MenuItem onClick={()=>navigate('/products')} style={{display: user.role === "Admin" ? 'block' : 'none'}}>Danh sách sản phẩm</MenuItem>
+                            : <></>
+                        }
                         <MenuItem onClick={onBtnLogoutClick}>Logout</MenuItem>
                     </Menu>
                     <a href='/shoppingcart'>
                         <FontAwesomeIcon icon={faShoppingBasket}/>                       
-                    </a>
-                    <ToastContainer autoClose={2000}/>   
+                    </a> 
                 </div> 
                 :   <IconNavBar/>        
             }        

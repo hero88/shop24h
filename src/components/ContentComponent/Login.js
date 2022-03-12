@@ -2,8 +2,8 @@ import { TextField, Button, Grid, Box } from '@mui/material';
 import {auth, googleProvider} from './../../firebase';
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import ResetPasswordModal from '../modal/ResetPasswordModal';
 
 function Login({sendUser}) {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -12,11 +12,13 @@ function Login({sendUser}) {
         return responseData;
     }
     const baseURL = "http://localhost:8000/customers/";
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate();    
+    const navigate = useNavigate();  
+
+    const [user, setUser] = useState(null);  
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [userExist, setUserExist] = useState(false);
+    const [resetPasswordModal, setResetPasswordModal] = useState(false);
 
     const changePasswordHandler = e => setPassword(e.target.value);
     const changeEmailHandler = e => setEmail(e.target.value);
@@ -115,8 +117,12 @@ function Login({sendUser}) {
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>
                     <Button variant='contained' color='success' style={{borderRadius: 10, margin: 20}} onClick={loginEmail}>Sign in</Button>
                 </Grid>
+                <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>
+                    <Button onClick={()=>setResetPasswordModal(true)}>Forget password?</Button>
+                    <Button onClick={()=> navigate('/signup')}>Sign Up for new account!</Button>
+                </Grid>
             </Grid>
-            <ToastContainer autoClose={2000}/>
+            <ResetPasswordModal resetModal={resetPasswordModal} setReset={setResetPasswordModal}/>
         </Box>
     )
 }

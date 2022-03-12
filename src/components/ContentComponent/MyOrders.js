@@ -22,7 +22,6 @@ function MyOrders() {
 
     const onBtnDeleteClick = data => {
         let vId = data._id;
-
         let reqOptions = {
             method: "DELETE"
         }

@@ -20,6 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Profile from './components/ContentComponent/Profile';
 import MyOrders from './components/ContentComponent/MyOrders';
+import SignUp from './components/ContentComponent/SignUp';
 
 function App() {
   const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -94,6 +95,7 @@ function App() {
         <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
         <Route path='profile' element={<Profile/>}/>
         <Route path='orders' element={<MyOrders/>}/>
+        <Route path='signup' element={<SignUp/>}/>
       </Routes> 
       
       <FooterComponent/>
