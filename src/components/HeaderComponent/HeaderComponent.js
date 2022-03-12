@@ -1,5 +1,5 @@
 import { Navbar } from "reactstrap";
-import { Button, MenuItem, Menu } from '@mui/material';
+import { Button, MenuItem, Menu, Grid } from '@mui/material';
 import {auth} from './../../firebase';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -89,31 +89,19 @@ function HeaderComponent({currentUser}){
                         'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={()=>navigate('/profile')}>Profile</MenuItem>
-                        <MenuItem onClick={()=>navigate('/orders')}>My orders</MenuItem>
+                        <MenuItem onClick={()=>navigate('/profile')}>Trang cá nhân</MenuItem>
+                        <MenuItem onClick={()=>navigate('/orders')}>Đơn hàng của tôi</MenuItem>
                         {
-                            auth.currentUser 
-                            ? <MenuItem style={{display: auth.currentUser.providerData ? 'none' : 'block'}}>Change Password</MenuItem>
-                            : <></>
+                            (user && user.role === "Admin")
+                            ? 
+                            <div>
+                                <MenuItem >Danh sách khách hàng</MenuItem>
+                                <MenuItem >Danh sách tất cả đơn hàng</MenuItem>
+                                <MenuItem onClick={()=>navigate('/producttable')} >Danh sách sản phẩm</MenuItem>
+                            </div>                            
+                            : <Grid></Grid>
                         }
-                        {
-                            user
-                            ?
-                            <MenuItem style={{display: user.role === "Admin" ? 'block' : 'none'}}>Danh sách khách hàng</MenuItem>
-                            : <></>
-                        }
-                        {
-                            user
-                            ?
-                            <MenuItem style={{display: user.role === "Admin" ? 'block' : 'none'}}>Danh sách tất cả đơn hàng</MenuItem>
-                            : <></>
-                        }
-                        {
-                            user
-                            ?
-                            <MenuItem onClick={()=>navigate('/products')} style={{display: user.role === "Admin" ? 'block' : 'none'}}>Danh sách sản phẩm</MenuItem>
-                            : <></>
-                        }
+                        
                         <MenuItem onClick={onBtnLogoutClick}>Logout</MenuItem>
                     </Menu>
                     <a href='/shoppingcart'>
