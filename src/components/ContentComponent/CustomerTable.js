@@ -44,7 +44,7 @@ function CustomerTable(){
                 let tempCustomers = customerList.filter(el=>el.role==="Customer");
                 if (tempUser) setDbUser(tempUser);
                 setCustomers(tempCustomers);
-                setNoPage(Math.ceil(tempCustomers/limit));
+                setNoPage(Math.ceil(tempCustomers.length/limit));
             })
             .catch(error=>console.log(error))        
     },[FireBaseUser, dbUser])
@@ -97,13 +97,7 @@ function CustomerTable(){
                                 </TableBody>
                                 </Table>
                             </TableContainer>
-                            {
-                                customers.length > limit
-                                ? 
-                                <Pagination onChange={changeHandler} count={noPage} defaultPage={1} style={{marginTop: 15}}></Pagination>
-                                : <Grid></Grid>
-                            }
-                            
+                            <Pagination onChange={changeHandler} count={noPage} defaultPage={page} style={{marginTop: 15}}></Pagination>                            
                         </Grid>
                         : <p>Chưa có khách hàng trong hệ thống!</p>
                     }

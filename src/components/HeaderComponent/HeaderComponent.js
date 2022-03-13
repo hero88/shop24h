@@ -39,8 +39,7 @@ function HeaderComponent({currentUser}){
         .then(() => {
             setUser(null);
             localStorage.setItem('cart', []);
-            toast.success("Đăng xuất thành công!"); 
-            console.log(user);        
+            toast.success("Đăng xuất thành công!");                   
             handleClose();
         })
         .catch((error) => {
@@ -96,7 +95,7 @@ function HeaderComponent({currentUser}){
                             ? 
                             <div>
                                 <MenuItem onClick={()=>navigate('/customertable')}>Danh sách khách hàng</MenuItem>
-                                <MenuItem >Danh sách tất cả đơn hàng</MenuItem>
+                                <MenuItem onClick={()=>navigate('/ordertable')}>Danh sách tất cả đơn hàng</MenuItem>
                                 <MenuItem onClick={()=>navigate('/producttable')} >Danh sách sản phẩm</MenuItem>
                             </div>                            
                             : <Grid></Grid>
