@@ -63,7 +63,6 @@ function ShoppingCart({currentCart, currentUser}) {
                 }),
                 headers: {'Content-Type': 'application/json; charset=UTF-8'}
             }
-            console.log(reqOptions);
             fetchApi(targetURL, reqOptions)
             .then(result=> console.log(result))
             .catch(err=> console.log(err))
