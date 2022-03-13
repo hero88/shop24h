@@ -95,7 +95,7 @@ function HeaderComponent({currentUser}){
                             (user && user.role === "Admin")
                             ? 
                             <div>
-                                <MenuItem >Danh sách khách hàng</MenuItem>
+                                <MenuItem onClick={()=>navigate('/customertable')}>Danh sách khách hàng</MenuItem>
                                 <MenuItem >Danh sách tất cả đơn hàng</MenuItem>
                                 <MenuItem onClick={()=>navigate('/producttable')} >Danh sách sản phẩm</MenuItem>
                             </div>                            

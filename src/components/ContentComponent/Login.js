@@ -17,13 +17,12 @@ function Login({sendUser}) {
     const [user, setUser] = useState(null);  
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [userExist, setUserExist] = useState(false);
     const [resetPasswordModal, setResetPasswordModal] = useState(false);
 
     const changePasswordHandler = e => setPassword(e.target.value);
     const changeEmailHandler = e => setEmail(e.target.value);
 
-    const createNewuser = (param) => {
+    const createNewDBuser = (param) => {
         let reqOptions = {
             method: 'POST',
             body: JSON.stringify(param),
@@ -38,6 +37,19 @@ function Login({sendUser}) {
         .catch(err =>console.log(err))
     }
 
+    const checkUserExist = paramUser => {
+        fetchApi(baseURL)
+        .then((result)=>{
+            let customers = result.customers;
+            let temp = customers.find(el=>el.uid === paramUser.providerData[0].uid);
+            if (temp) return true;
+            else return false;
+        })
+        .catch(err =>{
+            console.log(err);
+            return false;
+        })
+    }
     const loginGoogle = () => {
         auth.signInWithPopup(googleProvider)
         .then((result) => {
@@ -51,7 +63,7 @@ function Login({sendUser}) {
                 phoneNumber: temp.providerData[0].phoneNumber,                
             }     
             
-            if (!userExist) createNewuser(newUser);
+            if (checkUserExist(temp)===false) createNewDBuser(newUser);
 
             setTimeout(() => navigate('/'), 5000);
             sendUser(user);
@@ -62,18 +74,6 @@ function Login({sendUser}) {
         })
     }    
 
-    useEffect(()=> {
-        if (user) 
-            fetchApi(baseURL)
-            .then((result)=>{
-                let userList = result.customers;
-                let temp = userList.find(el=> el.uid === user.providerData[0].uid);
-                if (temp) setUserExist(true);
-                else setUserExist(false);
-            })
-            .catch(err => console.log(err))                
-    }, [user])
-
     const loginEmail = () => {
         auth.signInWithEmailAndPassword(email, password)
         .then((result)=> {
@@ -83,7 +83,7 @@ function Login({sendUser}) {
             sendUser(user);
         })
         .catch(() => toast.error("Email/Password sai rồi!"))
-    }
+    }    
 
     return(
         <Box
@@ -109,10 +109,10 @@ function Login({sendUser}) {
                     <p>-----OR-----</p>
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>                    
-                    <TextField placeholder='Username' variant='outlined' label="Username" onChange={changeEmailHandler}/>
+                    <TextField label="Username" onChange={changeEmailHandler}/>
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>                    
-                    <TextField placeholder='Password' variant='outlined' label="Password" onChange={changePasswordHandler} type='password'/>
+                    <TextField label="Password" onChange={changePasswordHandler} type='password'/>
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>
                     <Button variant='contained' color='success' style={{borderRadius: 10, margin: 20}} onClick={loginEmail}>Sign in</Button>

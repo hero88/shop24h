@@ -87,11 +87,10 @@ function Profile() {
             .catch(err=> console.log(err))
     }, [user, FireBaseUser, name, address, email, phone, city, country])
     return(
-        <div>   
+        <Container>   
             { 
-                user 
+                user && FireBaseUser
                 ?
-                <Container>
                     <Grid container spacing={2}>
                         <Grid item xs={12} lg={12} sm={12} md={12} className='text-center'>
                             <h2 className="fw-bold">Thông tin cá nhân</h2>
@@ -112,10 +111,9 @@ function Profile() {
                             <Button style={{float:"right"}} variant="contained" color="success" onClick={()=>navigate('/')}>Quay về trang chủ</Button>
                         </Grid>
                     </Grid>
-                </Container>
                 : <p>Bạn chưa đăng nhập</p>
             }
-        </div>
+        </Container>
     )
 }
 export default Profile;

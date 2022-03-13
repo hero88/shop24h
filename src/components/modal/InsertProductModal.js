@@ -76,7 +76,7 @@ function InsertProductModal({insert, setInsert}) {
                 </Typography>
                 <Grid container spacing={2} mt={3}>
                     <Grid item xs={12}>
-                        <TextField label='Tên sản phẩm' onChange={changeProductNameHandler} fullWidth/>
+                        <TextField multiline maxRows={Infinity} label='Tên sản phẩm' onChange={changeProductNameHandler} fullWidth/>
                     </Grid>
                     <Grid item xs={12}>
                         <label>Loại sản phẩm</label>&nbsp;
@@ -98,12 +98,12 @@ function InsertProductModal({insert, setInsert}) {
                         <TextField type='number' label='Giá ưu đãi' onChange={changePromotionPriceHandler} fullWidth/>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField label='Mô tả sản phẩm' onChange={changeDescriptionHandler} fullWidth/>
+                        <TextField multiline maxRows={Infinity} label='Mô tả sản phẩm' onChange={changeDescriptionHandler} fullWidth/>
                     </Grid>   
                 </Grid>
                                            
                 <Grid mt={5} >
-                    <Button variant="contained" color="success" onClick={onBtnInsertClick}>Thêm đơn hàng</Button>
+                    <Button variant="contained" color="success" onClick={onBtnInsertClick}>Thêm sản phẩm</Button>
                     <Button variant="contained" color="success" onClick={handleClose} style={{float:"right"}}>Hủy bỏ</Button>
                 </Grid>
             </Box>
