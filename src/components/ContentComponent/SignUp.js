@@ -1,7 +1,7 @@
 import { Grid, TextField, Button, Typography} from "@mui/material";
 import { Container } from 'reactstrap';
 import { toast } from 'react-toastify';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 import {auth} from '../../firebase';
 import {useNavigate} from 'react-router-dom';
@@ -58,8 +58,7 @@ function SignUp(){
             city: city,
             phoneNumber: phone,
             country: country,
-            email: email,
-            role: "Admin"
+            email: email
         }
         if (checkInput(newUser)) {
             let reqOptions = {

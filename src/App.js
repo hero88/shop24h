@@ -22,6 +22,7 @@ import Profile from './components/ContentComponent/Profile';
 import MyOrders from './components/ContentComponent/MyOrders';
 import SignUp from './components/ContentComponent/SignUp';
 import ProductTable from './components/ContentComponent/ProductTable';
+import CustomerTable from './components/ContentComponent/CustomerTable';
 
 function App() {
   const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -98,6 +99,7 @@ function App() {
         <Route path='orders' element={<MyOrders/>}/>
         <Route path='signup' element={<SignUp/>}/>
         <Route path='producttable' element={<ProductTable/>}/>
+        <Route path='customertable' element={<CustomerTable/>}/>
       </Routes> 
       
       <FooterComponent/>

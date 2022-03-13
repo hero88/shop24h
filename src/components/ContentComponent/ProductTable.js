@@ -1,11 +1,11 @@
-import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody} from "@mui/material";
+import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination} from "@mui/material";
 import { Container } from 'reactstrap';
-import { toast } from 'react-toastify';
 import {useState, useEffect} from 'react';
 
 import {auth} from '../../firebase';
-import {useNavigate} from 'react-router-dom';
 import InsertProductModal from "../modal/InsertProductModal";
+import UpdateProductModal from "../modal/UpdateProductModal";
+import DeleteProductModal from "../modal/DeleteProductModal";
 
 function ProductTable() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -16,6 +16,10 @@ function ProductTable() {
     const FireBaseUser = auth.currentUser;
     const customerURL = "http://localhost:8000/customers/";
     const productURL = "http://localhost:8000/products/";
+    
+    const [page, setPage] = useState(1);
+    const [noPage, setNoPage] = useState(0);
+    const limit = 10;
 
     const [dbUser, setDbUser] = useState(null);
     const [productList, setProductList] = useState([]);
@@ -23,6 +27,10 @@ function ProductTable() {
     const [insertModal, setInsertModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
+
+    const changeHandler = (event, value) => {
+        setPage(value);        
+    }
 
     const onBtnAddClick = () => {
         setInsertModal(true);
@@ -48,14 +56,19 @@ function ProductTable() {
             })
             .catch(error=>console.log(error))
 
-        if (dbUser)
+        if (dbUser) {
             fetchApi(productURL)
+            .then(response => setNoPage(Math.ceil(response.count/limit)))
+            .catch(err => console.log(err));
+
+            fetchApi(productURL + "?limit=" + limit + "&page=" + page)
             .then(result=>{
                 let tempProduct = result.products;
                 setProductList(tempProduct);
             })
             .catch(error=>console.log(error))
-    }, [productList,dbUser, FireBaseUser])
+        }
+    }, [productList,dbUser, FireBaseUser, page])
 
     return(
     <Container>
@@ -68,7 +81,7 @@ function ProductTable() {
                 </Grid>
                 <Grid item xs={12} sm={12} md={12} lg={12}>
                     <Button variant="contained" color='success' onClick={onBtnAddClick}>Thêm sản phẩm</Button>
-                </Grid>
+                </Grid>            
                 {
                     productList.length > 0
                     ?
@@ -106,13 +119,16 @@ function ProductTable() {
                                 </TableBody>
                                 </Table>
                             </TableContainer>
-                        </Grid>
+                            <Pagination onChange={changeHandler} count={noPage} defaultPage={1} style={{marginTop: 15}}></Pagination>
+                        </Grid>                     
                     : <p>Chưa có sản phẩm trong hệ thống!</p>
                 }
             </Grid>
-            : <p>Bạn không có quyền truy cập trang này!</p>
+            : <p>Bạn chưa đăng nhập, không có quyền truy cập trang này!</p>
         }
         <InsertProductModal insert={insertModal} setInsert={setInsertModal}/>
+        <UpdateProductModal update={updateModal} setUpdate={setUpdateModal} product={currentProduct}/>
+        <DeleteProductModal deleteModal={deleteModal} setDelete={setDeleteModal} product={currentProduct}/>
     </Container>
     )
 }
