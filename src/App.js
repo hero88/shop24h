@@ -7,6 +7,7 @@ import HomepageContent from './components/ContentComponent/HomepageContent';
 import { Route, Routes } from 'react-router-dom';
 
 import Login from './components/ContentComponent/Login';
+import { Grid } from '@mui/material';
 
 import {useState, useEffect} from 'react';
 import {auth} from './firebase'
@@ -66,23 +67,30 @@ function App() {
 
   return (
     <div >
-      <HeaderComponent currentUser={user} />        
-      <br/><br/><br/>
-      <Routes>
-        <Route path='/login' element={<Login sendUser={setUser}/>}/>
-        <Route path='/' element={<HomepageContent/>}/>
-        <Route path='*' element={<HomepageContent/>}/>
-        <Route path='products/:id' element={<ProductDetail currentUser={user} sendProduct={cartHandle}/>}/>
-        <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
-        <Route path='profile' element={<Profile/>}/>
-        <Route path='orders' element={<MyOrders/>}/>
-        <Route path='signup' element={<SignUp/>}/>
-        <Route path='producttable' element={<ProductTable/>}/>
-        <Route path='customertable' element={<CustomerTable/>}/>
-        <Route path='ordertable' element={<OrderTable/>}/>
-      </Routes> 
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={12} md={12} lg={12} mb={5}>
+          <HeaderComponent currentUser={user} numCart={cart}/>    
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} mt={10}>
+          <Routes>
+            <Route path='/login' element={<Login sendUser={setUser}/>}/>
+            <Route path='/' element={<HomepageContent/>}/>
+            <Route path='*' element={<HomepageContent/>}/>
+            <Route path='products/:id' element={<ProductDetail currentUser={user} sendProduct={cartHandle}/>}/>
+            <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
+            <Route path='profile' element={<Profile/>}/>
+            <Route path='orders' element={<MyOrders/>}/>
+            <Route path='signup' element={<SignUp/>}/>
+            <Route path='producttable' element={<ProductTable/>}/>
+            <Route path='customertable' element={<CustomerTable/>}/>
+            <Route path='ordertable' element={<OrderTable/>}/>
+          </Routes> 
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} mt={10}>
+          <FooterComponent/>
+        </Grid>
+      </Grid>    
       
-      <FooterComponent/>
       <ToastContainer autoClose={2000}/>
     </div>
   );

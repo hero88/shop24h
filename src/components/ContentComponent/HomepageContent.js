@@ -24,11 +24,11 @@ function HomepageContent(){
     }, []);
 
     return(
-        <Container className='mt-5'>                                               
+        <Container>                                               
             <Row>
                 <Col xs='12' sm='12' md='12' lg='12'>
                     <Breadcrumb tag="nav" className="mt-5">
-                        <BreadcrumbItem tag="a" href="/" active>Home</BreadcrumbItem>                            
+                        <BreadcrumbItem tag="a" href="/" active>Trang chủ</BreadcrumbItem>                            
                     </Breadcrumb>
                 </Col>
                 <Col sm='3' xs='5'>

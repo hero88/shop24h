@@ -50,7 +50,7 @@ function CustomerTable(){
     },[FireBaseUser, dbUser])
 
     return(
-        <Container>
+        <Container className="mt-5">
             {
                 (FireBaseUser && dbUser && dbUser.role === "Admin")
                 ?
@@ -99,10 +99,10 @@ function CustomerTable(){
                             </TableContainer>
                             <Pagination onChange={changeHandler} count={noPage} defaultPage={page} style={{marginTop: 15}}></Pagination>                            
                         </Grid>
-                        : <p>Chưa có khách hàng trong hệ thống!</p>
+                        : <h4>Chưa có khách hàng trong hệ thống!</h4>
                     }
                 </Grid>
-                : <p>Bạn chưa đăng nhập, không có quyền truy cập trang này!</p>
+                : <h4>Bạn chưa đăng nhập, không có quyền truy cập trang này!</h4>
             }
             <UpdateCustomerModal update={updateModal} setUpdate={setUpdateModal} customer={currentCustomer}/>
         </Container>

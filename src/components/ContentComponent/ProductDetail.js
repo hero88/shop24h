@@ -55,8 +55,8 @@ function ProductDetail({currentUser, sendProduct}) {
             <br/>
             <Col xs='12' sm='12' md='12' lg='12'>
                 <Breadcrumb tag="nav" className="mt-5">
-                        <BreadcrumbItem tag="a" href="/">Home</BreadcrumbItem>     
-                        <BreadcrumbItem >Products</BreadcrumbItem>     
+                        <BreadcrumbItem tag="a" href="/">Trang chủ</BreadcrumbItem>     
+                        <BreadcrumbItem >Sản phẩm</BreadcrumbItem>     
                         <BreadcrumbItem href="/products/:id" active>{currentProduct.name}</BreadcrumbItem>                  
                 </Breadcrumb>
             </Col>

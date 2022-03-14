@@ -49,7 +49,7 @@ function ProductList({data, searchData}) {
     return(
         <Container className='p-4'>
             <Col sm='12' className='text-center fw-bold'>
-                <h2>PRODUCTS</h2>
+                <h2>SẢN PHẨM</h2>
             </Col>
             <Col sm='12' className='mb-3'>
                     <label>Chọn số lượng sản phẩm hiển thị &nbsp;</label>
@@ -67,6 +67,7 @@ function ProductList({data, searchData}) {
                     <Col 
                         sm={ 12/productList.length > 4 ? 12/productList.length : 4 }                         
                         key={index}
+                        xs='auto'
                     >
                         <Card className='mb-2'>
                             <a href={"/products/" + element._id} data-toggle='tooltip' title='Click for details'>

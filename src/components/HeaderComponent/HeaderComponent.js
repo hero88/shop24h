@@ -3,7 +3,7 @@ import { Button, MenuItem, Menu, Grid } from '@mui/material';
 import {auth} from './../../firebase';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBasket  } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBasket, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import Logo from "./Logo";
 import IconNavBar from "./IconNavBar";
@@ -14,11 +14,24 @@ import { toast } from 'react-toastify';
 
 import {useState, useEffect} from 'react';
 
-function HeaderComponent({currentUser}){
+function HeaderComponent({currentUser, numCart}){
     const fetchApi = async (paramUrl, paramOptions = {}) => {
         const response = await fetch(paramUrl, paramOptions);
         const responseData = await response.json();
         return responseData;
+    }
+
+    const cartStyle = {
+        height: '1.2rem',
+        width: '1.2rem',
+        fontSize:'.7rem',
+        borderRadius: '100%',
+        background: 'green',
+        color: 'white',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute'        
     }
 
     const [user, setUser] = useState(currentUser);
@@ -62,14 +75,18 @@ function HeaderComponent({currentUser}){
     },[currentUser])
 
     return(
-        <Navbar className='fixed-top' color='light' expand='md' light>
+        <Navbar className='fixed-top mb-5' color='warning' expand='md' light>
             <Logo/>
             { 
                 currentUser 
                 ? 
                 <div>
-                    <p>Hello {currentUser.displayName}</p>&nbsp;
-                    <img src={currentUser.photoURL} alt='avatar' width='30%'/>&nbsp;
+                    <p>Hello {currentUser.displayName ? currentUser.displayName : 'Admin'}</p>&nbsp;
+                    {
+                        currentUser.photoURL 
+                        ? <img src={currentUser.photoURL} alt='avatar' width='20%'/>
+                        : <FontAwesomeIcon icon={faUserCircle}/> 
+                    }
                     <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
@@ -104,7 +121,8 @@ function HeaderComponent({currentUser}){
                         <MenuItem onClick={onBtnLogoutClick}>Logout</MenuItem>
                     </Menu>
                     <a href='/shoppingcart'>
-                        <FontAwesomeIcon icon={faShoppingBasket}/>                       
+                        <FontAwesomeIcon icon={faShoppingBasket}/>  
+                        <span style={cartStyle}>{numCart.length}</span>                     
                     </a> 
                 </div> 
                 :   <IconNavBar/>        
