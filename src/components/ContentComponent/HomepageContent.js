@@ -1,4 +1,4 @@
-import {Container, Row, Col} from 'reactstrap';
+import {Container, Row, Col, Breadcrumb, BreadcrumbItem} from 'reactstrap';
 
 import FilterComponent from './FilterComponent';
 
@@ -24,8 +24,13 @@ function HomepageContent(){
     }, []);
 
     return(
-        <Container>                                    
+        <Container>                                               
             <Row>
+                <Col xs='12' sm='12' md='12' lg='12'>
+                    <Breadcrumb tag="nav" className="mt-5">
+                        <BreadcrumbItem tag="a" href="/" active>Trang chủ</BreadcrumbItem>                            
+                    </Breadcrumb>
+                </Col>
                 <Col sm='3' xs='5'>
                     <FilterComponent sendFilterObj={setSearchObj}/>
                 </Col>

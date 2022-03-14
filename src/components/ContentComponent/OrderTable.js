@@ -67,7 +67,7 @@ function OrderTable() {
     }, [dbUser, FireBaseUser, orderList]);
 
     return(
-        <Container>
+        <Container className="mt-5">
             {
                 (FireBaseUser && dbUser && dbUser.role === "Admin")
                 ? 
@@ -116,10 +116,10 @@ function OrderTable() {
                                 </TableContainer>
                                 <Pagination onChange={changeHandler} count={noPage} defaultPage={page} style={{marginTop: 15}}></Pagination>
                             </Grid>                     
-                        : <p>Chưa có đơn hàng trong hệ thống!</p>
+                        : <h4>Chưa có đơn hàng trong hệ thống!</h4>
                     }
                 </Grid>
-                : <p>Bạn chưa đăng nhập, không có quyền truy cập trang này!</p>
+                : <h4>Bạn chưa đăng nhập, không có quyền truy cập trang này!</h4>
             }
             <InsertOrderModal insert={insertModal} setInsert={setInsertModal} list={customers}/>
             <UpdateOrderModal update={updateModal} setUpdate={setUpdateModal} list={customers} data={currentOrder}/>

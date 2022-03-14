@@ -1,6 +1,6 @@
 import { TextField, Button, Grid, Box } from '@mui/material';
 import {auth, googleProvider} from './../../firebase';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ResetPasswordModal from '../modal/ResetPasswordModal';
@@ -93,6 +93,7 @@ function Login({sendUser}) {
             }}
             noValidate
             autoComplete="off"        
+            mt={5}
         >
             <Grid container spacing={1}>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>
@@ -118,8 +119,8 @@ function Login({sendUser}) {
                     <Button variant='contained' color='success' style={{borderRadius: 10, margin: 20}} onClick={loginEmail}>Sign in</Button>
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>
-                    <Button onClick={()=>setResetPasswordModal(true)}>Forget password?</Button>
-                    <Button onClick={()=> navigate('/signup')}>Sign Up for new account!</Button>
+                    <Button onClick={()=>setResetPasswordModal(true)}>Quên mật khẩu?</Button>
+                    <Button onClick={()=> navigate('/signup')}>Tạo tài khoản mới!</Button>
                 </Grid>
             </Grid>
             <ResetPasswordModal resetModal={resetPasswordModal} setReset={setResetPasswordModal}/>

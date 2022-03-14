@@ -6,6 +6,9 @@ import {useState, useEffect} from 'react';
 import {auth} from '../../firebase';
 import {useNavigate} from 'react-router-dom';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+
 function Profile() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
         const response = await fetch(paramUrl, paramOptions);
@@ -87,7 +90,7 @@ function Profile() {
             .catch(err=> console.log(err))
     }, [user, FireBaseUser, name, address, email, phone, city, country])
     return(
-        <Container>   
+        <Container className='mt-5'>   
             { 
                 user && FireBaseUser
                 ?
@@ -96,7 +99,12 @@ function Profile() {
                             <h2 className="fw-bold">Thông tin cá nhân</h2>
                         </Grid>
                         <Grid item xs={4}>
-                            <img src={FireBaseUser.providerData[0].photoURL} alt='pic' width='50%'></img>
+                            { 
+                                FireBaseUser.providerData[0].photoURL
+                                ? <img src={FireBaseUser.providerData[0].photoURL} alt='pic' width='50%'></img>
+                                : <FontAwesomeIcon icon={faUserCircle} size='6x'/>
+                            }
+                            
                         </Grid>
                         <Grid item xs={8} >
                             <TextField style={{marginBottom: 15}} defaultValue={user.fullName} label='Họ tên' onChange={changeFullNameHandler} fullWidth/>
@@ -111,7 +119,7 @@ function Profile() {
                             <Button style={{float:"right"}} variant="contained" color="success" onClick={()=>navigate('/')}>Quay về trang chủ</Button>
                         </Grid>
                     </Grid>
-                : <p>Bạn chưa đăng nhập</p>
+                : <h4>Bạn chưa đăng nhập</h4>
             }
         </Container>
     )

@@ -71,7 +71,7 @@ function ProductTable() {
     }, [productList,dbUser, FireBaseUser, page])
 
     return(
-    <Container>
+    <Container className="mt-5">
         {
             (FireBaseUser && dbUser && dbUser.role === "Admin")
             ? 
@@ -121,10 +121,10 @@ function ProductTable() {
                             </TableContainer>
                             <Pagination onChange={changeHandler} count={noPage} defaultPage={1} style={{marginTop: 15}}></Pagination>
                         </Grid>                     
-                    : <p>Chưa có sản phẩm trong hệ thống!</p>
+                    : <h4>Chưa có sản phẩm trong hệ thống!</h4>
                 }
             </Grid>
-            : <p>Bạn chưa đăng nhập, không có quyền truy cập trang này!</p>
+            : <h4>Bạn chưa đăng nhập, không có quyền truy cập trang này!</h4>
         }
         <InsertProductModal insert={insertModal} setInsert={setInsertModal}/>
         <UpdateProductModal update={updateModal} setUpdate={setUpdateModal} product={currentProduct}/>

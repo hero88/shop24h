@@ -81,15 +81,20 @@ function ShoppingCart({currentCart, currentUser}) {
                     'Content-type': 'application/json; charset=UTF-8'
                 }
             }
-            fetchApi(targetURL, reqOptions)
-            .then(result =>{
-                let order = result.order;
-                toast.success("Tạo đơn hàng thành công với id: " + order._id);
-                createOrderDetail(order._id);
-                localStorage.setItem('cart',[]);
-                setTimeout(()=> window.location.reload(), 2000);
-            })
-            .catch(err=>console.log(err));
+            if (TotalCart === 0 ){
+                toast.error("Bạn chưa có sản phẩm nào !");
+                return false;
+            }
+            else
+                fetchApi(targetURL, reqOptions)
+                .then(result =>{
+                    let order = result.order;
+                    toast.success("Tạo đơn hàng thành công với id: " + order._id);
+                    createOrderDetail(order._id);
+                    localStorage.setItem('cart',[]);
+                    setTimeout(()=> window.location.reload(), 2000);
+                })
+                .catch(err=>console.log(err));
         }
     }
 
@@ -109,13 +114,13 @@ function ShoppingCart({currentCart, currentUser}) {
     }, [cart, currentCart, currentUser])
 
     return(
-        <Container>
+        <Container className='mt-5'>            
             {   
                 cart.length > 0
                 ? 
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={12} lg={12}>
-                        <h5>Sản phẩm của bạn</h5>
+                        <h5>Sản phẩm trong giỏ hàng của bạn</h5>
                     </Grid>
                     <Grid item xs={12} md={12} sm={12} lg={12}>
                         <TableContainer component={Paper}>
@@ -174,7 +179,7 @@ function ShoppingCart({currentCart, currentUser}) {
                         </TableContainer>
                     </Grid>                   
                 </Grid> 
-                : <p>Giỏ hàng trống, bạn chưa có sản phẩm nào !</p>
+                : <h4>Giỏ hàng trống, bạn chưa có sản phẩm nào !</h4>
             }
             <ToastContainer autoClose={2000}/>
         </Container>

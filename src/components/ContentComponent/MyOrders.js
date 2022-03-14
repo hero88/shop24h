@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import {useState, useEffect} from 'react';
 
 import {auth} from '../../firebase';
-import {useNavigate} from 'react-router-dom';
+import OrderDetailModal from '../modal/OrderDetailModal';
 
 function MyOrders() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -19,6 +19,13 @@ function MyOrders() {
 
     const [user, setUser] = useState(null);
     const [orderList, setOrderList] = useState([]);
+    const [currentOrder, setCurrentOrder] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
+
+    const onItemIdClick = data => {
+        setOpenModal(true);
+        setCurrentOrder(data);
+    }
 
     const onBtnDeleteClick = data => {
         let vId = data._id;
@@ -104,7 +111,7 @@ function MyOrders() {
                                         orderList.map((item, index) => 
                                         <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                             <TableCell>
-                                                {item._id}
+                                                <Button onClick={()=>onItemIdClick(item)}>{item._id}</Button>
                                             </TableCell>
                                             <TableCell>
                                                 {new Date(item.timeCreated).toLocaleDateString()}
@@ -123,9 +130,10 @@ function MyOrders() {
                             </TableContainer>
                         </Grid>
                     </Grid>
-                : <p>Bạn chưa có đơn hàng nào!</p>
+                : <h4>Bạn chưa có đơn hàng nào!</h4>
             }            
         </Container>
+        <OrderDetailModal open={openModal} setOpen={setOpenModal} data={currentOrder}/>        
     </>
     )
 }

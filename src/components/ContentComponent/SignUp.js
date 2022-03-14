@@ -104,7 +104,7 @@ function SignUp(){
     }
     return(
     <>
-        <Container>
+        <Container className='mt-5'>
             <Grid container spacing={2}>
                     <Grid item xs={12} lg={12} sm={12} md={12} className='text-center'>
                             <h2 className="fw-bold">Đăng ký</h2>

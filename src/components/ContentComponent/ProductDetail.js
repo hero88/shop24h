@@ -1,6 +1,7 @@
 import { useParams} from "react-router-dom";
 
-import {Container, Grid, Button} from '@mui/material';
+import {Grid, Button} from '@mui/material';
+import {Col, Breadcrumb, BreadcrumbItem, Container} from 'reactstrap';
 import {useState, useEffect} from 'react';
 
 import {AddCart} from '../actions'
@@ -50,8 +51,16 @@ function ProductDetail({currentUser, sendProduct}) {
     },[currentProduct,id])
     
     return(
-        <Container>
-            <Grid container spacing={2}>
+        <Container >
+            <br/>
+            <Col xs='12' sm='12' md='12' lg='12'>
+                <Breadcrumb tag="nav" className="mt-5">
+                        <BreadcrumbItem tag="a" href="/">Trang chủ</BreadcrumbItem>     
+                        <BreadcrumbItem >Sản phẩm</BreadcrumbItem>     
+                        <BreadcrumbItem href="/products/:id" active>{currentProduct.name}</BreadcrumbItem>                  
+                </Breadcrumb>
+            </Col>
+            <Grid container spacing={2} mt={2}>
                 <Grid item xs={4} md={4} lg={4}>
                     <img src={currentProduct.imageUrl} alt='imageDraft' width='60%'/>
                 </Grid>
