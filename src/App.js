@@ -4,9 +4,7 @@ import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 import FooterComponent from './components/FooterComponent/FooterComponent';
 import HomepageContent from './components/ContentComponent/HomepageContent';
 
-import {Row, BreadcrumbItem, Breadcrumb } from 'reactstrap';
 import { Route, Routes } from 'react-router-dom';
-import ProductList from './components/ContentComponent/ProductList';
 
 import Login from './components/ContentComponent/Login';
 
@@ -14,7 +12,6 @@ import {useState, useEffect} from 'react';
 import {auth} from './firebase'
 import ProductDetail from './components/ContentComponent/ProductDetail';
 import ShoppingCart from './components/ContentComponent/ShoppingCart';
-
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -26,14 +23,7 @@ import CustomerTable from './components/ContentComponent/CustomerTable';
 import OrderTable from './components/ContentComponent/OrderTable';
 
 function App() {
-  const fetchApi = async (paramUrl, paramOptions = {}) => {
-    const response = await fetch(paramUrl, paramOptions);
-    const responseData = await response.json();
-    return responseData;
-  }
-
   const [user, setUser] = useState(null);
-  const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
 
   const cartHandle = (data) => {
@@ -71,29 +61,17 @@ function App() {
     }
     auth.onAuthStateChanged((result) => {
       setUser(result);
-    });    
-
-    fetchApi("http://localhost:8000/products/")
-            .then(response => {                
-                setProducts(response.products);
-            })
-            .catch(error => console.log(error)); 
+    });   
   },[user, cart]);  
 
   return (
     <div >
-      <HeaderComponent currentUser={user} />      
-      <Row className='mt-5 p-4'>
-          <Breadcrumb tag="nav" className="mt-5">
-            <BreadcrumbItem tag="a" href="/">Home</BreadcrumbItem>    
-            <BreadcrumbItem tag="a" href="/products">Products</BreadcrumbItem>        
-          </Breadcrumb>
-      </Row>     
-      <br/>
+      <HeaderComponent currentUser={user} />        
+      <br/><br/><br/>
       <Routes>
         <Route path='/login' element={<Login sendUser={setUser}/>}/>
         <Route path='/' element={<HomepageContent/>}/>
-        <Route path='products' element={<ProductList data={products} searchData={{}}/>}/>
+        <Route path='*' element={<HomepageContent/>}/>
         <Route path='products/:id' element={<ProductDetail currentUser={user} sendProduct={cartHandle}/>}/>
         <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
         <Route path='profile' element={<Profile/>}/>
