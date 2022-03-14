@@ -119,7 +119,7 @@ function Profile() {
                             <Button style={{float:"right"}} variant="contained" color="success" onClick={()=>navigate('/')}>Quay về trang chủ</Button>
                         </Grid>
                     </Grid>
-                : <p>Bạn chưa đăng nhập</p>
+                : <h4>Bạn chưa đăng nhập</h4>
             }
         </Container>
     )
