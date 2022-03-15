@@ -117,7 +117,7 @@ function MyOrders() {
                                                 {new Date(item.timeCreated).toLocaleDateString()}
                                             </TableCell>
                                             <TableCell>{item.totalAmount.toLocaleString()}</TableCell>
-                                            <TableCell>{item.status === 0 ? 'Not Paid' : 'Paid' }</TableCell>
+                                            <TableCell>{item.status === 0 ? 'Chưa thanh toán' : 'Đã thanh toán' }</TableCell>
                                             <TableCell>
                                                 <Button variant='contained' style={{marginRight: 15}} onClick={()=>onBtnPayClick(item)}>Thanh toán</Button>
                                                 <Button variant='contained' color='error' onClick={()=>onBtnDeleteClick(item)}>Xóa</Button>
