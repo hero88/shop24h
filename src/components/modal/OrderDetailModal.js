@@ -32,9 +32,10 @@ function OrderDetailModal({open, setOpen, data}) {
     }
 
     let findProductNameById = paramDetailID => {
-        let name ="";
+        let name =""; 
+        let productId ="";
         let detail = detailList.find(el=>el._id === paramDetailID);
-        let productId = detail.product;
+        if (detail) productId = detail.product;
         let product = productList.find(el=>el._id === productId);
         name = product.name;
         return name;
