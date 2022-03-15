@@ -1,9 +1,9 @@
 import { Navbar } from "reactstrap";
-import { Button, MenuItem, Menu, Grid } from '@mui/material';
+import { Button, MenuItem, Menu, Grid, Divider } from '@mui/material';
 import {auth} from './../../firebase';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingBasket, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingBasket, faUserCircle, faList, faBars, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import Logo from "./Logo";
 import IconNavBar from "./IconNavBar";
@@ -88,11 +88,11 @@ function HeaderComponent({currentUser, numCart}){
                         : <FontAwesomeIcon icon={faUserCircle}/> 
                     }
                     <Button
-                    id="basic-button"
-                    aria-controls={open ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={handleClick}
+                        id="basic-button"
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick}
                     >
                         Menu
                     </Button>
@@ -102,25 +102,43 @@ function HeaderComponent({currentUser, numCart}){
                         open={open}
                         onClose={handleClose}
                         MenuListProps={{
-                        'aria-labelledby': 'basic-button',
+                            'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={()=>navigate('/profile')}>Trang cá nhân</MenuItem>
-                        <MenuItem onClick={()=>navigate('/orders')}>Đơn hàng của tôi</MenuItem>
+                        <MenuItem onClick={()=>navigate('/profile')}>
+                            <FontAwesomeIcon icon={faUser}/>&nbsp;
+                            Trang cá nhân
+                        </MenuItem>
+                        <MenuItem onClick={()=>navigate('/orders')}>
+                            <FontAwesomeIcon icon={faBars}/>&nbsp;
+                            Đơn hàng của tôi
+                        </MenuItem>
                         {
                             (user && user.role === "Admin")
                             ? 
                             <div>
-                                <MenuItem onClick={()=>navigate('/customertable')}>Danh sách khách hàng</MenuItem>
-                                <MenuItem onClick={()=>navigate('/ordertable')}>Danh sách tất cả đơn hàng</MenuItem>
-                                <MenuItem onClick={()=>navigate('/producttable')} >Danh sách sản phẩm</MenuItem>
+                                <MenuItem onClick={()=>navigate('/customertable')}>
+                                    <FontAwesomeIcon icon={faList}/>&nbsp;
+                                    Danh sách khách hàng                                
+                                </MenuItem>
+                                <MenuItem onClick={()=>navigate('/ordertable')}>
+                                    <FontAwesomeIcon icon={faList}/>&nbsp;
+                                    Danh sách tất cả đơn hàng
+                                </MenuItem>
+                                <MenuItem onClick={()=>navigate('/producttable')} >
+                                    <FontAwesomeIcon icon={faList}/>&nbsp;
+                                    Danh sách sản phẩm
+                                </MenuItem>
                             </div>                            
                             : <Grid></Grid>
                         }
-                        
-                        <MenuItem onClick={onBtnLogoutClick}>Logout</MenuItem>
+                        <Divider/>
+                        <MenuItem onClick={onBtnLogoutClick}>
+                            <FontAwesomeIcon icon={faRightFromBracket}/>&nbsp;
+                            Logout
+                        </MenuItem>
                     </Menu>
-                    <a href='/shoppingcart'>
+                    <a href='/shoppingcart' style={{marginRight: 25}}>
                         <FontAwesomeIcon icon={faShoppingBasket}/>  
                         <span style={cartStyle}>{numCart.length}</span>                     
                     </a> 

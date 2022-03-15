@@ -26,8 +26,8 @@ function OrderDetailModal({open, setOpen, data}) {
 
     let findCustomerNameById = paramId => {
         let name = "";
-        let customer = customerList.find(el=>el._id = paramId);
-        name = customer.fullName;
+        let customer = customerList.find(el=>el._id === paramId);
+        if (customer) name = customer.fullName;
         return name;
     }
 
@@ -77,7 +77,7 @@ function OrderDetailModal({open, setOpen, data}) {
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Thông tin đơn hàng
                     </Typography>
-                    <Grid container spacing={2} mt={3} mb={3}>
+                    <Grid container spacing={2} mt={2}>
                         <Grid item xs={12}>
                             <TextField label='Mã khách hàng' defaultValue={findCustomerNameById(data.customer)} fullWidth InputProps={{readOnly: true}}/>
                         </Grid>    
@@ -86,21 +86,21 @@ function OrderDetailModal({open, setOpen, data}) {
                         </Grid>
                     </Grid>
                         {
-                            data.details.length > 0
+                            (data.details && data.details.length > 0)
                             ? 
                                 data.details.map((item, index)=>
-                                <Grid container spacing={2} key={index}>
-                                    <Grid item xs={12}>
+                                <Grid container spacing={2} key={index} mt={1}>
+                                    <Grid item xs={6}>
                                         <TextField multiline label='Tên sản phẩm' defaultValue={findProductNameById(item)} InputProps={{readOnly: true}} fullWidth/>                                        
                                     </Grid>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={6}>
                                         <TextField label='Số lượng' defaultValue={findQuantityById(item)} InputProps={{readOnly: true}} fullWidth/> 
                                     </Grid>
                                 </Grid>                                    
                                 )
                             : <Grid></Grid>
                         }   
-                    <Grid container spacing={2} mt={2}>
+                    <Grid container spacing={2} mt={1}>
                         <Grid item xs={12}>
                             <TextField label='Trạng thái' defaultValue={data.status === 0 ? 'Chưa thanh toán' : 'Đã thanh toán'} fullWidth InputProps={{readOnly: true}}/>
                         </Grid>
@@ -109,14 +109,13 @@ function OrderDetailModal({open, setOpen, data}) {
                         </Grid>   
                     </Grid>
                                             
-                    <Grid mt={5} >
+                    <Grid mt={4} >
                         <Button variant="contained" color="success" onClick={handleClose} style={{float:"right"}}>Quay lại</Button>
                     </Grid>
                 </Box>
             </Modal>
             : <Grid></Grid>
-        }
-        
+        }        
         </>
     )
 }

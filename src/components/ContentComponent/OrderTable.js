@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react';
 import {auth} from '../../firebase';
 import InsertOrderModal from "../modal/InsertOrderModal";
 import UpdateOrderModal from "../modal/UpdateOrderModal";
+import OrderDetailModal from "../modal/OrderDetailModal";
 
 function OrderTable() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -27,6 +28,7 @@ function OrderTable() {
 
     const [insertModal, setInsertModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
+    const [openModal, setOpenModal] = useState(false);
 
     const changeHandler = (event, value) => {
         setPage(value);        
@@ -34,6 +36,11 @@ function OrderTable() {
 
     const onBtnAddClick = () => {
         setInsertModal(true);
+    }
+
+    const onItemIdClick = data => {
+        setOpenModal(true);
+        setCurrentOrder(data);
     }
 
     const onBtnEditClick = (data) => {        
@@ -73,7 +80,7 @@ function OrderTable() {
                 ? 
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={12} md={12} lg={12} className='text-center'>
-                        <h2 className="fw-bold">Danh sách sản phẩm</h2>
+                        <h2 className="fw-bold">Danh sách đơn hàng</h2>
                     </Grid>
                     <Grid item xs={12} sm={12} md={12} lg={12}>
                         <Button variant="contained" color='success' onClick={onBtnAddClick}>Thêm đơn hàng</Button>
@@ -98,13 +105,13 @@ function OrderTable() {
                                             orderList.map((item, index) => 
                                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                                 <TableCell>
-                                                    {item._id}
+                                                    <Button onClick={()=>onItemIdClick(item)}>{item._id}</Button>
                                                 </TableCell>
                                                 <TableCell>
                                                     {new Date(item.timeCreated).toLocaleDateString()}
                                                 </TableCell>
                                                 <TableCell>{item.totalAmount.toLocaleString()}</TableCell>
-                                                <TableCell>{item.status === 0 ? 'Not Paid' : 'Paid' }</TableCell>
+                                                <TableCell>{item.status === 0 ? 'Chưa thanh toán' : 'Đã thanh toán' }</TableCell>
                                                 <TableCell>
                                                     <Button variant='contained' style={{marginRight: 15}} onClick={()=>onBtnEditClick(item)}>Sửa</Button>                                                
                                                 </TableCell>
@@ -123,6 +130,7 @@ function OrderTable() {
             }
             <InsertOrderModal insert={insertModal} setInsert={setInsertModal} list={customers}/>
             <UpdateOrderModal update={updateModal} setUpdate={setUpdateModal} list={customers} data={currentOrder}/>
+            <OrderDetailModal open={openModal} setOpen={setOpenModal} data={currentOrder}/>
         </Container>
     )
 }

@@ -34,17 +34,18 @@ function FilterComponent({sendFilterObj}) {
         <Container className='mt-5'>
         {/* Filter by type */}
         <Row>
-            <Col sm='12'>
+            <Col xs='12' sm='4' md='4' lg='4'>
                 <InputLabel id="demo-simple-select-helper-label">Chọn loại sản phẩm</InputLabel>
             </Col>
-            <Col sm='12'>
+            <Col xs='12' sm='8' md='8' lg='8'>
                 <Select 
                     labelId="demo-simple-select-helper-label"                    
                     defaultValue="None" 
                     label='Type'
                     onChange={onChangeSelect}
+                    fullWidth
                 >
-                    <MenuItem value="None">Chọn</MenuItem>
+                    <MenuItem value="None">Chọn loại sản phẩm</MenuItem>
                     <MenuItem value="Accessories">Phụ kiện</MenuItem>
                     <MenuItem value="Balo">Balo</MenuItem>
                     <MenuItem value="Keyboard">Bàn phím</MenuItem>
@@ -54,9 +55,9 @@ function FilterComponent({sendFilterObj}) {
             </Col>
         </Row>
         {/* Filter by price */}
-        <Row className='mt-5'>
+        <Row className='mt-3'>
             <Col sm='12'>
-                <InputLabel>Price range</InputLabel>
+                <InputLabel>Mức giá</InputLabel>
             </Col>
             <Col >
                 <Input placeholder='Min price' onChange={onMinPriceChange}/> 
@@ -67,15 +68,15 @@ function FilterComponent({sendFilterObj}) {
             </Col>
         </Row>
         {/* Filter by name */}
-        <Row className='mt-5'>
+        <Row className='mt-3'>
              <Col sm='12'>
                 <InputLabel>Nhập tên sản phẩm</InputLabel>
              </Col>
              <Col sm='12'>
-                <Input placeholder='product name...' onChange={onProductNameChange}/> 
+                <Input placeholder='Tên sản phẩm...' onChange={onProductNameChange}/> 
             </Col>
         </Row>
-        <Button className='mt-5' variant='contained' onClick={onBtnFilterClick}>Tìm kiếm</Button>
+        <Button className='mt-3' variant='contained' onClick={onBtnFilterClick}>Tìm kiếm</Button>
         </Container>
     )
 }
