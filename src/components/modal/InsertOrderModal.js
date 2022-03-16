@@ -8,10 +8,11 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 550,
+    width: 850,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
+    zIndex: 10,
     p: 4,
 };
 
@@ -137,12 +138,13 @@ function InsertOrderModal({insert, setInsert, list}) {
             onClose={handleClose}
             aria-labelledby="modal-detail-title"
             aria-describedby="modal-detail-description"
+            style={{ overflow: 'scroll' }}
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Thêm đơn hàng
                 </Typography>
-                <Grid container spacing={2} mt={3}>
+                <Grid container spacing={2} mt={3} mb={2}>
                     <Grid item xs={12}>
                         <label>Khách hàng</label>&nbsp;
                         <select onChange={changeSelectCustomer} className="form-control">                        
@@ -162,11 +164,11 @@ function InsertOrderModal({insert, setInsert, list}) {
                             <option value='4'>4</option>
                         </select>
                     </Grid>
+                </Grid>
                     {                        
                         arrayList.map((el, index)=>
-                            <Grid item xs={12} key={index}>
-                                <Grid item xs={12}>
-                                    <label>Sản phẩm</label>&nbsp;
+                            <Grid container key={index} spacing={2}>
+                                <Grid item xs={6}>
                                     <select className="form-control" id={"select-product" + el}>
                                         {
                                             productList.length>0
@@ -178,14 +180,12 @@ function InsertOrderModal({insert, setInsert, list}) {
                                         }
                                     </select>
                                 </Grid>
-                                <Grid item xs={12} mt={2}>
+                                <Grid item xs={6}>
                                     <TextField type='number' label='Số lượng' id={'quantity-input'+el} fullWidth/>
                                 </Grid>                                      
                             </Grid>  
                         )                      
-                    }                       
-                </Grid>
-                                           
+                    }                        
                 <Grid mt={5} >
                     <Button variant="contained" color="success" onClick={onBtnInsertClick}>Thêm đơn hàng</Button>
                     <Button variant="contained" color="success" onClick={handleClose} style={{float:"right"}}>Hủy bỏ</Button>

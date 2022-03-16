@@ -78,10 +78,10 @@ function HeaderComponent({currentUser, numCart}){
         <Navbar className='fixed-top mb-5' color='warning' expand='md' light>
             <Logo/>
             { 
-                currentUser 
+                user 
                 ? 
                 <div>
-                    <p>Hello {currentUser.displayName ? currentUser.displayName : user.fullName}</p>&nbsp;
+                    <p>Hello { user.role === "Admin" ? "Admin" : user.fullName}</p>&nbsp;
                     {
                         currentUser.photoURL 
                         ? <img src={currentUser.photoURL} alt='avatar' width='20%'/>
