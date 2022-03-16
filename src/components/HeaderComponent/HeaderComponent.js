@@ -81,7 +81,7 @@ function HeaderComponent({currentUser, numCart}){
                 currentUser 
                 ? 
                 <div>
-                    <p>Hello {currentUser.displayName ? currentUser.displayName : 'Admin'}</p>&nbsp;
+                    <p>Hello {currentUser.displayName ? currentUser.displayName : user.fullName}</p>&nbsp;
                     {
                         currentUser.photoURL 
                         ? <img src={currentUser.photoURL} alt='avatar' width='20%'/>
