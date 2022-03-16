@@ -1,4 +1,4 @@
-import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination} from "@mui/material";
+import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination, TextField} from "@mui/material";
 import { Container } from 'reactstrap';
 import {useState, useEffect} from 'react';
 
@@ -25,6 +25,7 @@ function OrderTable() {
     const [orderList, setOrderList] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [currentOrder, setCurrentOrder] = useState({});
+    const [search, setSearch] = useState("");
 
     const [insertModal, setInsertModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
@@ -47,6 +48,8 @@ function OrderTable() {
         setCurrentOrder(data);
         setUpdateModal(true);            
     }
+
+    const changeIdHandler = e => setSearch(e.target.value);
 
     useEffect(()=>{
         if (FireBaseUser && !dbUser)
@@ -82,9 +85,12 @@ function OrderTable() {
                     <Grid item xs={12} sm={12} md={12} lg={12} className='text-center'>
                         <h2 className="fw-bold">Danh sách đơn hàng</h2>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
                         <Button variant="contained" color='success' onClick={onBtnAddClick}>Thêm đơn hàng</Button>
-                    </Grid>            
+                    </Grid>       
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField label='Tìm kiếm mã đơn hàng' onChange={changeIdHandler} fullWidth/>
+                    </Grid>     
                     {
                         orderList.length > 0
                         ?
@@ -102,7 +108,10 @@ function OrderTable() {
                                     </TableHead>
                                     <TableBody>
                                         {
-                                            orderList.map((item, index) => 
+                                            orderList.filter((item)=> {
+                                                if (search.length===0) return item;
+                                                else return (item._id.toLowerCase().includes(search.toLowerCase())) 
+                                            }).map((item, index) => 
                                             <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                                 <TableCell>
                                                     <Button onClick={()=>onItemIdClick(item)}>{item._id}</Button>

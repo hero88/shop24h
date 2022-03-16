@@ -6,10 +6,11 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 550,
+    width: 950,
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
+    zIndex: 10,
     p: 4,
 };
 
@@ -37,14 +38,14 @@ function OrderDetailModal({open, setOpen, data}) {
         let detail = detailList.find(el=>el._id === paramDetailID);
         if (detail) productId = detail.product;
         let product = productList.find(el=>el._id === productId);
-        name = product.name;
+        if (product) name = product.name;
         return name;
     }
 
     let findQuantityById = paramDetailID => {
         let quantity = 0;
         let detail = detailList.find(el=>el._id === paramDetailID);
-        quantity = detail.quantity;
+        if (detail) quantity = detail.quantity;
         return quantity;
     }
 
@@ -73,6 +74,7 @@ function OrderDetailModal({open, setOpen, data}) {
                 onClose={handleClose}
                 aria-labelledby="modal-detail-title"
                 aria-describedby="modal-detail-description"
+                style={{ overflow: 'scroll' }}
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">

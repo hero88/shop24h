@@ -1,4 +1,4 @@
-import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination} from "@mui/material";
+import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination, TextField} from "@mui/material";
 import { Container } from 'reactstrap';
 import {useState, useEffect} from 'react';
 
@@ -25,6 +25,7 @@ function CustomerTable(){
     const [customers, setCustomers] = useState([]);
     const [currentCustomer,setCurrentCustomer] = useState({});
     const [updateModal, setUpdateModal] = useState(false);
+    const [search, setSearch] = useState("");
 
     const onBtnEditClick = (data) => {
         setCurrentCustomer(data);
@@ -35,6 +36,8 @@ function CustomerTable(){
         window.location.href='/signup';
     }
 
+    const changeNameHandler = e => setSearch(e.target.value);
+
     useEffect(()=>{        
         if (FireBaseUser && !dbUser)
             fetchApi(customerURL)
@@ -42,7 +45,7 @@ function CustomerTable(){
                 let customerList = result.customers;
                 let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
                 let tempCustomers = customerList.filter(el=>el.role==="Customer");
-                if (tempUser) setDbUser(tempUser);
+                if (tempUser) setDbUser(tempUser);                
                 setCustomers(tempCustomers);
                 setNoPage(Math.ceil(tempCustomers.length/limit));
             })
@@ -58,9 +61,12 @@ function CustomerTable(){
                     <Grid item xs={12} sm={12} md={12} lg={12} className='text-center'>
                         <h2 className='fw-bold'>Danh sách khách hàng</h2>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12} lg={12}>
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
                         <Button variant="contained" color='success' onClick={onBtnAddClick}>Thêm khách hàng</Button>
                     </Grid> 
+                    <Grid item xs={6} sm={6} md={6} lg={6}>
+                        <TextField label='Tìm kiếm tên khách hàng' onChange={changeNameHandler}fullWidth/>
+                    </Grid>
                     {
                         customers.length > 0
                         ?
@@ -78,7 +84,10 @@ function CustomerTable(){
                                 </TableHead>
                                 <TableBody>
                                     {
-                                        customers.map((item, index) => 
+                                        customers.filter((item)=> {
+                                            if (search.length===0) return item;
+                                            else return (item.fullName.toLowerCase().includes(search.toLowerCase())) 
+                                        }).map((item, index) => 
                                         <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                             <TableCell>
                                                 {item.fullName}
