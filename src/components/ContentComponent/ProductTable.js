@@ -49,39 +49,50 @@ function ProductTable() {
     }
 
     useEffect(()=>{
-        if (FireBaseUser && !dbUser)
-            fetchApi(customerURL)
-            .then(result=>{
-                let customerList = result.customers;
-                let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
-                if (tempUser) setDbUser(tempUser);
-            })
-            .catch(error=>console.log(error))
+        let isContinued = true;
+        if (isContinued) {
+            if (FireBaseUser && !dbUser)
+                fetchApi(customerURL)
+                .then(result=>{
+                    if (isContinued) {
+                        let customerList = result.customers;
+                        let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
+                        if (tempUser) setDbUser(tempUser);
+                    }                    
+                })
+                .catch(error=>console.log(error))
 
-        if (dbUser) {
-            let targetURL = "";
-            if ((Object.keys(searchData).length===0)
-                || (!searchData.name && searchData.minPrice === 0 && searchData.maxPrice === 0 && searchData.type==="None")
-            )
-                targetURL = productURL;
-            else{
-                targetURL = productURL;
-                if (searchData.name) targetURL +=  "&name=" + searchData.name; // search by name
-                if (searchData.minPrice) targetURL += "&minPrice=" + searchData.minPrice; // search by min, max price
-                if (searchData.maxPrice) targetURL += "&maxPrice=" + searchData.maxPrice; // search by type
-                if (searchData.type) targetURL += "&type=" + searchData.type;            
+            if (dbUser) {
+                let targetURL = "";
+                if ((Object.keys(searchData).length===0)
+                    || (!searchData.name && searchData.minPrice === 0 && searchData.maxPrice === 0 && searchData.type==="None")
+                )
+                    targetURL = productURL;
+                else{
+                    targetURL = productURL;
+                    if (searchData.name) targetURL +=  "&name=" + searchData.name; // search by name
+                    if (searchData.minPrice) targetURL += "&minPrice=" + searchData.minPrice; // search by min, max price
+                    if (searchData.maxPrice) targetURL += "&maxPrice=" + searchData.maxPrice; // search by type
+                    if (searchData.type) targetURL += "&type=" + searchData.type;            
+                }
+                fetchApi(targetURL)
+                .then(response => {
+                    if (isContinued) setNoPage(Math.ceil(response.count/limit));
+                })
+                .catch(err => console.log(err));
+
+                fetchApi(targetURL + "&limit=" + limit + "&page=" + page)
+                .then(result=>{
+                    if (isContinued) {
+                        let tempProduct = result.products;
+                        setProductList(tempProduct);
+                    }
+                })
+                .catch(error=>console.log(error))
             }
-            fetchApi(targetURL)
-            .then(response => setNoPage(Math.ceil(response.count/limit)))
-            .catch(err => console.log(err));
-
-            fetchApi(targetURL + "&limit=" + limit + "&page=" + page)
-            .then(result=>{
-                let tempProduct = result.products;
-                setProductList(tempProduct);
-            })
-            .catch(error=>console.log(error))
         }
+
+        return ()=> isContinued = false;
     }, [productList,dbUser, FireBaseUser, page, searchData])
 
     return(

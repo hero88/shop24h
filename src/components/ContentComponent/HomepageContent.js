@@ -16,11 +16,13 @@ function HomepageContent(){
     const [searchObj, setSearchObj] = useState({});
 
     useEffect(() => {
+        let isContinued = true;        
         fetchApi("http://localhost:8000/products/")
-            .then(response => {                
-                setProducts(response.products);
-            })
-            .catch(error => console.log(error))        
+                .then(response => {                
+                    if (isContinued) setProducts(response.products);
+                })
+                .catch(error => console.log(error))        
+        return () => isContinued = false;
     }, []);
 
     return(

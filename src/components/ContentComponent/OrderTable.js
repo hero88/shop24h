@@ -59,28 +59,34 @@ function OrderTable() {
     const changeIdHandler = e => setSearch(e.target.value);
 
     useEffect(()=>{
+        let isContinued = true;
         if (FireBaseUser && !dbUser)
             fetchApi(customerURL)
-            .then(result=>{
-                let customerList = result.customers;
-                let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
-                if (tempUser) setDbUser(tempUser);
-                setCustomers(customerList);
+            .then(result=> {
+                if (isContinued) {
+                    let customerList = result.customers;
+                    let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
+                    if (tempUser) setDbUser(tempUser);
+                    setCustomers(customerList);
+                }
             })
             .catch(error=>console.log(error))
 
         fetchApi(orderURL)
-            .then(data=>{
-                let tempList = data.Order;
-                setOrderList(tempList);
+            .then(data=> {
+                if (isContinued) {
+                    let tempList = data.Order;
+                    setOrderList(tempList);
+                }
             })
             .catch(error=>console.log(error))
         
-
-        if (orderList.length > 0){
+        if (orderList.length > 0 && isContinued){
             let total = orderList.length;
             setNoPage(Math.ceil(total/limit));
         }
+
+        return ()=> isContinued = false;
     }, [dbUser, FireBaseUser, orderList]);
 
     return(

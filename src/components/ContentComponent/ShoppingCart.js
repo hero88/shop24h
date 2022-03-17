@@ -99,18 +99,23 @@ function ShoppingCart({currentCart, currentUser}) {
     }
 
     useEffect(()=>{
+        let isContinued = true; 
         if (cart.length === 0) setCart(currentCart);
         if (currentUser) {
             fetchApi(customerURL)
-            .then(result =>{
-                let customerList = result.customers;
-                let tempUserProvider = customerList.find(el=>currentUser.providerData[0].uid === el.uid);
-                let tempUser = customerList.find(el=> el.uid === currentUser.uid);
-                if (tempUserProvider) setUserId(tempUserProvider._id);
-                if (tempUser) setUserId(tempUser._id);
-            })
-            .catch(err=> console.log(err))
-        }
+                .then(result =>{
+                    if (isContinued) {
+                        let customerList = result.customers;
+                        let tempUserProvider = customerList.find(el=>currentUser.providerData[0].uid === el.uid);
+                        let tempUser = customerList.find(el=> el.uid === currentUser.uid);
+                        if (tempUserProvider) setUserId(tempUserProvider._id);
+                        if (tempUser) setUserId(tempUser._id);
+                    }                    
+                })
+                .catch(err=> console.log(err))
+            }
+        
+        return ()=> isContinued = false;
     }, [cart, currentCart, currentUser])
 
     return(
@@ -152,7 +157,7 @@ function ShoppingCart({currentCart, currentUser}) {
                                     )
                                 }
                                 <TableRow>
-                                    <TableCell>Total Carts: </TableCell>
+                                    <TableCell>Tổng cộng: </TableCell>
                                     <TableCell className='fw-bold'>{Number(TotalCart).toLocaleString('en-US')} VND</TableCell>
                                     <TableCell/>
                                 </TableRow>

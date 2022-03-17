@@ -53,13 +53,18 @@ function UpdateOrderModal({update, setUpdate, list, data}) {
     }
 
     useEffect(()=>{
+        let isContinued = true;
         if (productList.length===0) 
             fetchApi(productURL)
             .then((result) => {
-                let tempList = result.products;
-                setProductList(tempList);
+                if (isContinued) {
+                    let tempList = result.products;
+                    setProductList(tempList);
+                }
             })
             .catch((error) => console.log(error))
+
+        return ()=> isContinued = false;
     }, [productList])
 
     return(

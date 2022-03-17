@@ -24,26 +24,35 @@ function ProductList({data, searchData}) {
 
     useEffect(() => {
         let targetURL = "";
-        if ((Object.keys(searchData).length===0)
-            || (!searchData.name && searchData.minPrice === 0 && searchData.maxPrice === 0 && searchData.type==="None")
-        )
-            targetURL = baseURL;
-        else{
-            targetURL = baseURL;
-            if (searchData.name) targetURL +=  "&name=" + searchData.name;
-            if (searchData.minPrice) targetURL += "&minPrice=" + searchData.minPrice;
-            if (searchData.maxPrice) targetURL += "&maxPrice=" + searchData.maxPrice;
-            if (searchData.type) targetURL += "&type=" + searchData.type;            
+        let isContinued = true;
+        if (isContinued) {
+            if ((Object.keys(searchData).length===0)
+                || (!searchData.name && searchData.minPrice === 0 && searchData.maxPrice === 0 && searchData.type==="None")
+            )
+                targetURL = baseURL;
+            else{
+                targetURL = baseURL;
+                if (searchData.name) targetURL +=  "&name=" + searchData.name;
+                if (searchData.minPrice) targetURL += "&minPrice=" + searchData.minPrice;
+                if (searchData.maxPrice) targetURL += "&maxPrice=" + searchData.maxPrice;
+                if (searchData.type) targetURL += "&type=" + searchData.type;            
+            }
+            fetchApi(targetURL)
+                .then(response => {
+                    if (isContinued) setNoPage(Math.ceil(response.count/limit));
+                })
+                .catch(err => console.log(err));
+
+            targetURL += "&limit=" + limit + "&page=" + page; // do pagination
+
+            fetchApi(targetURL)
+                .then(response => {
+                    if (isContinued) setProductList(response.products);
+                })
+                .catch(error => console.log(error));
         }
-        fetchApi(targetURL)
-            .then(response => setNoPage(Math.ceil(response.count/limit)))
-            .catch(err => console.log(err));
+        return ()=> isContinued = false;
 
-        targetURL += "&limit=" + limit + "&page=" + page; // do pagination
-
-        fetchApi(targetURL)
-            .then(response => setProductList(response.products))
-            .catch(error => console.log(error));
     }, [page, limit, searchData]);
 
     return(

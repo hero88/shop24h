@@ -62,17 +62,22 @@ function HeaderComponent({currentUser, numCart}){
     }        
 
     useEffect(() => {
+        let isContinued = true;
         if (currentUser) {
             fetchApi(customerURL)
-            .then(result =>{
-                let customerList = result.customers;
-                let tempUserProvider = customerList.find(el=>currentUser.providerData[0].uid === el.uid);
-                let tempUser = customerList.find(el=> el.uid === currentUser.uid);
-                if (tempUserProvider) setUser(tempUserProvider);
-                if (tempUser) setUser(tempUser);
-            })
-            .catch(err=> console.log(err))
+                .then(result =>{
+                    if (isContinued) {
+                        let customerList = result.customers;
+                        let tempUserProvider = customerList.find(el=>currentUser.providerData[0].uid === el.uid);
+                        let tempUser = customerList.find(el=> el.uid === currentUser.uid);
+                        if (tempUserProvider) setUser(tempUserProvider);
+                        if (tempUser) setUser(tempUser);
+                    }                    
+                })
+                .catch(err=> console.log(err))
         }
+        
+        return ()=> isContinued = false;
     },[currentUser])
 
     return(
