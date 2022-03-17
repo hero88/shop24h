@@ -70,7 +70,6 @@ function SignUp(){
             .then(response =>{
                 console.log(response);
                 toast.success("Đăng ký thành công !");
-                clearForm();
             })
             .catch(error=>console.log(error))
         }
@@ -85,11 +84,12 @@ function SignUp(){
             .then((data)=>{
                 let user = data.user;
                 createDbUser(user.uid); // create user in backend
+                clearForm();
+                localStorage.setItem('cart', []); // tạo giỏ hàng trống
+                setTimeout(() => navigate('/'), 2000);
             })
-            .catch((error) => console.log(error))
-            clearForm();
-            localStorage.setItem('cart', []); // tạo giỏ hàng trống
-            setTimeout(() => navigate('/'), 2000);
+            .catch((error) => toast.error(error.message))
+            
         }
         else {
             toast.error("Email/Mật khẩu không hợp lệ!");

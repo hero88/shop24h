@@ -50,18 +50,27 @@ function OrderDetailModal({open, setOpen, data}) {
     }
 
     useEffect(()=>{
+        let isContinued = true;        
         if (productList.length===0) 
             fetchApi("http://localhost:8000/products/")
-            .then(res=> setProductList(res.products))
+            .then(res=> {
+                if (isContinued) setProductList(res.products);
+            })
             .catch(error=>console.log(error))
         if (customerList.length===0)
             fetchApi("http://localhost:8000/customers/")
-            .then(res=> setCustomerList(res.customers))
-            .catch(error=>console.log(error))
+                .then(res=> {
+                    if (isContinued) setCustomerList(res.customers);
+                })
+                .catch(error=>console.log(error))
         if (customerList.length===0)
             fetchApi("http://localhost:8000/orderdetail/")
-            .then(res=> setDetailList(res.OrderDetail))
-            .catch(error=>console.log(error))
+                .then(res=> {
+                    if (isContinued) setDetailList(res.OrderDetail);
+                })
+                .catch(error=>console.log(error))        
+        
+        return ()=> isContinued = false;
     })
 
     return(

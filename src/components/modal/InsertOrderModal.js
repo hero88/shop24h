@@ -121,14 +121,19 @@ function InsertOrderModal({insert, setInsert, list}) {
     }
 
     useEffect(()=>{
+        let isContinued = true;
         if (noProduct>0) createArray(noProduct);
         if (productList.length===0) 
             fetchApi(productURL)
-            .then((result) => {
-                let tempList = result.products;
-                setProductList(tempList);
-            })
-            .catch((error) => console.log(error))
+                .then((result) => {
+                    if (isContinued) {
+                        let tempList = result.products;
+                        setProductList(tempList);
+                    }                    
+                })
+                .catch((error) => console.log(error))
+        
+        return ()=> isContinued = false;
     }, [noProduct, productList])
 
     return(

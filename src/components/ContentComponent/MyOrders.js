@@ -59,25 +59,33 @@ function MyOrders() {
     }
 
     useEffect(() => {
+        let isContinued = true;        
         if (!user)
             fetchApi(customerURL)
                 .then(result =>{
-                    let customerList = result.customers;
-                    let tempUserProvider = customerList.find(el=>FireBaseUser.providerData[0].uid === el.uid);
-                    let tempUser = customerList.find(el=> el.uid === FireBaseUser.uid);
-                    if (tempUserProvider) setUser(tempUserProvider);
-                    if (tempUser) setUser(tempUser);
+                    if (isContinued) {
+                        let customerList = result.customers;
+                        let tempUserProvider = customerList.find(el=>FireBaseUser.providerData[0].uid === el.uid);
+                        let tempUser = customerList.find(el=> el.uid === FireBaseUser.uid);
+                        if (tempUserProvider) setUser(tempUserProvider);
+                        if (tempUser) setUser(tempUser);
+                    }                    
                 })
                 .catch(err=> console.log(err))
         
         if (user) 
             fetchApi(customerURL + user._id + '/orders')
-            .then(result =>{
-                let temp = result.Orders.orders;
-                if (temp.length > 0) setOrderList(temp);
-            })
-            .catch(err=>console.log(err.message))
+                .then(result =>{
+                    if (isContinued) {
+                        let temp = result.Orders.orders;
+                        if (temp.length > 0) setOrderList(temp);
+                    }                    
+                })
+                .catch(err=>console.log(err.message))        
+        
+        return ()=> isContinued=false;
     }, [user, FireBaseUser, orderList])
+    
     return(
     <>
         <Container>

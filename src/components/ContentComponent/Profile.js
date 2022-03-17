@@ -78,16 +78,21 @@ function Profile() {
     }
 
     useEffect(() => {
+        let isContinued = true;
         if (!user)
-        fetchApi(customerURL)
-            .then(result =>{
-                let customerList = result.customers;
-                let tempUserProvider = customerList.find(el=>FireBaseUser.providerData[0].uid === el.uid);
-                let tempUser = customerList.find(el=> el.uid === FireBaseUser.uid);
-                if (tempUserProvider) setUser(tempUserProvider);
-                if (tempUser) setUser(tempUser);
-            })
-            .catch(err=> console.log(err))
+            fetchApi(customerURL)
+                .then(result =>{ 
+                    if (isContinued) {
+                        let customerList = result.customers;
+                        let tempUserProvider = customerList.find(el=>FireBaseUser.providerData[0].uid === el.uid);
+                        let tempUser = customerList.find(el=> el.uid === FireBaseUser.uid);
+                        if (tempUserProvider) setUser(tempUserProvider);
+                        if (tempUser) setUser(tempUser);
+                    }                    
+                })
+                .catch(err=> console.log(err))
+                
+        return ()=> isContinued = false;
     }, [user, FireBaseUser, name, address, email, phone, city, country])
     return(
         <Container className='mt-5'>   

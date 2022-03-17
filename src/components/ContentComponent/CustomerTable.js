@@ -38,18 +38,24 @@ function CustomerTable(){
 
     const changeNameHandler = e => setSearch(e.target.value);
 
-    useEffect(()=>{        
+    useEffect(()=>{     
+        let isContinued = true;   
         if (FireBaseUser && !dbUser)
             fetchApi(customerURL)
             .then(result=>{
-                let customerList = result.customers;
-                let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
-                let tempCustomers = customerList.filter(el=>el.role==="Customer");
-                if (tempUser) setDbUser(tempUser);                
-                setCustomers(tempCustomers);
-                setNoPage(Math.ceil(tempCustomers.length/limit));
+                if (isContinued) {
+                    let customerList = result.customers;
+                    let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
+                    let tempCustomers = customerList.filter(el=>el.role==="Customer");
+                    if (tempUser) setDbUser(tempUser);                
+                    setCustomers(tempCustomers);
+                    setNoPage(Math.ceil(tempCustomers.length/limit));
+                }                
             })
             .catch(error=>console.log(error))        
+        return ()=>{
+            isContinued = false;
+        }
     },[FireBaseUser, dbUser])
 
     return(
