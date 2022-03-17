@@ -85,6 +85,10 @@ function Login({sendUser}) {
         .catch(() => toast.error("Email/Password sai rồi!"))
     }    
 
+    const handleKeyPress = e => {
+        if (e.key === 'Enter') loginEmail();
+    }
+
     return(
         <Box
             component="form"
@@ -110,10 +114,10 @@ function Login({sendUser}) {
                     <p>-----OR-----</p>
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>                    
-                    <TextField label="Username" onChange={changeEmailHandler}/>
+                    <TextField label="Username" onChange={changeEmailHandler} />
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>                    
-                    <TextField label="Password" onChange={changePasswordHandler} type='password'/>
+                    <TextField label="Password" onChange={changePasswordHandler} type='password' onKeyPress={handleKeyPress}/>
                 </Grid>
                 <Grid item xs={12} md={12} sm={12} lg={12} style={{textAlign:'center'}}>
                     <Button variant='contained' color='success' style={{borderRadius: 10, margin: 20}} onClick={loginEmail}>Sign in</Button>

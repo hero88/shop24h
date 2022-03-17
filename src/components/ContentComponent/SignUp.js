@@ -87,6 +87,9 @@ function SignUp(){
                 createDbUser(user.uid); // create user in backend
             })
             .catch((error) => console.log(error))
+            clearForm();
+            localStorage.setItem('cart', []); // tạo giỏ hàng trống
+            setTimeout(() => navigate('/'), 2000);
         }
         else {
             toast.error("Email/Mật khẩu không hợp lệ!");
@@ -110,9 +113,9 @@ function SignUp(){
                             <h2 className="fw-bold">Đăng ký</h2>
                     </Grid>
                     <Grid item xs={12} lg={12} sm={12} md={12}>
-                        <TextField style={{marginBottom: 15}} defaultValue={name} label='Họ tên' onChange={changeFullNameHandler} fullWidth/>
-                        <TextField style={{marginBottom: 15}} defaultValue={email} label='Email' onChange={changeEmailHandler} fullWidth/>
-                        <TextField  defaultValue={password} type='password' label='Password' onChange={changePasswordHandler} fullWidth/>
+                        <TextField style={{marginBottom: 15}} defaultValue={name} label='Họ tên' onChange={changeFullNameHandler} fullWidth required/>
+                        <TextField style={{marginBottom: 15}} defaultValue={email} label='Email' onChange={changeEmailHandler} fullWidth required/>
+                        <TextField  defaultValue={password} type='password' label='Password' onChange={changePasswordHandler} fullWidth required/>
                         <Typography variant="subtitle2" style={{marginBottom: 15}}>Password must have at least one lowercase letter, one uppercase letter, one digit, one special character, and is at least eight characters long.</Typography>
                         <TextField style={{marginBottom: 15}} defaultValue={phone} label='Số điện thoại' onChange={changePhoneHandler} fullWidth/>
                         <TextField style={{marginBottom: 15}} defaultValue={address} label='Địa chỉ' onChange={changeAddressHandler} fullWidth/>

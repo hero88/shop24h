@@ -52,7 +52,8 @@ function HeaderComponent({currentUser, numCart}){
         .then(() => {
             setUser(null);
             localStorage.setItem('cart', []);
-            toast.success("Đăng xuất thành công!");                   
+            toast.success("Đăng xuất thành công!"); 
+            navigate('/');                  
             handleClose();
         })
         .catch((error) => {

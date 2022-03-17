@@ -6,6 +6,7 @@ import {auth} from '../../firebase';
 import InsertOrderModal from "../modal/InsertOrderModal";
 import UpdateOrderModal from "../modal/UpdateOrderModal";
 import OrderDetailModal from "../modal/OrderDetailModal";
+import DeleteOrderModal from "../modal/DeleteOrderModal";
 
 function OrderTable() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -30,6 +31,7 @@ function OrderTable() {
     const [insertModal, setInsertModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
     const [openModal, setOpenModal] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
 
     const changeHandler = (event, value) => {
         setPage(value);        
@@ -47,6 +49,11 @@ function OrderTable() {
     const onBtnEditClick = (data) => {        
         setCurrentOrder(data);
         setUpdateModal(true);            
+    }
+
+    const onBtnDeleteClick = data => {
+        setDeleteModal(true);
+        setCurrentOrder(data);
     }
 
     const changeIdHandler = e => setSearch(e.target.value);
@@ -123,6 +130,7 @@ function OrderTable() {
                                                 <TableCell>{item.status === 0 ? 'Chưa thanh toán' : 'Đã thanh toán' }</TableCell>
                                                 <TableCell>
                                                     <Button variant='contained' style={{marginRight: 15}} onClick={()=>onBtnEditClick(item)}>Sửa</Button>                                                
+                                                    <Button variant='contained' color='error' onClick={()=>onBtnDeleteClick(item)}>Xóa</Button>
                                                 </TableCell>
                                             </TableRow>
                                             )
@@ -140,6 +148,7 @@ function OrderTable() {
             <InsertOrderModal insert={insertModal} setInsert={setInsertModal} list={customers}/>
             <UpdateOrderModal update={updateModal} setUpdate={setUpdateModal} list={customers} data={currentOrder}/>
             <OrderDetailModal open={openModal} setOpen={setOpenModal} data={currentOrder}/>
+            <DeleteOrderModal deleteModal={deleteModal} setDelete={setDeleteModal} order={currentOrder}/>
         </Container>
     )
 }

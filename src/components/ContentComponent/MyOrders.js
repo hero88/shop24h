@@ -5,6 +5,7 @@ import {useState, useEffect} from 'react';
 
 import {auth} from '../../firebase';
 import OrderDetailModal from '../modal/OrderDetailModal';
+import DeleteOrderModal from '../modal/DeleteOrderModal';
 
 function MyOrders() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -21,6 +22,7 @@ function MyOrders() {
     const [orderList, setOrderList] = useState([]);
     const [currentOrder, setCurrentOrder] = useState(null);
     const [openModal, setOpenModal] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
 
     const onItemIdClick = data => {
         setOpenModal(true);
@@ -28,16 +30,8 @@ function MyOrders() {
     }
 
     const onBtnDeleteClick = data => {
-        let vId = data._id;
-        let reqOptions = {
-            method: "DELETE"
-        }
-        fetchApi(orderURL + vId, reqOptions)
-        .then(() => {
-            toast.success("Xóa thành công đơn hàng !");
-            setTimeout(() => window.location.reload(), 2000);
-        })
-        .catch(error => toast.error("Lỗi rồi: " + error))
+        setDeleteModal(true);
+        setCurrentOrder(data);
     }
 
     const onBtnPayClick = data => {
@@ -70,7 +64,7 @@ function MyOrders() {
                 .then(result =>{
                     let customerList = result.customers;
                     let tempUserProvider = customerList.find(el=>FireBaseUser.providerData[0].uid === el.uid);
-                    let tempUser = customerList.find(el=> el._id === FireBaseUser._id);
+                    let tempUser = customerList.find(el=> el.uid === FireBaseUser.uid);
                     if (tempUserProvider) setUser(tempUserProvider);
                     if (tempUser) setUser(tempUser);
                 })
@@ -133,7 +127,8 @@ function MyOrders() {
                 : <h4>Bạn chưa có đơn hàng nào!</h4>
             }            
         </Container>
-        <OrderDetailModal open={openModal} setOpen={setOpenModal} data={currentOrder}/>        
+        <OrderDetailModal open={openModal} setOpen={setOpenModal} data={currentOrder}/> 
+        <DeleteOrderModal deleteModal={deleteModal} setDelete={setDeleteModal} order={currentOrder}/>       
     </>
     )
 }

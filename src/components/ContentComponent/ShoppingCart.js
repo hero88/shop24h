@@ -107,7 +107,7 @@ function ShoppingCart({currentCart, currentUser}) {
                 let tempUserProvider = customerList.find(el=>currentUser.providerData[0].uid === el.uid);
                 let tempUser = customerList.find(el=> el.uid === currentUser.uid);
                 if (tempUserProvider) setUserId(tempUserProvider._id);
-                if (tempUser) setUserId(tempUser);
+                if (tempUser) setUserId(tempUser._id);
             })
             .catch(err=> console.log(err))
         }
