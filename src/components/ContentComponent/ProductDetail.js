@@ -3,6 +3,7 @@ import { useParams} from "react-router-dom";
 import {Grid, Button} from '@mui/material';
 import {Col, Breadcrumb, BreadcrumbItem, Container} from 'reactstrap';
 import {useState, useEffect} from 'react';
+import { toast } from 'react-toastify';
 
 import {AddCart} from '../actions'
 import {connect} from 'react-redux';
@@ -25,7 +26,7 @@ function ProductDetail({currentUser, sendProduct}) {
 
     const onBtnAddToCartClick = () => {
         if (!currentUser) {
-            alert("Bạn cần phải đăng nhập!");
+            toast.error("Bạn cần phải đăng nhập!");
             return false;
         }
         else {
