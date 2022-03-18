@@ -81,7 +81,7 @@ function OrderTable() {
             })
             .catch(error=>console.log(error))
         
-        if (orderList.length > 0 && isContinued){
+        if (orderList.length > 0){
             let total = orderList.length;
             setNoPage(Math.ceil(total/limit));
         }
@@ -144,7 +144,7 @@ function OrderTable() {
                                     </TableBody>
                                     </Table>
                                 </TableContainer>
-                                <Pagination onChange={changeHandler} count={noPage} defaultPage={page} style={{marginTop: 15}}></Pagination>
+                                <Pagination onChange={changeHandler} count={noPage} defaultPage={1} style={{marginTop: 15}}></Pagination>
                             </Grid>                     
                         : <h4>Chưa có đơn hàng trong hệ thống!</h4>
                     }

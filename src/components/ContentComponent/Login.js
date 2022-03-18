@@ -64,7 +64,7 @@ function Login({sendUser}) {
             }     
             
             if (checkUserExist(temp)===false) createNewDBuser(newUser);
-
+            localStorage.setItem('cart', []); // tạo giỏ hàng trống
             setTimeout(() => navigate('/'), 5000);
             sendUser(user);
         })
@@ -79,6 +79,7 @@ function Login({sendUser}) {
         .then((result)=> {
             toast.success("Đăng nhập thành công!");
             setUser(result.user);
+            localStorage.setItem('cart', []); // tạo giỏ hàng trống
             setTimeout(() => navigate('/'), 5000);
             sendUser(user);
         })

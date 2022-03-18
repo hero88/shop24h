@@ -49,28 +49,25 @@ function OrderDetailModal({open, setOpen, data}) {
         return quantity;
     }
 
-    useEffect(()=>{
-        let isContinued = true;        
+    useEffect(()=>{        
         if (productList.length===0) 
             fetchApi("http://localhost:8000/products/")
             .then(res=> {
-                if (isContinued) setProductList(res.products);
+                setProductList(res.products);
             })
             .catch(error=>console.log(error))
         if (customerList.length===0)
             fetchApi("http://localhost:8000/customers/")
                 .then(res=> {
-                    if (isContinued) setCustomerList(res.customers);
+                    setCustomerList(res.customers);
                 })
                 .catch(error=>console.log(error))
         if (customerList.length===0)
             fetchApi("http://localhost:8000/orderdetail/")
                 .then(res=> {
-                    if (isContinued) setDetailList(res.OrderDetail);
+                    setDetailList(res.OrderDetail);
                 })
-                .catch(error=>console.log(error))        
-        
-        return ()=> isContinued = false;
+                .catch(error=>console.log(error))   
     })
 
     return(
