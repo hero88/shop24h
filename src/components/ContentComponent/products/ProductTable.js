@@ -2,11 +2,11 @@ import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableC
 import { Container, Row, Col } from 'reactstrap';
 import {useState, useEffect} from 'react';
 
-import {auth} from '../../firebase';
-import InsertProductModal from "../modal/InsertProductModal";
-import UpdateProductModal from "../modal/UpdateProductModal";
-import DeleteProductModal from "../modal/DeleteProductModal";
-import FilterComponent from "./FilterComponent";
+import {auth} from '../../../firebase';
+import InsertProductModal from "../../modal/InsertProductModal";
+import UpdateProductModal from "../../modal/UpdateProductModal";
+import DeleteProductModal from "../../modal/DeleteProductModal";
+import FilterComponent from "../FilterComponent";
 
 function ProductTable() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {

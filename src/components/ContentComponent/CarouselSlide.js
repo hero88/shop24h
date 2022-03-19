@@ -1,24 +1,21 @@
 import { Container} from 'reactstrap';
 import {Carousel} from 'react-bootstrap';
 
-import DATA from './../../data.json';
-
-function CarouselSlide(){
+function CarouselSlide({data}){
     return(
-        <Container className='p-4'>
+        <Container className='p-6'>
             <Carousel variant='dark'>
                 {
-                    DATA.map((element,index)=>
+                    data.map((element,index)=>
                         <Carousel.Item key={index}>
-                            <img
-                                className="d-block w-40"
-                                src={element.ImageUrl}
-                                alt={"Slide " + index }
-                            />
-                            <Carousel.Caption className='text-start'>
-                                <h3>{element.Name}</h3>
-                                <p>{element.Description}</p>
-                            </Carousel.Caption>
+                            <a href='/products'>
+                                <img
+                                    className="d-block w-100"
+                                    src={element.imageUrl}
+                                    alt={"Slide " + index } 
+                                    width='20%'                                   
+                                />
+                            </a>              
                         </Carousel.Item>
                     )
                 }

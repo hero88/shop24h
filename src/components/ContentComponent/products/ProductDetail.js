@@ -5,7 +5,7 @@ import {Col, Breadcrumb, BreadcrumbItem, Container} from 'reactstrap';
 import {useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
 
-import {AddCart} from '../actions'
+import {AddCart} from '../../actions'
 import {connect} from 'react-redux';
 
 function ProductDetail({currentUser, sendProduct}) {
@@ -62,11 +62,11 @@ function ProductDetail({currentUser, sendProduct}) {
             <Col xs='12' sm='12' md='12' lg='12'>
                 <Breadcrumb tag="nav" className="mt-5">
                         <BreadcrumbItem tag="a" href="/">Trang chủ</BreadcrumbItem>     
-                        <BreadcrumbItem >Sản phẩm</BreadcrumbItem>     
+                        <BreadcrumbItem tag='a' href='/products'>Sản phẩm</BreadcrumbItem>     
                         <BreadcrumbItem href="/products/:id" active>{currentProduct.name}</BreadcrumbItem>                  
                 </Breadcrumb>
             </Col>
-            <Grid container spacing={2} mt={2}>
+            <Grid container spacing={2} mt={2} >
                 <Grid item xs={4} md={4} lg={4}>
                     <img src={currentProduct.imageUrl} alt='imageDraft' width='60%'/>
                 </Grid>
@@ -92,7 +92,7 @@ function ProductDetail({currentUser, sendProduct}) {
             {
                 relatedProducts.length > 0
                 ?                 
-                <Grid container spacing={2}>
+                <Grid container spacing={2} style={{backgroundColor:'lightskyblue'}}>
                     <Grid item xs={12} md={12} lg={12}>
                         <h5>Sản phẩm liên quan</h5>
                     </Grid>

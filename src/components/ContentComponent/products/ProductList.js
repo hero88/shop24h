@@ -84,10 +84,9 @@ function ProductList({data, searchData}) {
                             </a>                            
                             <CardBody>
                                 <h4>{element.name}</h4>
-                                <p>{element.description}</p>
                             </CardBody>
                             <CardFooter>
-                                <h4>Price:</h4>
+                                <h4>Giá tiền:</h4>
                                 <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
                                 <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND</p>
                             </CardFooter>

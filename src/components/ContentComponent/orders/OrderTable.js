@@ -2,11 +2,11 @@ import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableC
 import { Container } from 'reactstrap';
 import {useState, useEffect} from 'react';
 
-import {auth} from '../../firebase';
-import InsertOrderModal from "../modal/InsertOrderModal";
-import UpdateOrderModal from "../modal/UpdateOrderModal";
-import OrderDetailModal from "../modal/OrderDetailModal";
-import DeleteOrderModal from "../modal/DeleteOrderModal";
+import {auth} from '../../../firebase';
+import InsertOrderModal from "../../modal/InsertOrderModal";
+import UpdateOrderModal from "../../modal/UpdateOrderModal";
+import OrderDetailModal from "../../modal/OrderDetailModal";
+import DeleteOrderModal from "../../modal/DeleteOrderModal";
 
 function OrderTable() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -85,9 +85,10 @@ function OrderTable() {
             let total = orderList.length;
             setNoPage(Math.ceil(total/limit));
         }
+        console.log(page);
 
         return ()=> isContinued = false;
-    }, [dbUser, FireBaseUser, orderList]);
+    }, [dbUser, FireBaseUser, orderList,page]);
 
     return(
         <Container className="mt-5">

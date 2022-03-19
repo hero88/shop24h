@@ -47,19 +47,26 @@ function UpdateCustomerModal({update, setUpdate, customer}) {
             address: address ? address : customer.address
         };
 
-        let reqOptions = {
-            method: 'PUT',
-            body: JSON.stringify(newCustomer),
-            headers: {'Content-type': 'application/json; charset=UTF-8'}
-        };
-        fetchApi('http://localhost:8000/customers/' + vId, reqOptions)
-        .then((result)=>{
-            console.log(result);
-            toast.success("Cập nhật khách hàng thành công!");
-            window.location.href= '/customertable';
-        })
-        .catch(err=>console.log(err))
+        if (isNaN(newCustomer.phoneNumber)) {
+            toast.error("Số điện thoại không được có chữ!");
+            return false;
+        }
+        else {
+            let reqOptions = {
+                method: 'PUT',
+                body: JSON.stringify(newCustomer),
+                headers: {'Content-type': 'application/json; charset=UTF-8'}
+            };
+            fetchApi('http://localhost:8000/customers/' + vId, reqOptions)
+            .then((result)=>{
+                console.log(result);
+                toast.success("Cập nhật khách hàng thành công!");
+                handleClose();
+            })
+            .catch(err=>console.log(err))
+        }        
     }
+    
     return (
         <>
         <Modal

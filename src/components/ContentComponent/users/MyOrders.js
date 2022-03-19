@@ -3,9 +3,9 @@ import { Container } from 'reactstrap';
 import { toast } from 'react-toastify';
 import {useState, useEffect} from 'react';
 
-import {auth} from '../../firebase';
-import OrderDetailModal from '../modal/OrderDetailModal';
-import DeleteOrderModal from '../modal/DeleteOrderModal';
+import {auth} from '../../../firebase';
+import OrderDetailModal from '../../modal/OrderDetailModal';
+import DeleteOrderModal from '../../modal/DeleteOrderModal';
 
 function MyOrders() {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -75,11 +75,11 @@ function MyOrders() {
         
         if (user) 
             fetchApi(customerURL + user._id + '/orders')
-                .then(result =>{
-                    if (isContinued) {
+                .then(result =>{     
+                    if (isContinued) {              
                         let temp = result.Orders.orders;
-                        if (temp.length > 0) setOrderList(temp);
-                    }                    
+                        setOrderList(temp);
+                    }                                        
                 })
                 .catch(err=>console.log(err.message))        
         

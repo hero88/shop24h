@@ -3,7 +3,7 @@ import { Container } from 'reactstrap';
 import { toast } from 'react-toastify';
 import {useState, useEffect} from 'react';
 
-import {auth} from '../../firebase';
+import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

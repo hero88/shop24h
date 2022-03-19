@@ -1,9 +1,9 @@
 import { TextField, Button, Grid, Box } from '@mui/material';
-import {auth, googleProvider} from './../../firebase';
+import {auth, googleProvider} from '../../../firebase';
 import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import ResetPasswordModal from '../modal/ResetPasswordModal';
+import ResetPasswordModal from '../../modal/ResetPasswordModal';
 
 function Login({sendUser}) {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
