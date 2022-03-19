@@ -61,7 +61,7 @@ function UpdateCustomerModal({update, setUpdate, customer}) {
             .then((result)=>{
                 console.log(result);
                 toast.success("Cập nhật khách hàng thành công!");
-                window.location.href= '/customertable';
+                handleClose();
             })
             .catch(err=>console.log(err))
         }        

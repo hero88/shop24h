@@ -2,8 +2,8 @@ import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableC
 import { Container } from 'reactstrap';
 import {useState, useEffect} from 'react';
 
-import {auth} from '../../firebase';
-import UpdateCustomerModal from "../modal/UpdateCustomerModal";
+import {auth} from '../../../firebase';
+import UpdateCustomerModal from "../../modal/UpdateCustomerModal";
 
 function CustomerTable(){
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -40,14 +40,14 @@ function CustomerTable(){
 
     useEffect(()=>{     
         let isContinued = true;   
-        if (FireBaseUser && !dbUser)
+        if (FireBaseUser)
             fetchApi(customerURL)
             .then(result=>{
                 if (isContinued) {
                     let customerList = result.customers;
                     let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
                     let tempCustomers = customerList.filter(el=>el.role==="Customer");
-                    if (tempUser) setDbUser(tempUser);                
+                    if (tempUser) setDbUser(tempUser); 
                     setCustomers(tempCustomers);
                     setNoPage(Math.ceil(tempCustomers.length/limit));
                 }                
@@ -56,7 +56,7 @@ function CustomerTable(){
         return ()=>{
             isContinued = false;
         }
-    },[FireBaseUser, dbUser])
+    },[FireBaseUser, dbUser, customers])
 
     return(
         <Container className="mt-5">

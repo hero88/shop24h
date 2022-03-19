@@ -6,22 +6,23 @@ import HomepageContent from './components/ContentComponent/HomepageContent';
 
 import { Route, Routes } from 'react-router-dom';
 
-import Login from './components/ContentComponent/Login';
+import Login from './components/ContentComponent/users/Login';
 import { Grid } from '@mui/material';
 
 import {useState, useEffect} from 'react';
 import {auth} from './firebase'
-import ProductDetail from './components/ContentComponent/ProductDetail';
-import ShoppingCart from './components/ContentComponent/ShoppingCart';
+import ProductDetail from './components/ContentComponent/products/ProductDetail';
+import ShoppingCart from './components/ContentComponent/orders/ShoppingCart';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Profile from './components/ContentComponent/Profile';
-import MyOrders from './components/ContentComponent/MyOrders';
-import SignUp from './components/ContentComponent/SignUp';
-import ProductTable from './components/ContentComponent/ProductTable';
-import CustomerTable from './components/ContentComponent/CustomerTable';
-import OrderTable from './components/ContentComponent/OrderTable';
+import Profile from './components/ContentComponent/users/Profile';
+import MyOrders from './components/ContentComponent/users/MyOrders';
+import SignUp from './components/ContentComponent/users/SignUp';
+import ProductTable from './components/ContentComponent/products/ProductTable';
+import CustomerTable from './components/ContentComponent/users/CustomerTable';
+import OrderTable from './components/ContentComponent/orders/OrderTable';
+import AllProducts from './components/ContentComponent/products/AllProducts';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -84,6 +85,7 @@ function App() {
             <Route path='producttable' element={<ProductTable/>}/>
             <Route path='customertable' element={<CustomerTable/>}/>
             <Route path='ordertable' element={<OrderTable/>}/>
+            <Route path='products' element={<AllProducts/>}/>
           </Routes> 
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} mt={10}>
