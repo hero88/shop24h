@@ -1,7 +1,7 @@
 import { useParams} from "react-router-dom";
 
 import {Grid, Button} from '@mui/material';
-import {Col, Breadcrumb, BreadcrumbItem, Container} from 'reactstrap';
+import {Col, Breadcrumb, BreadcrumbItem, Container, Card, CardBody, CardFooter, CardImg} from 'reactstrap';
 import {useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
 
@@ -60,7 +60,7 @@ function ProductDetail({currentUser, sendProduct}) {
         <Container >
             <br/>
             <Col xs='12' sm='12' md='12' lg='12'>
-                <Breadcrumb tag="nav" className="mt-5">
+                <Breadcrumb tag="nav" className="mt-3">
                         <BreadcrumbItem tag="a" href="/">Trang chủ</BreadcrumbItem>     
                         <BreadcrumbItem tag='a' href='/products'>Sản phẩm</BreadcrumbItem>     
                         <BreadcrumbItem href="/products/:id" active>{currentProduct.name}</BreadcrumbItem>                  
@@ -92,19 +92,25 @@ function ProductDetail({currentUser, sendProduct}) {
             {
                 relatedProducts.length > 0
                 ?                 
-                <Grid container spacing={2} style={{backgroundColor:'lightskyblue'}}>
+                <Grid container spacing={2} >
                     <Grid item xs={12} md={12} lg={12}>
                         <h5>Sản phẩm liên quan</h5>
                     </Grid>
                     {
                         relatedProducts.map((element, index)=>
                             <Grid item xs={ 12/relatedProducts.length > 4 ? 12/relatedProducts.length : 4 } key={index}>
-                                <a href={"/products/" + element._id} data-toggle='tooltip' title='Click for details'>
-                                    <img src={element.imageUrl} alt='' width='30%'/>
-                                </a>
-                                <p className="fw-bold">{element.name}</p>
-                                <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
-                                <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND</p>
+                                <Card className='mb-4' style={{height: '50%', width: '70%'}}>
+                                        <a href={"/products/" + element._id} data-toggle='tooltip' title='Click for details'>
+                                            <CardImg src={element.imageUrl} top alt='photo_something' style={{objectFit:'cover'}} width='250px' height='250px'/>
+                                        </a>                            
+                                        <CardBody>
+                                            <h4 style={{whiteSpace: 'pre', textOverflow: 'ellipsis', overflow:'hidden'}}>{element.name}</h4>
+                                        </CardBody>
+                                        <CardFooter>
+                                            <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
+                                            <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND</p>
+                                        </CardFooter>
+                                </Card>
                             </Grid>
                         )
                     }                    

@@ -10,13 +10,13 @@ import store  from './components/stores'
 
 
 ReactDOM.render(
-  <React.StrictMode>    
-    <BrowserRouter>
-      <Provider store = {store}>
-        <App />
-      </Provider>
-    </BrowserRouter>    
-  </React.StrictMode>,
+  <Provider store = {store}>
+    <React.StrictMode>    
+        <BrowserRouter>      
+            <App />      
+        </BrowserRouter>    
+      </React.StrictMode>
+  </Provider>,  
   document.getElementById('root')
 );
 

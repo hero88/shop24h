@@ -7,7 +7,6 @@ import { faShoppingBasket, faUserCircle, faList, faBars, faRightFromBracket, faU
 
 import Logo from "./Logo";
 import IconNavBar from "./IconNavBar";
-import  {connect} from  'react-redux';
 import { useNavigate } from "react-router-dom";
 
 import { toast } from 'react-toastify';
@@ -155,10 +154,5 @@ function HeaderComponent({currentUser, numCart}){
     )
 }
 
-const mapStateToProps = state =>{
-    return{
-        numberCart: state._todoProduct.numberCart
-    }
-}
 
-export default connect(mapStateToProps,null)(HeaderComponent);
+export default HeaderComponent;
