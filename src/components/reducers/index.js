@@ -21,7 +21,7 @@ function todoProduct(state = initProduct,action){
         case ADD_CART:
             if(state.numberCart===0){
                 let cart = {
-                    id:action.payload.id,
+                    _id:action.payload._id,
                     quantity:1,
                     name:action.payload.name,
                     image:action.payload.imageUrl,
@@ -33,7 +33,7 @@ function todoProduct(state = initProduct,action){
                 let check = false;
                 let copy = state.Carts;
                 copy.map((item,key)=>{
-                    if(item.id===action.payload.id){
+                    if(item._id===action.payload._id){
                         copy[key].quantity++;
                         check=true;
                     }
@@ -41,7 +41,7 @@ function todoProduct(state = initProduct,action){
                 });
                 if(!check){
                     let _cart = {
-                        id:action.payload.id,
+                        _id:action.payload._id,
                         quantity:1,
                         name:action.payload.name,
                         image:action.payload.imageUrl,
@@ -78,7 +78,7 @@ function todoProduct(state = initProduct,action){
                     ...state,
                     numberCart:state.numberCart - quantity_,
                     Carts:state.Carts.filter(item=>{
-                        return item.id !== state.Carts[action.payload].id
+                        return item._id !== state.Carts[action.payload]._id
                     })
                    
                 }

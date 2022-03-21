@@ -34,10 +34,10 @@ function AllProducts() {
                         <BreadcrumbItem tag='a' href='/products' active>Sản phẩm</BreadcrumbItem>                            
                     </Breadcrumb>
                 </Col>
-                <Col sm='3' xs='5'>
+                <Col sm='3' xs='12'>
                     <FilterComponent sendFilterObj={setSearchObj}/>
                 </Col>
-                <Col sm='9' xs='7'>
+                <Col sm='9' xs='12'>
                     <ProductList data={products} searchData={searchObj}/>                    
                 </Col>
             </Row>            

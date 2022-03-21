@@ -1,6 +1,6 @@
 import {Grid, Pagination} from '@mui/material';
 import {useState, useEffect} from 'react';
-import {Container, Row, Col, Card, CardBody, CardFooter} from 'reactstrap';
+import {Container, Row, Col, Card, CardBody, CardFooter, CardImg} from 'reactstrap';
 
 
 function ProductList({data, searchData}) {    
@@ -80,10 +80,10 @@ function ProductList({data, searchData}) {
                     >
                         <Card className='mb-2'>
                             <a href={"/products/" + element._id} data-toggle='tooltip' title='Click for details'>
-                                <img src={element.imageUrl} className='card-img-top' alt='photo_something' />
+                                <CardImg src={element.imageUrl} top alt='photo_something' style={{objectFit:'cover'}} width='250px' height='250px'/>
                             </a>                            
                             <CardBody>
-                                <h4>{element.name}</h4>
+                                <h4 style={{whiteSpace: 'pre', textOverflow: 'ellipsis', overflow:'hidden'}}>{element.name}</h4>
                             </CardBody>
                             <CardFooter>
                                 <h4>Giá tiền:</h4>

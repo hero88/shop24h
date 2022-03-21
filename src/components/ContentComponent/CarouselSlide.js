@@ -3,19 +3,17 @@ import {Carousel} from 'react-bootstrap';
 
 function CarouselSlide({data}){
     return(
-        <Container className='p-6'>
+        <Container className='p-6' style={{width: '60%'}}>
             <Carousel variant='dark'>
                 {
                     data.map((element,index)=>
-                        <Carousel.Item key={index}>
-                            <a href='/products'>
+                        <Carousel.Item key={index}>                            
                                 <img
                                     className="d-block w-100"
                                     src={element.imageUrl}
                                     alt={"Slide " + index } 
                                     width='20%'                                   
-                                />
-                            </a>              
+                                />                                         
                         </Carousel.Item>
                     )
                 }

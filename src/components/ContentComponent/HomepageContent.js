@@ -1,4 +1,4 @@
-import {Container, Row, Col, Breadcrumb, BreadcrumbItem, Card, CardBody, CardFooter} from 'reactstrap';
+import {Container, Row, Col, Card, CardBody, CardFooter, Button} from 'reactstrap';
 
 import {useState, useEffect} from 'react';
 import CarouselSlide from './CarouselSlide';
@@ -30,18 +30,10 @@ function HomepageContent(){
 
     return(
         <Container fluid>                                               
-            <Row>
-                <Col xs='12' sm='12' md='12' lg='12'>
-                    <Breadcrumb tag="nav" className="mt-5">
-                        <BreadcrumbItem tag="a" href="/" active>Trang chủ</BreadcrumbItem>                            
-                    </Breadcrumb>
-                </Col>
-                <Col xs='12' sm='12' md='8' lg='8' className='mb-3'>
+            <Row>                
+                <Col xs='12' sm='12' md='12' lg='12' className='mb-3'>
                     <CarouselSlide data={products}/>
-                </Col>
-                <Col xs='12' sm='12' md='4' lg='4' className='mb-3'>
-                    <h3 className='text-center text-success'>Kính chào quý khách!!</h3>
-                </Col>
+                </Col>                
             </Row>
                 {
                     latest.length > 0
@@ -62,7 +54,7 @@ function HomepageContent(){
                                             <img src={element.imageUrl} className='card-img-top' alt='photo_something' width='20%'/>
                                         </a>                            
                                         <CardBody>
-                                            <h4>{element.name}</h4>
+                                            <h5 style={{whiteSpace: 'pre', textOverflow: 'ellipsis', overflow:'hidden'}}>{element.name}</h5>
                                         </CardBody>
                                         <CardFooter>
                                             <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
@@ -75,7 +67,11 @@ function HomepageContent(){
                     </Row>
                     : <Row></Row>
                 }
-                       
+            <Row>
+                <Col sm='12' xs='12' className='text-center'>
+                    <Button className='btn-primary' onClick={()=>window.location.href = '/products'}>Đến trang sản phẩm</Button>
+                </Col>
+            </Row>           
         </Container>
     )
 }
