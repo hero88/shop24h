@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
 
 import {AddCart} from '../../actions'
-import {connect} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 function ProductDetail({currentUser, sendProduct}) {
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -16,6 +16,7 @@ function ProductDetail({currentUser, sendProduct}) {
     }
 
     const {id} = useParams();
+    const dispatch = useDispatch();
     const [NoItem, setNoItem] = useState(1);
     const [currentProduct, setCurrentProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
@@ -38,6 +39,7 @@ function ProductDetail({currentUser, sendProduct}) {
                 image: currentProduct.imageUrl
             };
             sendProduct(selectedProduct);
+            dispatch(AddCart(selectedProduct));
         }
     }
     
@@ -66,10 +68,10 @@ function ProductDetail({currentUser, sendProduct}) {
                 </Breadcrumb>
             </Col>
             <Grid container spacing={2} mt={2} >
-                <Grid item xs={4} md={4} lg={4}>
+                <Grid item xs={12} md={4} lg={4} sm={4}>
                     <img src={currentProduct.imageUrl} alt='imageDraft' width='60%'/>
                 </Grid>
-                <Grid item xs={7} md={7} lg={7}>
+                <Grid item xs={12} md={7} lg={7} sm={7}>
                     <h4>{currentProduct.name}</h4>
                     <p>Type: {currentProduct.type}</p>
                     <p className='text-decoration-line-through'>{(currentProduct.buyPrice * NoItem).toLocaleString()} VND</p>
@@ -97,8 +99,8 @@ function ProductDetail({currentUser, sendProduct}) {
                     </Grid>
                     {
                         relatedProducts.map((element, index)=>
-                            <Grid item xs={ 12/relatedProducts.length > 4 ? 12/relatedProducts.length : 4 } key={index}>
-                                <Card className='mb-4' style={{height: '50%', width: '70%'}}>
+                            <Grid item sm={ 12/relatedProducts.length > 4 ? 12/relatedProducts.length : 4 } key={index} xs={12}>
+                                <Card className='mb-4' style={{height: '50%'}}>
                                         <a href={"/products/" + element._id} data-toggle='tooltip' title='Click for details'>
                                             <CardImg src={element.imageUrl} top alt='photo_something' style={{objectFit:'cover'}} width='250px' height='250px'/>
                                         </a>                            
@@ -120,17 +122,4 @@ function ProductDetail({currentUser, sendProduct}) {
     )
 }
 
-
-const mapStateToProps = state =>{
-    return {
-         _products: state._todoProduct,
-    };
-}
-function mapDispatchToProps(dispatch){
-    return{
-        AddCart:item=>dispatch(AddCart(item))
-      
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail);
+export default ProductDetail;
