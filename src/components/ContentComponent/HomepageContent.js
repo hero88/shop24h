@@ -1,5 +1,6 @@
 import {Container, Row, Col, Card, CardBody, CardFooter, Button} from 'reactstrap';
-
+import {GetAllProduct} from '../actions';
+import {useSelector, useDispatch} from 'react-redux';
 import {useState, useEffect} from 'react';
 import CarouselSlide from './CarouselSlide';
 
@@ -9,30 +10,32 @@ function HomepageContent(){
         const responseData = await response.json();
         return responseData;
     }
-    const [products, setProducts] = useState([]);
     const [latest, setLatest] = useState([]);
 
-    useEffect(() => {
-        let isContinued = true;        
-        fetchApi("http://localhost:8000/products/")
-                .then(response => {                
-                    if (isContinued) {
+    const allProducts = useSelector(state => state._todoProduct._products);
+    const dispatch = useDispatch();
+
+    useEffect(() => {   
+        const controller = new AbortController();
+        const signal = controller.signal;    
+
+        fetchApi("http://localhost:8000/products/", {signal: signal})
+                .then(response => {   
                         let tempProduct = response.products;
                         let chosenDate = new Date('2022-03-05');
                         let latestArr = tempProduct.filter(el => new Date(el.timeCreated) >= chosenDate);
-                        setProducts(tempProduct); 
+                        if (tempProduct.length>=0) dispatch(GetAllProduct(tempProduct));
                         setLatest(latestArr);
-                    }
                 })
                 .catch(error => console.log(error))        
-        return () => isContinued = false;
-    }, [latest]);
+        return () => controller.abort();
+    }, [latest, dispatch]);
 
     return(
         <Container fluid>                                               
             <Row>                
                 <Col xs='12' sm='12' md='12' lg='12' className='mb-3'>
-                    <CarouselSlide data={products}/>
+                    <CarouselSlide data={allProducts}/>
                 </Col>                
             </Row>
                 {

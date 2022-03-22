@@ -7,21 +7,6 @@ export const ADD_CART = 'ADD_CART' ;
 export const UPDATE_CART = 'UPDATE_CART';
 export const DELETE_CART = 'DELETE_CART';
 
-export const actFetchProductsRequest = () => {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
-    return (dispatch) => {
-        return fetchApi("http://localhost:8000/products/")
-            .then(res => {          
-                dispatch(GetAllProduct(res.products));
-            })
-            .catch(err => console.log(err.message));
-    }
-}
-
 /*GET_ALL_PRODUCT*/
 export function GetAllProduct(payload){
     return{

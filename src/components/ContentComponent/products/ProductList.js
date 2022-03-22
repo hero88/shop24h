@@ -24,8 +24,8 @@ function ProductList({data, searchData}) {
 
     useEffect(() => {
         let targetURL = "";
-        let isContinued = true;
-        if (isContinued) {
+        const controller = new AbortController();
+        const signal = controller.signal; 
             if ((Object.keys(searchData).length===0)
                 || (!searchData.name && searchData.minPrice === 0 && searchData.maxPrice === 0 && searchData.type==="None")
             )
@@ -37,21 +37,21 @@ function ProductList({data, searchData}) {
                 if (searchData.maxPrice) targetURL += "&maxPrice=" + searchData.maxPrice;
                 if (searchData.type) targetURL += "&type=" + searchData.type;            
             }
-            fetchApi(targetURL)
+            fetchApi(targetURL, {signal: signal})
                 .then(response => {
-                    if (isContinued) setNoPage(Math.ceil(response.count/limit));
+                    setNoPage(Math.ceil(response.count/limit));
                 })
                 .catch(err => console.log(err));
 
             targetURL += "&limit=" + limit + "&page=" + page; // do pagination
 
-            fetchApi(targetURL)
+            fetchApi(targetURL, {signal: signal})
                 .then(response => {
-                    if (isContinued) setProductList(response.products);
+                    setProductList(response.products);
                 })
                 .catch(error => console.log(error));
-        }
-        return ()=> isContinued = false;
+        
+        return ()=> controller.abort();
 
     }, [page, limit, searchData]);
 
