@@ -19,50 +19,35 @@ function todoProduct(state = initProduct,action){
                     ...state
                 }
         case ADD_CART:
-            if(state.numberCart===0){
-                let cart = {
-                    _id:action.payload._id,
-                    quantity:1,
-                    name:action.payload.name,
-                    image:action.payload.imageUrl,
-                    price:action.payload.promotionPrice
-                } 
-                state.Carts.push(cart); 
+            let copy = [...state.Carts];
+            let product = action.payload;
+            if(copy.length === 0){
+                copy.push(product); 
             }
             else{
-                let check = false;
-                let copy = state.Carts;
+                let check = false;                
                 copy.map((item,key)=>{
-                    if(item._id===action.payload._id){
-                        copy[key].quantity++;
+                    if(item.productId === product.productId){
+                        copy[key].quantity = copy[key].quantity+1;
                         check=true;
                     }
                     return copy;
                 });
-                if(!check){
-                    let _cart = {
-                        _id:action.payload._id,
-                        quantity:1,
-                        name:action.payload.name,
-                        image:action.payload.imageUrl,
-                        price:action.payload.promotionPrice
-                    }
-                    state.Carts.push(_cart);
-                }
-                else state.Carts = copy;
+                if(!check) copy.push(product);
             }
             return{
                 ...state,
-                numberCart:state.numberCart+1
+                Carts: copy,
+                numberCart: copy.length
             }
-            case INCREASE_QUANTITY:
+        case INCREASE_QUANTITY:
                 state.numberCart++
                 state.Carts[action.payload].quantity++;
               
                return{
                    ...state
                }
-            case DECREASE_QUANTITY:
+        case DECREASE_QUANTITY:
                 let quantity = state.Carts[action.payload].quantity;
                 if(quantity>1){
                     state.numberCart--;
@@ -72,7 +57,7 @@ function todoProduct(state = initProduct,action){
                 return{
                     ...state
                 }
-            case DELETE_CART:
+        case DELETE_CART:
                 let quantity_ = state.Carts[action.payload].quantity;
                 return{
                     ...state,
