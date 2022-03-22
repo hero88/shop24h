@@ -42,18 +42,17 @@ function ProductDetail({currentUser, sendProduct}) {
     }
     
     useEffect(()=>{
-        let isContinued = true;        
-        fetchApi("http://localhost:8000/products/")
-            .then(response => {    
-                if (isContinued) {           
+        const controller = new AbortController();
+        const signal = controller.signal;        
+        fetchApi("http://localhost:8000/products/", {signal: signal})
+            .then(response => {           
                     let productDB = response.products;
                     setCurrentProduct(productDB.find(el => id===el._id));
                     setRelatedProducts(productDB.filter(el => currentProduct.type === el.type && currentProduct._id !== el._id));
-                }
             })
             .catch(error => console.log(error))
         
-        return ()=> isContinued = false;
+        return ()=> controller.abort();
     },[currentProduct,id])
     
     return(

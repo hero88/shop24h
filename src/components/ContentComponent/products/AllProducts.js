@@ -1,29 +1,14 @@
 import {Container, Row, Col, Breadcrumb, BreadcrumbItem} from 'reactstrap';
 
 import FilterComponent from '../FilterComponent';
-
+import { useSelector } from 'react-redux';
 import ProductList from './ProductList';
 
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 function AllProducts() {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
-    const [products, setProducts] = useState([]);
+    const products = useSelector(state => state._todoProduct._products);
     const [searchObj, setSearchObj] = useState({});
-
-    useEffect(() => {
-        let isContinued = true;        
-        fetchApi("http://localhost:8000/products/")
-                .then(response => {                
-                    if (isContinued) setProducts(response.products);
-                })
-                .catch(error => console.log(error))        
-        return () => isContinued = false;
-    }, []);
 
     return(
         <Container>                                               
