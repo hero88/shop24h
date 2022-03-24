@@ -1,4 +1,4 @@
-import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination, TextField} from "@mui/material";
+import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination, TextField, TableSortLabel} from "@mui/material";
 import { Container } from 'reactstrap';
 import {useState, useEffect} from 'react';
 
@@ -26,6 +26,7 @@ function CustomerTable(){
     const [currentCustomer,setCurrentCustomer] = useState({});
     const [updateModal, setUpdateModal] = useState(false);
     const [search, setSearch] = useState("");
+    const [DateOrderDirection, setDateOrderDirection] = useState("asc");
 
     const onBtnEditClick = (data) => {
         setCurrentCustomer(data);
@@ -38,25 +39,46 @@ function CustomerTable(){
 
     const changeNameHandler = e => setSearch(e.target.value);
 
+    const sortDateArray = (arr, orderBy) => {
+        switch (orderBy) {
+            case "asc":
+            default:
+              return arr.sort((a, b) => {
+                let dateA = new Date(a.timeCreated);
+                let dateB = new Date(b.timeCreated);
+                return dateA > dateB ? 1 : dateB > dateA ? -1 : 0;
+              });
+            case "desc":
+              return arr.sort((a, b) => {
+                let dateA = new Date(a.timeCreated);
+                let dateB = new Date(b.timeCreated);
+                return dateA < dateB ? 1 : dateB < dateA ? -1 : 0;
+                });
+        }
+    }
+
+    const handleSortDateRequest = () => {
+        let temp = sortDateArray(customers, DateOrderDirection);
+        setCustomers(temp);
+        setDateOrderDirection(DateOrderDirection === "asc" ? "desc" : "asc");
+    }
+
     useEffect(()=>{     
-        let isContinued = true;   
-        if (FireBaseUser)
-            fetchApi(customerURL)
+        const controller = new AbortController();
+        const signal = controller.signal;  
+        if (FireBaseUser && !dbUser)
+            fetchApi(customerURL, {signal: signal})
             .then(result=>{
-                if (isContinued) {
                     let customerList = result.customers;
                     let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
                     let tempCustomers = customerList.filter(el=>el.role==="Customer");
                     if (tempUser) setDbUser(tempUser); 
                     setCustomers(tempCustomers);
-                    setNoPage(Math.ceil(tempCustomers.length/limit));
-                }                
+                    setNoPage(Math.ceil(tempCustomers.length/limit));              
             })
             .catch(error=>console.log(error))        
-        return ()=>{
-            isContinued = false;
-        }
-    },[FireBaseUser, dbUser, customers])
+        return ()=> controller.abort();
+    },[FireBaseUser, dbUser, updateModal])
 
     return(
         <Container className="mt-5">
@@ -84,7 +106,11 @@ function CustomerTable(){
                                         <TableCell width='30%'>Tên khách hàng</TableCell>
                                         <TableCell width='20%'>Số điện thoại</TableCell>
                                         <TableCell width='15%'>Email</TableCell>
-                                        <TableCell width='15%'>Ngày đăng ký</TableCell>
+                                        <TableCell width='15%' onClick={handleSortDateRequest}>
+                                            <TableSortLabel active={true} direction={DateOrderDirection}>
+                                            Ngày đăng ký
+                                            </TableSortLabel>
+                                        </TableCell>
                                         <TableCell width='20%'> Action </TableCell>
                                     </TableRow>
                                 </TableHead>

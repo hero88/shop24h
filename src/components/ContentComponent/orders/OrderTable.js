@@ -1,4 +1,4 @@
-import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination, TextField} from "@mui/material";
+import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination, TextField, TableSortLabel} from "@mui/material";
 import { Container } from 'reactstrap';
 import {useState, useEffect} from 'react';
 
@@ -27,6 +27,9 @@ function OrderTable() {
     const [customers, setCustomers] = useState([]);
     const [currentOrder, setCurrentOrder] = useState({});
     const [search, setSearch] = useState("");
+    const [PriceOrderDirection, setPriceOrderDirection] = useState("asc");
+    const [StatusOrderDirection, setStatusOrderDirection] = useState("asc");
+    const [DateOrderDirection, setDateOrderDirection] = useState("asc");
 
     const [insertModal, setInsertModal] = useState(false);
     const [updateModal, setUpdateModal] = useState(false);
@@ -58,37 +61,93 @@ function OrderTable() {
 
     const changeIdHandler = e => setSearch(e.target.value);
 
+    const sortPriceArray = (arr, orderBy) => {
+        switch (orderBy) {
+          case "asc":
+          default:
+            return arr.sort((a, b) =>
+              a.totalAmount > b.totalAmount ? 1 : b.totalAmount > a.totalAmount ? -1 : 0
+            );
+          case "desc":
+            return arr.sort((a, b) =>
+              a.totalAmount < b.totalAmount ? 1 : b.totalAmount < a.totalAmount ? -1 : 0
+            );
+        }
+    };
+
+    const sortStatusArray = (arr, orderBy) => {
+        switch (orderBy) {
+            case "asc":
+            default:
+              return arr.sort((a, b) =>
+                a.status > b.status ? 1 : b.status > a.status ? -1 : 0
+              );
+            case "desc":
+              return arr.sort((a, b) =>
+                a.status < b.status ? 1 : b.status < a.status ? -1 : 0
+              );
+        }
+    }
+
+    const sortDateArray = (arr, orderBy) => {
+        switch (orderBy) {
+            case "asc":
+            default:
+              return arr.sort((a, b) => {
+                let dateA = new Date(a.timeCreated);
+                let dateB = new Date(b.timeCreated);
+                return dateA > dateB ? 1 : dateB > dateA ? -1 : 0;
+              });
+            case "desc":
+              return arr.sort((a, b) => {
+                let dateA = new Date(a.timeCreated);
+                let dateB = new Date(b.timeCreated);
+                return dateA < dateB ? 1 : dateB < dateA ? -1 : 0;
+                });
+        }
+    }
+
+    const handleSortPriceRequest = () => {
+        let temp = sortPriceArray(orderList, PriceOrderDirection);
+        setOrderList(temp);
+        setPriceOrderDirection(PriceOrderDirection === "asc" ? "desc" : "asc");
+    };
+
+    const handleSortStatusRequest = () => {
+        let temp = sortStatusArray(orderList, StatusOrderDirection);
+        setOrderList(temp);
+        setStatusOrderDirection(StatusOrderDirection === "asc" ? "desc" : "asc");
+    }
+
+    const handleSortDateRequest = () => {
+        let temp = sortDateArray(orderList, DateOrderDirection);
+        setOrderList(temp);
+        setDateOrderDirection(DateOrderDirection === "asc" ? "desc" : "asc");
+    }
+
     useEffect(()=>{
-        let isContinued = true;
-        if (FireBaseUser && !dbUser)
-            fetchApi(customerURL)
+        const controller = new AbortController();
+        const signal = controller.signal; 
+        if (FireBaseUser && !dbUser) {
+            fetchApi(customerURL, {signal: signal})
             .then(result=> {
-                if (isContinued) {
                     let customerList = result.customers;
                     let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
                     if (tempUser) setDbUser(tempUser);
                     setCustomers(customerList);
-                }
             })
             .catch(error=>console.log(error))
-
-        fetchApi(orderURL)
-            .then(data=> {
-                if (isContinued) {
-                    let tempList = data.Order;
-                    setOrderList(tempList);
-                }
-            })
-            .catch(error=>console.log(error))
-        
-        if (orderList.length > 0){
-            let total = orderList.length;
-            setNoPage(Math.ceil(total/limit));
         }
-        console.log(page);
+        fetchApi(orderURL, {signal: signal})
+            .then(data=> {
+                    let tempList = data.Order;
+                    if (tempList) setNoPage(Math.ceil(tempList.length/limit));
+                    setOrderList(tempList);
+            })
+            .catch(error=>console.log(error))        
 
-        return ()=> isContinued = false;
-    }, [dbUser, FireBaseUser, orderList,page]);
+        return ()=> controller.abort();
+    }, [dbUser, FireBaseUser, updateModal, insertModal, deleteModal]);
 
     return(
         <Container className="mt-5">
@@ -114,9 +173,21 @@ function OrderTable() {
                                     <TableHead style={ {backgroundColor: 'orange'}}>
                                         <TableRow>
                                             <TableCell width='30%'>Mã đơn hàng</TableCell>
-                                            <TableCell width='20%'>Ngày tạo</TableCell>
-                                            <TableCell width='15%'>Thành tiền(VND)</TableCell>
-                                            <TableCell width='15%'>Trạng thái</TableCell>
+                                            <TableCell width='20%' onClick={handleSortDateRequest}>
+                                                <TableSortLabel active={true} direction={DateOrderDirection}>
+                                                    Ngày tạo
+                                                </TableSortLabel>                                                
+                                            </TableCell>
+                                            <TableCell width='15%' onClick={handleSortPriceRequest}>
+                                                <TableSortLabel active={true} direction={PriceOrderDirection}>
+                                                    Thành tiền(VND)
+                                                </TableSortLabel>
+                                            </TableCell>
+                                            <TableCell width='15%' onClick={handleSortStatusRequest}>
+                                                <TableSortLabel active={true} direction={StatusOrderDirection}>
+                                                    Trạng thái
+                                                </TableSortLabel>                                                
+                                            </TableCell>
                                             <TableCell width='20%'> Action </TableCell>
                                         </TableRow>
                                     </TableHead>
@@ -145,6 +216,7 @@ function OrderTable() {
                                     </TableBody>
                                     </Table>
                                 </TableContainer>
+                                <span className="m-2 text-center">Page: {page}</span>
                                 <Pagination onChange={changeHandler} count={noPage} defaultPage={1} style={{marginTop: 15}}></Pagination>
                             </Grid>                     
                         : <h4>Chưa có đơn hàng trong hệ thống!</h4>
