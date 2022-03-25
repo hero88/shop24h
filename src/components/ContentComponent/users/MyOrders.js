@@ -15,8 +15,8 @@ function MyOrders() {
     }
 
     const FireBaseUser = auth.currentUser;
-    const customerURL = "http://vast-castle-13621.herokuapp.com/customers/";
-    const orderURL = "http://vast-castle-13621.herokuapp.com/orders/";
+    const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";
+    const orderURL = "https://vast-castle-13621.herokuapp.com/orders/";
 
     const [user, setUser] = useState(null);
     const [orderList, setOrderList] = useState([]);

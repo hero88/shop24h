@@ -17,7 +17,7 @@ function Profile() {
     }
 
     const FireBaseUser = auth.currentUser;
-    const customerURL = "http://vast-castle-13621.herokuapp.com/customers/";
+    const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";
     const navigate = useNavigate();
 
     const [user, setUser] = useState(null);
