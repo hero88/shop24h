@@ -15,8 +15,8 @@ function ProductTable() {
         return responseData;
     }
     const FireBaseUser = auth.currentUser;
-    const customerURL = "http://localhost:8000/customers/";
-    const productURL = "http://localhost:8000/products/?";
+    const customerURL = "http://vast-castle-13621.herokuapp.com/customers/";
+    const productURL = "https://vast-castle-13621.herokuapp.com/products/?";
     
     const [page, setPage] = useState(1);
     const [noPage, setNoPage] = useState(0);

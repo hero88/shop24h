@@ -25,8 +25,8 @@ function UpdateOrderModal({update, setUpdate, list, data}) {
         setUpdate(false);               
     };
 
-    const productURL = "http://localhost:8000/products/";
-    const orderURL = "http://localhost:8000/orders/";    
+    const productURL = "http://vast-castle-13621.herokuapp.com/products/";
+    const orderURL = "http://vast-castle-13621.herokuapp.com/orders/";    
    
     const [productList, setProductList] = useState([]);
     const [status, setStatus] = useState(0);

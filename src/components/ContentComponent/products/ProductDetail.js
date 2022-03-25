@@ -15,6 +15,8 @@ function ProductDetail({currentUser, sendProduct}) {
         return responseData;
     }
 
+    const productURL = "https://vast-castle-13621.herokuapp.com/products";
+
     const {id} = useParams();
     const dispatch = useDispatch();
     const [NoItem, setNoItem] = useState(1);
@@ -46,7 +48,7 @@ function ProductDetail({currentUser, sendProduct}) {
     useEffect(()=>{
         const controller = new AbortController();
         const signal = controller.signal;        
-        fetchApi("http://localhost:8000/products/", {signal: signal})
+        fetchApi(productURL, {signal: signal})
             .then(response => {           
                     let productDB = response.products;
                     setCurrentProduct(productDB.find(el => id===el._id));

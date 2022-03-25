@@ -53,7 +53,7 @@ function InsertProductModal({insert, setInsert}) {
             body: JSON.stringify(newProduct),
             headers: {'Content-type': 'application/json; charset=UTF-8'}
         };
-        fetchApi('http://localhost:8000/products/', reqOptions)
+        fetchApi('http://vast-castle-13621.herokuapp.com/products/', reqOptions)
         .then((result)=>{
             console.log(result);
             toast.success("Tạo sản phẩm thành công!");
