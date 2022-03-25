@@ -11,7 +11,7 @@ function HomepageContent(){
         return responseData;
     }
     const [latest, setLatest] = useState([]);
-
+    const productURL = "http://vast-castle-13621.herokuapp.com/products/";
     const allProducts = useSelector(state => state._todoProduct._products);
     const dispatch = useDispatch();
 
@@ -19,7 +19,7 @@ function HomepageContent(){
         const controller = new AbortController();
         const signal = controller.signal;    
 
-        fetchApi("http://localhost:8000/products/", {signal: signal})
+        fetchApi(productURL, {signal: signal})
                 .then(response => {   
                         let tempProduct = response.products;
                         let chosenDate = new Date('2022-03-05');

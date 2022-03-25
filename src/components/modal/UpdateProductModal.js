@@ -54,7 +54,7 @@ function UpdateProductModal({update, setUpdate, product}) {
             body: JSON.stringify(newProduct),
             headers: {'Content-type': 'application/json; charset=UTF-8'}
         };
-        fetchApi('http://localhost:8000/products/' + vId, reqOptions)
+        fetchApi('http://vast-castle-13621.herokuapp.com/products/' + vId, reqOptions)
         .then((result)=>{
             console.log(result);
             toast.success("Cập nhật sản phẩm thành công!");

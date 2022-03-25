@@ -15,8 +15,8 @@ function OrderTable() {
         return responseData;
     }
     const FireBaseUser = auth.currentUser;
-    const customerURL = "http://localhost:8000/customers/";
-    const orderURL = "http://localhost:8000/orders/";
+    const customerURL = "https://vast-castle-13621.herokuapp.com/customers";
+    const orderURL = "https://vast-castle-13621.herokuapp.com/orders";
 
     const [page, setPage] = useState(1);
     const [noPage, setNoPage] = useState(0);
@@ -140,14 +140,14 @@ function OrderTable() {
         }
         fetchApi(orderURL, {signal: signal})
             .then(data=> {
-                    let tempList = data.Order;
-                    if (tempList) setNoPage(Math.ceil(tempList.length/limit));
-                    setOrderList(tempList);
+                let tempList = data.Order;
+                if (tempList) setNoPage(Math.ceil(tempList.length/limit));
+                setOrderList(tempList.slice((page - 1) * limit, page * limit));
             })
             .catch(error=>console.log(error))        
 
         return ()=> controller.abort();
-    }, [dbUser, FireBaseUser, updateModal, insertModal, deleteModal]);
+    }, [dbUser, FireBaseUser, updateModal, insertModal, deleteModal, page]);
 
     return(
         <Container className="mt-5">
@@ -216,7 +216,6 @@ function OrderTable() {
                                     </TableBody>
                                     </Table>
                                 </TableContainer>
-                                <span className="m-2 text-center">Page: {page}</span>
                                 <Pagination onChange={changeHandler} count={noPage} defaultPage={1} style={{marginTop: 15}}></Pagination>
                             </Grid>                     
                         : <h4>Chưa có đơn hàng trong hệ thống!</h4>

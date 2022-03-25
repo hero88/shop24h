@@ -15,8 +15,8 @@ function MyOrders() {
     }
 
     const FireBaseUser = auth.currentUser;
-    const customerURL = "http://localhost:8000/customers/";
-    const orderURL = "http://localhost:8000/orders/";
+    const customerURL = "http://vast-castle-13621.herokuapp.com/customers/";
+    const orderURL = "http://vast-castle-13621.herokuapp.com/orders/";
 
     const [user, setUser] = useState(null);
     const [orderList, setOrderList] = useState([]);

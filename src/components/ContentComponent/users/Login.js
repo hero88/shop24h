@@ -11,7 +11,7 @@ function Login({sendUser}) {
         const responseData = await response.json();
         return responseData;
     }
-    const baseURL = "http://localhost:8000/customers/";
+    const baseURL = "http://vast-castle-13621.herokuapp.com/customers/";
     const navigate = useNavigate();  
 
     const [user, setUser] = useState(null);  

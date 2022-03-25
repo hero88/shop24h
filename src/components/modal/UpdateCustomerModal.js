@@ -57,7 +57,7 @@ function UpdateCustomerModal({update, setUpdate, customer}) {
                 body: JSON.stringify(newCustomer),
                 headers: {'Content-type': 'application/json; charset=UTF-8'}
             };
-            fetchApi('http://localhost:8000/customers/' + vId, reqOptions)
+            fetchApi('http://vast-castle-13621.herokuapp.com/customers/' + vId, reqOptions)
             .then((result)=>{
                 console.log(result);
                 toast.success("Cập nhật khách hàng thành công!");

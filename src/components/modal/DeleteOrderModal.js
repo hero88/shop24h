@@ -24,7 +24,7 @@ function DeleteOrderModal({deleteModal, setDelete, order}){
     const onBtnConfirmClick = () => {
         let body = { method: 'DELETE'};
         let vId = order._id;
-        fetchApi("http://localhost:8000/orders/" + vId, body)
+        fetchApi("http://vast-castle-13621.herokuapp.com/orders/" + vId, body)
         .then(()=>{            
             toast.success("Bạn đã xóa thành công đơn hàng mang id= " + vId);
             handleClose();

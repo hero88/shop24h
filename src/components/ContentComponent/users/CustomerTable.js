@@ -12,7 +12,7 @@ function CustomerTable(){
         return responseData;
     }
     const FireBaseUser = auth.currentUser;
-    const customerURL = "http://localhost:8000/customers/";
+    const customerURL = "https://vast-castle-13621.herokuapp.com/customers";
 
     const [page, setPage] = useState(1);
     const [noPage, setNoPage] = useState(1);    
@@ -73,12 +73,12 @@ function CustomerTable(){
                     let tempUser = customerList.find(el=>el.uid===FireBaseUser.uid);
                     let tempCustomers = customerList.filter(el=>el.role==="Customer");
                     if (tempUser) setDbUser(tempUser); 
-                    setCustomers(tempCustomers);
+                    setCustomers(tempCustomers.slice((page - 1) * limit, page * limit));
                     setNoPage(Math.ceil(tempCustomers.length/limit));              
             })
             .catch(error=>console.log(error))        
         return ()=> controller.abort();
-    },[FireBaseUser, dbUser, updateModal])
+    },[FireBaseUser, dbUser, updateModal, page])
 
     return(
         <Container className="mt-5">

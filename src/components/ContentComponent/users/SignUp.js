@@ -13,7 +13,7 @@ function SignUp(){
         return responseData;
     }
 
-    const customerURL = "http://localhost:8000/customers/";
+    const customerURL = "http://vast-castle-13621.herokuapp.com/customers/";
     const navigate = useNavigate();
 
     const [name, setName] = useState("");

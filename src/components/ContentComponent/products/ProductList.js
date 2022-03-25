@@ -20,7 +20,7 @@ function ProductList({data, searchData}) {
     }
 
     const changeSelectHandler = e => setLimit(e.target.value);
-    const baseURL = "http://localhost:8000/products/?";
+    const baseURL = "https://vast-castle-13621.herokuapp.com/products/?";
 
     useEffect(() => {
         let targetURL = "";
