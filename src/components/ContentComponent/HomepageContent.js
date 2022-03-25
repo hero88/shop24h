@@ -34,7 +34,7 @@ function HomepageContent(){
     return(
         <Container fluid>                                               
             <Row>                
-                <Col xs='12' sm='12' md='12' lg='12' className='mb-3'>
+                <Col xs='12' sm='12' md='12' lg='12' className='mb-3 mt-2'>
                     <CarouselSlide data={allProducts}/>
                 </Col>                
             </Row>
@@ -48,7 +48,7 @@ function HomepageContent(){
                         {
                             latest.map((element, index)=>
                                 <Col
-                                    sm={ 12/latest.length > 4 ? 12/latest.length : 2 }                         
+                                    sm={ 12/latest.length > 4 ? 12/latest.length : 4 }                         
                                     key={index}
                                     xs='auto'
                                 >

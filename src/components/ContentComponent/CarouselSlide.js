@@ -3,7 +3,7 @@ import {Carousel} from 'react-bootstrap';
 
 function CarouselSlide({data}){
     return(
-        <Container className='p-6' style={{width: '60%'}}>
+        <Container className='p-4 mt-2' style={{width: '50%'}} >
             <Carousel variant='dark'>
                 {
                     data.map((element,index)=>

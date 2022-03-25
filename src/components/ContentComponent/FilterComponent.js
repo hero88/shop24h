@@ -34,10 +34,7 @@ function FilterComponent({sendFilterObj}) {
         <Container className='mt-5'>
         {/* Filter by type */}
         <Row>
-            <Col xs='12' sm='4' md='4' lg='4'>
-                <InputLabel id="demo-simple-select-helper-label">Chọn loại sản phẩm</InputLabel>
-            </Col>
-            <Col xs='12' sm='8' md='8' lg='8'>
+            <Col xs='12' sm='12' md='12' lg='12'>
                 <Select 
                     labelId="demo-simple-select-helper-label"                    
                     defaultValue="None" 
