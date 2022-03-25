@@ -17,8 +17,8 @@ function ShoppingCart({currentCart, currentUser}) {
     const [cart, setCart] = useState([]);
     const [userId, setUserId] = useState("");
 
-    const customerURL = "https://vast-castle-13621.herokuapp.com/customers";
-    const orderURL = "https://vast-castle-13621.herokuapp.com/orders";
+    const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";
+    const orderURL = "https://vast-castle-13621.herokuapp.com/orders/";
 
     let TotalCart = 0; // total VND amount of the cart
     const TotalPrice = (price,tonggia) =>{
