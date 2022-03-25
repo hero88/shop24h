@@ -44,7 +44,7 @@ function HeaderComponent({currentUser, numCart}){
         setAnchorEl(null);
     };
 
-    const customerURL = "http://vast-castle-13621.herokuapp.com/customers/";
+    const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";
 
     const onBtnLogoutClick = () => {
         auth.signOut()

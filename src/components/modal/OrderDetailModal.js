@@ -51,19 +51,19 @@ function OrderDetailModal({open, setOpen, data}) {
 
     useEffect(()=>{        
         if (productList.length===0) 
-            fetchApi("http://vast-castle-13621.herokuapp.com/products/")
+            fetchApi("https://vast-castle-13621.herokuapp.com/products/")
             .then(res=> {
                 setProductList(res.products);
             })
             .catch(error=>console.log(error))
         if (customerList.length===0)
-            fetchApi("http://vast-castle-13621.herokuapp.com/customers/")
+            fetchApi("https://vast-castle-13621.herokuapp.com/customers/")
                 .then(res=> {
                     setCustomerList(res.customers);
                 })
                 .catch(error=>console.log(error))
         if (customerList.length===0)
-            fetchApi("http://vast-castle-13621.herokuapp.com/orderdetail/")
+            fetchApi("https://vast-castle-13621.herokuapp.com/orderdetail/")
                 .then(res=> {
                     setDetailList(res.OrderDetail);
                 })

@@ -11,7 +11,7 @@ function HomepageContent(){
         return responseData;
     }
     const [latest, setLatest] = useState([]);
-    const productURL = "http://vast-castle-13621.herokuapp.com/products/";
+    const productURL = "https://vast-castle-13621.herokuapp.com/products/";
     const allProducts = useSelector(state => state._todoProduct._products);
     const dispatch = useDispatch();
 
