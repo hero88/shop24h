@@ -19,6 +19,11 @@ function ProductList({data, searchData}) {
         setPage(value);        
     }
 
+    const getDiscount = (oldP, newP) => {
+        let value = 100 * (oldP - newP) / oldP;
+        return parseInt(value);
+    }
+
     const changeSelectHandler = e => setLimit(e.target.value);
     const baseURL = "https://vast-castle-13621.herokuapp.com/products/?";
 
@@ -56,10 +61,7 @@ function ProductList({data, searchData}) {
     }, [page, limit, searchData]);
 
     return(
-        <Container className='p-4'>
-            <Col sm='12' className='text-center fw-bold'>
-                <h2>SẢN PHẨM</h2>
-            </Col>
+        <Container className='p-4'>            
             <Col sm='12' className='mb-3'>
                     <label>Chọn số lượng sản phẩm hiển thị &nbsp;</label>
                     <select onChange={changeSelectHandler} defaultValue={3}>
@@ -88,7 +90,7 @@ function ProductList({data, searchData}) {
                             <CardFooter>
                                 <h4>Giá tiền:</h4>
                                 <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
-                                <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND</p>
+                                <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND (giảm {getDiscount(element.buyPrice, element.promotionPrice)}%)</p>
                             </CardFooter>
                         </Card>
                     </Col>

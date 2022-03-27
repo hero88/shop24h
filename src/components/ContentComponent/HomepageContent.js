@@ -3,6 +3,7 @@ import {GetAllProduct} from '../actions';
 import {useSelector, useDispatch} from 'react-redux';
 import {useState, useEffect} from 'react';
 import CarouselSlide from './CarouselSlide';
+import '../../App.css';
 
 function HomepageContent(){
     const fetchApi = async (paramUrl, paramOptions = {}) => {
@@ -14,6 +15,11 @@ function HomepageContent(){
     const productURL = "https://vast-castle-13621.herokuapp.com/products/";
     const allProducts = useSelector(state => state._todoProduct._products);
     const dispatch = useDispatch();
+
+    const getDiscount = (oldP, newP) => {
+        let value = 100 * (oldP - newP) / oldP;
+        return parseInt(value);
+    }
 
     useEffect(() => {   
         const controller = new AbortController();
@@ -33,7 +39,10 @@ function HomepageContent(){
 
     return(
         <Container fluid>                                               
-            <Row>                
+            <Row>  
+                <Col xs='12' sm='12' md='12' lg='12' className='mt-3'>
+                    <h2 className='text-danger text-center fst-italic'>CHƯƠNG TRÌNH SIÊU KHUYẾN MÃI <span className='blinking'>LÊN ĐẾN 50%</span></h2>
+                </Col>              
                 <Col xs='12' sm='12' md='12' lg='12' className='mb-3 mt-2'>
                     <CarouselSlide data={allProducts}/>
                 </Col>                
@@ -50,7 +59,7 @@ function HomepageContent(){
                                 <Col
                                     sm={ 12/latest.length > 4 ? 12/latest.length : 4 }                         
                                     key={index}
-                                    xs='auto'
+                                    xs='6'
                                 >
                                     <Card className='mb-4' style={{height: '50%'}}>
                                         <a href={"/products/" + element._id} data-toggle='tooltip' title='Click for details'>
@@ -61,7 +70,7 @@ function HomepageContent(){
                                         </CardBody>
                                         <CardFooter>
                                             <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
-                                            <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND</p>
+                                            <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND (giảm {getDiscount(element.buyPrice, element.promotionPrice)}%)</p>
                                         </CardFooter>
                                     </Card>
                                 </Col>
