@@ -37,6 +37,8 @@ function HeaderComponent({currentUser, numCart}){
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const [menuSize, setMenuSize] = useState('xs');
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -63,6 +65,7 @@ function HeaderComponent({currentUser, numCart}){
     useEffect(() => {
         let isContinued = true;
         if (currentUser) {
+            setMenuSize('md');
             fetchApi(customerURL)
                 .then(result =>{
                     if (isContinued) {
@@ -75,12 +78,13 @@ function HeaderComponent({currentUser, numCart}){
                 })
                 .catch(err=> console.log(err))
         }
-        
+        else setMenuSize('xs');
+
         return ()=> isContinued = false;
-    },[currentUser])
+    },[currentUser, menuSize])
 
     return(
-        <Navbar className='fixed-top mb-5' color='warning' expand='md' light>
+        <Navbar className='fixed-top mb-5' color='warning' expand={menuSize} light>
             <Logo/>
             { 
                 user 

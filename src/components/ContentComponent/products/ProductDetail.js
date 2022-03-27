@@ -17,6 +17,11 @@ function ProductDetail({currentUser, sendProduct}) {
 
     const productURL = "https://vast-castle-13621.herokuapp.com/products";
 
+    const getDiscount = (oldP, newP) => {
+        let value = 100 * (oldP - newP) / oldP;
+        return parseInt(value);
+    }
+
     const {id} = useParams();
     const dispatch = useDispatch();
     const [NoItem, setNoItem] = useState(1);
@@ -75,9 +80,9 @@ function ProductDetail({currentUser, sendProduct}) {
                 </Grid>
                 <Grid item xs={12} md={7} lg={7} sm={7}>
                     <h4>{currentProduct.name}</h4>
-                    <p>Type: {currentProduct.type}</p>
+                    <p>Loại: {currentProduct.type}</p>
                     <p className='text-decoration-line-through'>{(currentProduct.buyPrice * NoItem).toLocaleString()} VND</p>
-                    <p className='text-danger'>{(currentProduct.promotionPrice * NoItem).toLocaleString()} VND</p>
+                    <p className='text-danger'>{(currentProduct.promotionPrice * NoItem).toLocaleString()} VND (giảm {getDiscount(currentProduct.buyPrice, currentProduct.promotionPrice)}%)</p>
                     <button onClick={substractItem}>-</button>
                     &nbsp;{NoItem >= 0 ? NoItem : 0 /*số lượng item min=0*/ }&nbsp; 
                     <button onClick={()=> setNoItem(NoItem + 1 )}>+</button>
@@ -111,7 +116,7 @@ function ProductDetail({currentUser, sendProduct}) {
                                         </CardBody>
                                         <CardFooter>
                                             <p className='text-decoration-line-through'>{element.buyPrice.toLocaleString()} VND</p>
-                                            <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND</p>
+                                            <p className='text-danger'>{element.promotionPrice.toLocaleString()} VND (giảm {getDiscount(element.buyPrice, element.promotionPrice)}%)</p>
                                         </CardFooter>
                                 </Card>
                             </Grid>
