@@ -84,7 +84,7 @@ function HeaderComponent({currentUser, numCart}){
     },[currentUser, menuSize])
 
     return(
-        <Navbar className='fixed-top mb-5' color='warning' expand={menuSize} light>
+        <Navbar className='fixed-top mb-5 text-light' color='dark' expand={menuSize} light>
             <Logo/>
             { 
                 user 

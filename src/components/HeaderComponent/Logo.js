@@ -5,7 +5,7 @@ function Logo() {
             <img src='https://img.freepik.com/free-vector/happy-shop-logo-template_57516-57.jpg' 
                 alt='logo'
                 width='10%'
-            /> <span>EasyShop</span>
+            /> <span className='text-light'>EasyShop</span>
         </NavbarBrand>
     )
 }

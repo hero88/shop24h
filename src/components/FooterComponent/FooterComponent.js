@@ -6,7 +6,7 @@ import SupportFooter from './SupportFooter';
 
 function FooterComponent(){
     return(
-        <Container className='bg-secondary p-4 mt-5' fluid>
+        <Container className='bg-dark p-4 text-light' fluid>
             <Row>
                 <Col >
                     <ProductFooter/>
