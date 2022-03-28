@@ -6,12 +6,13 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 950,
+    width: '60vw',
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     zIndex: 10,
     p: 4,
+    margin: 15% 'auto'
 };
 
 function OrderDetailModal({open, setOpen, data}) {
