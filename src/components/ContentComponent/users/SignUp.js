@@ -2,16 +2,11 @@ import { Grid, TextField, Button, Typography} from "@mui/material";
 import { Container } from 'reactstrap';
 import { toast } from 'react-toastify';
 import {useState} from 'react';
-
+import { fetchApi } from "../../../api";
 import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
 
 function SignUp(){
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
 
     const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";
     const navigate = useNavigate();

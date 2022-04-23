@@ -3,16 +3,11 @@ import {Grid, Divider,Button} from '@mui/material';
 import {Container} from 'reactstrap';
 import {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-
+import { fetchApi } from '../../../api';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function ShoppingCart({currentCart, currentUser}) {    
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
     const navigate = useNavigate();
     const [cart, setCart] = useState([]);
     const [userId, setUserId] = useState("");
