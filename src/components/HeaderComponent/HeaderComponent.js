@@ -10,15 +10,10 @@ import IconNavBar from "./IconNavBar";
 import { useNavigate } from "react-router-dom";
 
 import { toast } from 'react-toastify';
-
+import {fetchApi} from './../../api';
 import {useState, useEffect} from 'react';
 
 function HeaderComponent({currentUser, numCart}){
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
 
     const cartStyle = {
         height: '1.2rem',
@@ -84,7 +79,7 @@ function HeaderComponent({currentUser, numCart}){
     },[currentUser, menuSize])
 
     return(
-        <Navbar className='fixed-top mb-5' color='warning' expand={menuSize} light>
+        <Navbar className='fixed-top mb-5 text-light' color='dark' expand={menuSize} light>
             <Logo/>
             { 
                 user 

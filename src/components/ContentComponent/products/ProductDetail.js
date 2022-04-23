@@ -4,16 +4,11 @@ import {Grid, Button} from '@mui/material';
 import {Col, Breadcrumb, BreadcrumbItem, Container, Card, CardBody, CardFooter, CardImg} from 'reactstrap';
 import {useState, useEffect} from 'react';
 import { toast } from 'react-toastify';
-
+import { fetchApi } from "../../../api";
 import {AddCart} from '../../actions'
 import {useDispatch} from 'react-redux';
 
 function ProductDetail({currentUser, sendProduct}) {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
 
     const productURL = "https://vast-castle-13621.herokuapp.com/products";
 

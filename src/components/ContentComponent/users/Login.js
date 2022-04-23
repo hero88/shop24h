@@ -4,13 +4,9 @@ import {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ResetPasswordModal from '../../modal/ResetPasswordModal';
+import { fetchApi } from '../../../api';
 
 function Login({sendUser}) {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
     const baseURL = "https://vast-castle-13621.herokuapp.com/customers/";
     const navigate = useNavigate();  
 

@@ -1,14 +1,9 @@
 import {Grid, Pagination} from '@mui/material';
 import {useState, useEffect} from 'react';
 import {Container, Row, Col, Card, CardBody, CardFooter, CardImg} from 'reactstrap';
+import { fetchApi } from '../../../api';
 
-
-function ProductList({data, searchData}) {    
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
+function ProductList({data, searchData}) {  
 
     const [productList, setProductList] = useState(data);
     const [page, setPage] = useState(1);

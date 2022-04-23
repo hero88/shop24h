@@ -1,7 +1,7 @@
 import { Grid, Paper, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Pagination} from "@mui/material";
 import { Container, Row, Col } from 'reactstrap';
 import {useState, useEffect} from 'react';
-
+import { fetchApi } from "../../../api";
 import {auth} from '../../../firebase';
 import InsertProductModal from "../../modal/InsertProductModal";
 import UpdateProductModal from "../../modal/UpdateProductModal";
@@ -9,11 +9,6 @@ import DeleteProductModal from "../../modal/DeleteProductModal";
 import FilterComponent from "../FilterComponent";
 
 function ProductTable() {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
     const FireBaseUser = auth.currentUser;
     const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";
     const productURL = "https://vast-castle-13621.herokuapp.com/products/?";

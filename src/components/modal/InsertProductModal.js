@@ -1,28 +1,10 @@
 import { Modal, Box, Grid, TextField, Typography, Button} from "@mui/material";
 import { toast } from 'react-toastify';
 import {useState} from 'react';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60vw',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    zIndex: 10,
-    p: 4,
-    margin: 15% 'auto'
-};
+import {ModalStyle,BoxStyle} from './../../style';
+import {fetchApi} from './../../api';
 
 function InsertProductModal({insert, setInsert}) {    
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
-
     const handleClose = () => setInsert(false);
 
     const [productName, setProductName] = useState("");
@@ -71,8 +53,9 @@ function InsertProductModal({insert, setInsert}) {
             onClose={handleClose}
             aria-labelledby="modal-detail-title"
             aria-describedby="modal-detail-description"
+            style={ModalStyle}
         >
-            <Box sx={style}>
+            <Box sx={BoxStyle}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Thêm sản phẩm
                 </Typography>
@@ -106,7 +89,7 @@ function InsertProductModal({insert, setInsert}) {
                                            
                 <Grid mt={5} >
                     <Button variant="contained" color="success" onClick={onBtnInsertClick}>Thêm sản phẩm</Button>
-                    <Button variant="contained" color="success" onClick={handleClose} style={{float:"right"}}>Hủy bỏ</Button>
+                    <Button variant="contained" color="success" onClick={handleClose} >Hủy bỏ</Button>
                 </Grid>
             </Box>
         </Modal>

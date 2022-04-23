@@ -2,7 +2,7 @@ import { Grid, TextField, Button} from "@mui/material";
 import { Container } from 'reactstrap';
 import { toast } from 'react-toastify';
 import {useState, useEffect} from 'react';
-
+import { fetchApi } from "../../../api";
 import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
 
@@ -10,11 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 function Profile() {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
 
     const FireBaseUser = auth.currentUser;
     const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";

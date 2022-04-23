@@ -2,28 +2,10 @@ import { Modal, Box, Grid, TextField, Typography, Button} from "@mui/material";
 import { toast } from 'react-toastify';
 import {useState, useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60vw',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    zIndex: 10,
-    p: 4,
-    margin: 15% 'auto'
-};
+import {ModalStyle, BoxStyle} from './../../style'
+import {fetchApi} from './../../api'
 
 function InsertOrderModal({insert, setInsert, list}) {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
-
     const handleClose = () => {
         setInsert(false);
         resetForm();        
@@ -144,9 +126,9 @@ function InsertOrderModal({insert, setInsert, list}) {
             onClose={handleClose}
             aria-labelledby="modal-detail-title"
             aria-describedby="modal-detail-description"
-            style={{ overflow: 'scroll' }}
+            style={ModalStyle}
         >
-            <Box sx={style}>
+            <Box sx={BoxStyle}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Thêm đơn hàng
                 </Typography>
@@ -192,9 +174,13 @@ function InsertOrderModal({insert, setInsert, list}) {
                             </Grid>  
                         )                      
                     }                        
-                <Grid mt={5} >
-                    <Button variant="contained" color="success" onClick={onBtnInsertClick}>Thêm đơn hàng</Button>
-                    <Button variant="contained" color="success" onClick={handleClose} style={{float:"right"}}>Hủy bỏ</Button>
+                <Grid container spacing={2} mt={5}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <Button variant="contained" color="success" onClick={onBtnInsertClick}>Thêm đơn hàng</Button>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <Button variant="contained" color="success" onClick={handleClose} >Hủy bỏ</Button>
+                    </Grid>
                 </Grid>
             </Box>
         </Modal>

@@ -1,27 +1,10 @@
 import { Modal, Box, Grid, TextField, Typography, Button} from "@mui/material";
 import { toast } from 'react-toastify';
 import {useState} from 'react';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60vw',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    zIndex: 10,
-    p: 4,
-    margin: 15% 'auto'
-};
+import {ModalStyle, BoxStyle} from './../../style';
+import {fetchApi} from './../../api';
 
 function UpdateProductModal({update, setUpdate, product}) {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
 
     const handleClose = () => setUpdate(false);
 
@@ -71,14 +54,15 @@ function UpdateProductModal({update, setUpdate, product}) {
             onClose={handleClose}
             aria-labelledby="modal-detail-title"
             aria-describedby="modal-detail-description"
+            style={ModalStyle}
         >
-            <Box sx={style}>
+            <Box sx={BoxStyle}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Thông tin sản phẩm
                 </Typography>
                 <Grid container spacing={2} mt={3}>
                     <Grid item xs={12}>
-                        <TextField multiline maxRows={Infinity} label='Tên sản phẩm' onChange={changeProductNameHandler} fullWidth defaultValue={product.name}/>
+                        <TextField multiline maxRows={2} label='Tên sản phẩm' onChange={changeProductNameHandler} fullWidth defaultValue={product.name}/>
                     </Grid>
                     <Grid item xs={12}>
                         <label>Loại sản phẩm</label>&nbsp;
@@ -100,13 +84,17 @@ function UpdateProductModal({update, setUpdate, product}) {
                         <TextField type='number' label='Giá ưu đãi' onChange={changePromotionPriceHandler} fullWidth defaultValue={product.promotionPrice}/>
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField multiline maxRows={Infinity} label='Mô tả sản phẩm' onChange={changeDescriptionHandler} fullWidth defaultValue={product.description}/>
+                        <TextField multiline maxRows={4} label='Mô tả sản phẩm' onChange={changeDescriptionHandler} fullWidth defaultValue={product.description}/>
                     </Grid>   
                 </Grid>
                                            
-                <Grid mt={5} >
-                    <Button variant="contained" color="success" onClick={onBtnUpdateClick}>Cập nhật sản phẩm</Button>
-                    <Button variant="contained" color="success" onClick={handleClose} style={{float:"right"}}>Hủy bỏ</Button>
+                <Grid mt={5} container spacing={2}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <Button variant="contained" color="success" onClick={onBtnUpdateClick}>Cập nhật sản phẩm</Button>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
+                        <Button variant="contained" color="success" onClick={handleClose} >Hủy bỏ</Button>
+                    </Grid>
                 </Grid>
             </Box>
         </Modal>

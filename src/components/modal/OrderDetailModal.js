@@ -1,26 +1,8 @@
 import { Modal, Box, Grid, TextField, Typography, Button} from "@mui/material";
 import {useState, useEffect} from 'react';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60vw',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    zIndex: 10,
-    p: 4,
-    margin: 15% 'auto'
-};
-
+import {ModalStyle, BoxStyle} from './../../style';
+import {fetchApi} from './../../api';
 function OrderDetailModal({open, setOpen, data}) {
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
     const handleClose = () => setOpen(false);
     const [productList, setProductList] = useState([]);
     const [customerList, setCustomerList] = useState([]);
@@ -81,9 +63,9 @@ function OrderDetailModal({open, setOpen, data}) {
                 onClose={handleClose}
                 aria-labelledby="modal-detail-title"
                 aria-describedby="modal-detail-description"
-                style={{ overflow: 'scroll' }}
+                style={ModalStyle}
             >
-                <Box sx={style}>
+                <Box sx={BoxStyle}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         Thông tin đơn hàng
                     </Typography>
@@ -101,7 +83,7 @@ function OrderDetailModal({open, setOpen, data}) {
                                 data.details.map((item, index)=>
                                 <Grid container spacing={2} key={index} mt={1}>
                                     <Grid item xs={6}>
-                                        <TextField multiline label='Tên sản phẩm' defaultValue={findProductNameById(item)} InputProps={{readOnly: true}} fullWidth/>                                        
+                                        <TextField label='Tên sản phẩm' defaultValue={findProductNameById(item)} InputProps={{readOnly: true}} fullWidth/>                                        
                                     </Grid>
                                     <Grid item xs={6}>
                                         <TextField label='Số lượng' defaultValue={findQuantityById(item)} InputProps={{readOnly: true}} fullWidth/> 

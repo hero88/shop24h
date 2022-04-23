@@ -4,13 +4,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import {useState, useEffect} from 'react';
 import CarouselSlide from './CarouselSlide';
 import '../../App.css';
+import {fetchApi} from '../../api';
 
 function HomepageContent(){
-    const fetchApi = async (paramUrl, paramOptions = {}) => {
-        const response = await fetch(paramUrl, paramOptions);
-        const responseData = await response.json();
-        return responseData;
-    }
     const [latest, setLatest] = useState([]);
     const productURL = "https://vast-castle-13621.herokuapp.com/products/";
     const allProducts = useSelector(state => state._todoProduct._products);
