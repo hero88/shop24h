@@ -1,16 +1,20 @@
 import { Grid, TextField, Button, Typography} from "@mui/material";
 import { Container } from 'reactstrap';
 import { toast } from 'react-toastify';
-import {useState} from 'react';
+import {useState, useCallback} from 'react';
 import { fetchApi } from "../../../api";
 import {auth} from '../../../firebase';
 import {useNavigate} from 'react-router-dom';
 
-function SignUp(){
+import {useGoogleReCaptcha} from 'react-google-recaptcha-v3';
 
+function SignUp(){
+    const captchaURL = "https://vast-castle-13621.herokuapp.com/checkcaptcha";
     const customerURL = "https://vast-castle-13621.herokuapp.com/customers/";
     const navigate = useNavigate();
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
+    const [showForm, setShowForm] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -72,6 +76,7 @@ function SignUp(){
     }
 
     const onBtnSignUpClick = () => {
+        handleReCaptchaVerify();
         let mailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
         let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})');
         if (email.match(mailFormat) && strongPassword.test(password)) {
@@ -100,10 +105,43 @@ function SignUp(){
         setCity("");
         setCountry("");
     }
+
+    // Create an event handler so you can call the verification on button click event or form submit
+    const handleReCaptchaVerify = useCallback(async () => {
+        if (!executeRecaptcha) {
+            console.log('Execute recaptcha not yet available');
+            return;
+        }
+
+        const token = await executeRecaptcha('submit');
+        // Do whatever you want with the token
+        let reqOptions = {
+            body: JSON.stringify({token: token}),
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            }
+        }
+        fetchApi(captchaURL, reqOptions)
+        .then(res=>{
+            if (res.message === 'Successful')
+                setShowForm(true);
+            else {
+                toast.error("Failed to verify human!"); 
+                setShowForm(false);
+                return;
+            }
+        })
+        .catch(err => console.log(err))
+    },[executeRecaptcha, setShowForm]);
+
     return(
     <>
-        <Container className='mt-5'>
-            <Grid container spacing={2}>
+        <Container className='mt-3'>
+            {
+                showForm 
+                ?
+                <Grid container spacing={2}>
                     <Grid item xs={12} lg={12} sm={12} md={12} className='text-center'>
                             <h2 className="fw-bold">Đăng ký</h2>
                     </Grid>
@@ -121,7 +159,10 @@ function SignUp(){
                             <Button variant="contained" color="success" onClick={onBtnSignUpClick}>Đăng ký</Button>
                             <Button style={{float:"right"}} variant="contained" color="success" onClick={()=>navigate('/')}>Quay về trang chủ</Button>
                     </Grid>
-            </Grid>
+                </Grid>
+                : <Button variant='contained' onClick={handleReCaptchaVerify}>Verify Human</Button>
+            }
+            
         </Container>
     </>
     )

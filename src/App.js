@@ -5,7 +5,7 @@ import FooterComponent from './components/FooterComponent/FooterComponent';
 import HomepageContent from './components/ContentComponent/HomepageContent';
 
 import { Route, Routes } from 'react-router-dom';
-
+import {GoogleReCaptchaProvider} from 'react-google-recaptcha-v3';
 import Login from './components/ContentComponent/users/Login';
 import { Grid } from '@mui/material';
 
@@ -27,6 +27,7 @@ import AllProducts from './components/ContentComponent/products/AllProducts';
 function App() {
   const [user, setUser] = useState(null);
   const [cart, setCart] = useState([]);
+  const siteKey = '6LcwaaYfAAAAAHvrsRmTJGiaIr7fLQMZcJgpt2ct';
 
   const cartHandle = (data) => {
     let selectedProduct = data;
@@ -73,20 +74,30 @@ function App() {
           <HeaderComponent currentUser={user} numCart={cart}/>    
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} mt={10}>
-          <Routes>
-            <Route path='/login' element={<Login sendUser={setUser}/>}/>
-            <Route path='/' element={<HomepageContent/>}/>
-            <Route path='*' element={<HomepageContent/>}/>
-            <Route path='products/:id' element={<ProductDetail currentUser={user} sendProduct={cartHandle}/>}/>
-            <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
-            <Route path='profile' element={<Profile/>}/>
-            <Route path='orders' element={<MyOrders/>}/>
-            <Route path='signup' element={<SignUp/>}/>
-            <Route path='producttable' element={<ProductTable/>}/>
-            <Route path='customertable' element={<CustomerTable/>}/>
-            <Route path='ordertable' element={<OrderTable/>}/>
-            <Route path='products' element={<AllProducts/>}/>
-          </Routes> 
+            <Routes>
+              <Route path='/login' element={
+                <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
+                  <Login sendUser={setUser}/>
+                </GoogleReCaptchaProvider>
+                }
+              />
+              <Route path='/' element={<HomepageContent/>}/>
+              <Route path='*' element={<HomepageContent/>}/>
+              <Route path='products/:id' element={<ProductDetail currentUser={user} sendProduct={cartHandle}/>}/>
+              <Route path='shoppingcart' element={<ShoppingCart currentCart={cart} currentUser={user}/>}/>
+              <Route path='profile' element={<Profile/>}/>
+              <Route path='orders' element={<MyOrders/>}/>
+              <Route path='signup' element={
+                  <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
+                    <SignUp/>
+                  </GoogleReCaptchaProvider>
+                }
+              />
+              <Route path='producttable' element={<ProductTable/>}/>
+              <Route path='customertable' element={<CustomerTable/>}/>
+              <Route path='ordertable' element={<OrderTable/>}/>
+              <Route path='products' element={<AllProducts/>}/>
+            </Routes>         
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12} mt={10}>
           <FooterComponent/>
